@@ -1,0 +1,17 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/jianshen?useUnicode=true&characterEncoding=UTF8&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root
+    password: 123
+mybatis-plus:
+  mapper-locations: classpath:/mapper/*Mapper.xml
+logging:
+  level:
+    com.zhiyou100.gym.mapper: debug
+#pagehelper分页插件
+#pagehelper:
+#  helper-dialect: mysql
+#  params: count=countSql
+#  reasonable: true
+#  support-methods-arguments: true
