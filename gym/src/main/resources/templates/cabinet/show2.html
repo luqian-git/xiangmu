@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="UTF-8">
+<title>健身中心</title>
+<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+	<style type="text/css">
+		img{
+			width: 30px;
+			height: 30px;
+		}
+		body {
+			margin: 40px;
+			text-align: center;
+			padding: 0px;
+			background-size: cover;
+		}
+	</style>
+</head>
+<body >
+
+	<a href="/cabinet/show">返回租柜</a>
+
+	<table class="table table-bordered">
+		<tr>
+			<td>序号</td>
+			<td>编号</td>
+			<td>金额</td>
+			<td>时长</td>
+			<td>始于</td>
+			<td>修改</td>
+			<td>会员编号</td>
+			<td>柜子编号</td>
+		</tr>
+		<tr th:each="c,item:${infoy}">
+			<td th:text="${item.count}">序号</td>
+			<td th:text="${c.cabInfoNumber}"></td>
+			<td>
+				<p th:if="${c.cabInfoDuration == 12}">389</p>
+				<p th:if="${c.cabInfoDuration == 6}">288</p>
+				<p th:if="${c.cabInfoDuration == 3}">138</p>
+				<p th:if="${c.cabInfoDuration == 1}">58</p>
+			</td>
+			<td>
+				<p th:if="${c.cabInfoDuration == 12}">一年</p>
+				<p th:if="${c.cabInfoDuration == 6}">半年</p>
+				<p th:if="${c.cabInfoDuration == 3}">三个月</p>
+				<p th:if="${c.cabInfoDuration == 1}">一个月</p>
+			</td>
+			<td th:text="${c.cabInfoCreateTime}"></td>
+			<td th:text="${c.cabInfoUpdateTime}"></td>
+			<td th:text="${c.cabInfoMember}"></td>
+			<td th:text="${c.cabInfoNum}"></td>
+		</tr>
+	
+	</table>
+	<h1>已过期租柜记录</h1>
+	<table class="table table-bordered">
+		<tr th:each="g,item:${infog}">
+			<td th:text="${item.count}">序号</td>
+			<td th:text="${g.cabInfoNumber}"></td>
+			<td>
+				<p th:if="${g.cabInfoDuration == 12}">389</p>
+				<p th:if="${g.cabInfoDuration == 6}">288</p>
+				<p th:if="${g.cabInfoDuration == 3}">138</p>
+				<p th:if="${g.cabInfoDuration == 1}">58</p>
+			</td>
+			<td>
+				<p th:if="${g.cabInfoDuration == 12}">一年</p>
+				<p th:if="${g.cabInfoDuration == 6}">半年</p>
+				<p th:if="${g.cabInfoDuration == 3}">三个月</p>
+				<p th:if="${g.cabInfoDuration == 1}">一个月</p>
+			</td>
+			<td th:text="${g.cabInfoCreateTime}"></td>
+			<td th:text="${g.cabInfoUpdateTime}"></td>
+			<td th:text="${g.cabInfoMember}"></td>
+			<td th:text="${g.cabInfoNum}"></td>
+			<td>已过期</td>
+		</tr>
+	</table>
+</body>
+</html>

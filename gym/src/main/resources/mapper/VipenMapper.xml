@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.zhiyou100.gym.mapper.VipenMapper">
+    <resultMap type="com.zhiyou100.gym.pojo.Vipen" id="vipen">
+        <id column="vipen_id" property="vipenId"/>
+        <result column="vipen_number" property="vipenNumber"/>
+        <result column="vipen_user_id" property="vipenUserId"/>
+        <result column="vipen_entry_time" property="vipenEntryTime"/>
+        <result column="vipen_out_time" property="vipenOutTime"/>
+        <result column="vipen_status" property="vipenStatus"/>
+        <result column="us_name" property="usName"/>
+    </resultMap>
+    <!-- 查询所有  小写-->
+    <select id="findAll0" resultMap="vipen">
+          select v.*,u.us_name from gym_vipen v
+          inner join gym_user u  on v.vipen_user_id = u.us_id where v.vipen_status = 0
+    </select>
+    <!-- 查询所有  小写-->
+    <select id="findAll1" resultMap="vipen">
+          select v.*,u.us_name from gym_vipen v
+          inner join gym_user u  on v.vipen_user_id = u.us_id where v.vipen_status = 1
+    </select>
+    <!-- 添加数据-->
+    <insert id="add" parameterType="com.zhiyou100.gym.pojo.Vipen">
+		insert into gym_vipen values(null,#{vipenUserId},#{vipenNumber},now(),now(),0)
+	</insert>
+    <!-- sql修改-->
+    <update id="update" parameterType="integer">
+		update gym_vipen set
+        vipen_out_time = now(),
+        vipen_status = 1
+		where vipen_id = #{vipend}
+	</update>
+</mapper>

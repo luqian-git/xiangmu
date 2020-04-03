@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+</head>
+<style type="text/css">
+	body {
+		margin: 40px;
+		text-align: center;
+		padding: 0px;
+		background-size: cover;
+	}
+</style>
+<body>
+<h1>员工会员签到表</h1>
+<form action="/sign/insert"  method="post">
+	<p>
+		员工号/会员号<br>
+		<input type="text" name="signUserId" required="required">
+	</p>
+	<p>
+		签到备注<br>
+		<input type="text" name="signDesc" required="required">
+	</p>
+	<button class="btn btn-primary">添加</button><a class="btn btn-primary" href="/sign/show">取消</a>
+</form>
+<hr>
+<h1>游客签到表</h1>
+<p th:text="${msg}"></p>
+<form action="/sign/insert2"  method="post">
+	<p>
+		游客登记电话<br>
+		<input type="text" name="phone" required="required">
+	</p>
+	<p>
+		签到备注<br>
+		<input type="text" name="desc" required="required">
+	</p>
+	<button class="btn btn-primary">添加</button><a class="btn btn-primary" href="/sign/show">取消</a>
+</form>
+
+</body>
+</html>

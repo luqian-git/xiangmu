@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="UTF-8">
+<title>健身中心</title>
+<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+	<style type="text/css">
+		img{
+			width: 30px;
+			height: 30px;
+		}
+		body {
+			margin: 40px;
+			text-align: center;
+			padding: 0px;
+			background-size: cover;
+		}
+	</style>
+</head>
+<body >
+	<h1>未被出租 租柜</h1>
+	<a href="/cabinet/show2">查看租柜记录</a>
+	<a href="/cabinet/show1">查看已租租柜</a>
+
+	<table class="table table-bordered">
+		<tr>
+			<td>序号</td>
+			<td>编号</td>
+			<td>容量</td>
+			<td>状态</td>
+			<td>操作</td>
+		</tr>
+		<tr th:each="c,item:${cabinets}">
+			<td th:text="${item.count}">序号</td>
+			<td th:text="${c.cabNumber}"></td>
+			<td>
+				<p th:if="${c.cabCapacity == 0}">40*40*50</p>
+				<p th:if="${c.cabCapacity == 1}">80*80*100</p>
+			</td>
+			<td>
+				<p th:if="${c.cabStatus == 1}">空闲</p>
+				<p th:if="${c.cabStatus == 3}">故障</p>
+			</td>
+			<td>
+				<p th:if="${c.cabStatus == 1}">
+					<a th:href="@{/cabinet/add(cabNumber=${c.cabNumber})}">出租</a>
+					<a th:href="@{/cabinet/update3(cabId=${c.cabId})}">故障</a>
+				</p>
+				<p th:if="${c.cabStatus == 3}">
+					<a th:href="@{/cabinet/update1(cabId=${c.cabId})}">恢复使用</a>
+				</p>
+			</td>
+		</tr>
+
+	</table>
+</body>
+</html>

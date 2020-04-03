@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+</head>
+<body>
+<!-- th:src="${item.count%2==0}?'man.jpg':'woman.jpg'" -->
+<form action="/user/update.do">
+	<input type="hidden" name="id" th:value="${user.id}">
+	<input type="hidden" name="founder" th:value="${user.founder}">
+	<p>
+		账号:<input type="text" name="account" th:value="${user.account}" >			
+	</p>
+	<p>
+		密码:<input type="text" name="password" th:value="${user.password}" >			
+	</p>
+	<button class="btn btn-primary">修改</button><a class="btn btn-primary" th:href="@{/user/show}">取消</a>
+</form>
+
+
+</body>
+</html>

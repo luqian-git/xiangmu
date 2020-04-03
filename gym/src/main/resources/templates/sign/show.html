@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="UTF-8">
+<title>健身中心</title>
+<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+	<style type="text/css">
+		body {
+			margin: 40px;
+			text-align: center;
+			padding: 0px;
+			background-size: cover;
+		}
+	</style>
+</head>
+<body >
+
+	<h1>签到记录</h1>
+
+	<table class="table table-bordered">
+		<tr>
+			<td>
+				<a href="/sign/add">签到</a>
+			</td>
+			<td>
+				<form href="/sign/show">
+					<select name="q">
+						<option  value="0" th:selected="${q == 0}?selected">员工</option>
+						<option  value="1" th:selected="${q == 1}?selected">会员</option>
+						<option  value="2" th:selected="${q == 2}?selected">游客</option>
+					</select>
+					<button>查询</button>
+				</form>
+			</td>
+		</tr>
+		<tr>
+			<td>序号</td>
+			<td>编号</td>
+			<td>签到时间</td>
+			<td>签到人</td>
+			<td>签到人编号</td>
+			<td>备注</td>
+			<td>所属</td>
+		</tr>
+		<tr th:each="c,item:${signs}">
+			<td th:text="${item.count}">序号</td>
+			<td th:text="${c.signNumder}"></td>
+			<td th:text="${c.signTime}"></td>
+			<td>
+				<p th:text="${c.usName}"></p>
+				<p th:text="${c.potName}"></p>
+			</td>
+			<td>
+				<p th:text="${c.usMember}"></p>
+				<p th:text="${c.potNumber}"></p>
+			</td>
+			<td th:text="${c.signDesc}"></td>
+			<td>
+				<p th:if="${c.signStatus == 0}">员工</p>
+				<p th:if="${c.signStatus == 1}">会员</p>
+				<p th:if="${c.signStatus == 2}">游客</p>
+			</td>
+		</tr>
+
+	</table>
+</body>
+</html>

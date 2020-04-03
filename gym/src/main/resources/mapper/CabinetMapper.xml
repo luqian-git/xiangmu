@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.zhiyou100.gym.mapper.CabinetMapper">
+    <resultMap type="com.zhiyou100.gym.pojo.Cabinet" id="cabinet">
+        <id column="cab_id" property="cabId" />
+        <result column="cab_number" property="cabNumber"/>
+        <result column="cab_capacity" property="cabCapacity"/>
+        <result column="cab_status" property="cabStatus"/>
+        <collection property="cabInfo" ofType="com.zhiyou100.gym.pojo.CabInfo">
+            <result column="cab_info_id" property="cabInfoId"/>
+            <result column="cab_info_number" property="cabInfoNumber"/>
+            <result column="cab_info_price" property="cabInfoPrice"/>
+            <result column="cab_info_duration" property="cabInfoDuration"/>
+            <result column="cab_info_create_time" property="cabInfoCreateTime"/>
+            <result column="cab_info_update_time" property="cabInfoUpdateTime"/>
+            <result column="cab_info_member" property="cabInfoMember"/>
+            <result column="cab_info_num" property="cabInfoNum"/>
+            <result column="cab_info_status" property="cabInfoStatus"/>
+            <result column="us_name" property="usName"/>
+        </collection>
+
+    </resultMap>
+
+    <select id="findWAll" resultMap="cabinet">
+          select * from gym_cabinet where cab_status = 1 or cab_status = 3
+    </select>
+    <select id="findYAll" resultMap="cabinet">
+        select c.*,i.*,u.* from gym_cabinet c
+        INNER JOIN gym_cab_info i on i.cab_info_num  =  c.cab_number
+        INNER JOIN gym_user u on i.cab_info_member = u.us_member
+        INNER JOIN gym_user_role ur on u.us_id = ur.u_id
+        INNER JOIN gym_role r on ur.r_id = r.ro_id
+        where c.cab_status = 2
+        and i.cab_info_status = 1
+        and u.us_status = 1
+        and ur.r_id = 5
+    </select>
+    <select id="findById" resultMap="cabinet">
+          select * from gym_cabinet where cab_id = #{cabId}
+    </select>
+
+    <update id="update1" parameterType="integer">
+          update gym_cabinet set
+          cab_status = 1
+          where cab_id = #{cabId}
+    </update>
+    <update id="update2" parameterType="integer">
+          update gym_cabinet set
+          cab_status = 2
+          where cab_number = #{cabNumber}
+    </update>
+    <update id="update3" parameterType="integer">
+          update gym_cabinet set
+          cab_status = 3
+          where cab_id = #{cabId}
+    </update>
+    <update id="update0" parameterType="integer">
+          update gym_cabinet set
+          cab_status = 0
+          where cab_id = #{cabId}
+    </update>
+
+</mapper>

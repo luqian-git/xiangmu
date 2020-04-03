@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.zhiyou100.gym.mapper.UserMapper">
+    <resultMap type="com.zhiyou100.gym.pojo.User" id="user">
+        <id column="us_id" property="usId" />
+        <result column="us_account" property="usAccount"/>
+        <result column="us_password" property="usPassword"/>
+        <result column="us_name" property="usName"/>
+        <result column="us_sex" property="usSex"/>
+        <result column="us_age" property="usAge"/>
+        <result column="us_head" property="usHead"/>
+        <result column="us_label" property="usLabel"/>
+        <result column="us_introduce" property="usIntroduce"/>
+        <result column="us_member" property="usMember"/>
+        <result column="us_status" property="usStatus"/>
+        <collection property="roles" ofType="com.zhiyou100.gym.pojo.Role">
+            <result column="ro_id" property="roId"/>
+            <result column="ro_name" property="roName"/>
+            <result column="ro_desc" property="roDesc"/>
+        </collection>
+    </resultMap>
+    <select id="findByUId" resultMap="user">
+        select u.*,r.* from gym_user u
+        INNER JOIN gym_user_role ur on u.us_id = ur.u_id
+        INNER JOIN gym_role r on ur.r_id = r.ro_id
+        where u.us_id = #{usId}
+    </select>
+    <select id="findByUAccount" resultMap="user">
+       select u.*,r.* from gym_user u
+        INNER JOIN gym_user_role ur on u.us_id = ur.u_id
+        INNER JOIN gym_role r on ur.r_id = r.ro_id
+       where u.us_account =#{usAccount}
+    </select>
+    <select id="findAllUR" resultMap="user">
+        select u.*,r.* from gym_user u
+        INNER JOIN gym_user_role ur on u.us_id = ur.u_id
+        INNER JOIN gym_role r on ur.r_id = r.ro_id
+    </select>
+    <select id="findByMember" resultMap="user" parameterType="integer">
+        select * from gym_user u where u.us_status = 1 and u.us_member = #{usMember}
+    </select>
+
+
+</mapper>

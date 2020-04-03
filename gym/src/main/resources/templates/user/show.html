@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="UTF-8">
+<title>健身中心</title>
+<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+	<style type="text/css">
+		img{
+			width: 30px;
+			height: 30px;
+		}
+		body {
+			margin: 40px;
+			text-align: center;
+			background: url("/img/3.jpg");
+			padding: 0px;
+			background-size: cover;
+		}
+	</style>
+</head>
+<body >
+	<h1>账号管理</h1>
+	<table class="table table-bordered">
+		<tr>
+			<td>序号</td>
+			<td>账号</td>
+			<td>密码</td>
+			<td>姓名</td>
+			<td>性别</td>
+			<td>年龄</td>
+			<td>头像</td>
+			<td>标签</td>
+			<td>介绍</td>
+			<td>编号</td>
+			<td>角色</td>
+			<td>状态</td>
+			<td>操作</td>
+		</tr>
+		<tr th:each="user,item:${users}">
+			<td th:text="${item.count}">序号</td>
+			<td th:text="${user.usAccount}">账号</td>
+			<td th:text="${user.usPassword}">密码</td>
+			<td th:text="${user.usName}">姓名</td>
+			<td th:text="${user.usSex}">性别</td>
+			<td th:text="${user.usAge}">年龄</td>
+			<td>
+				<!--${user.usHead}      static.img-->
+				<img th:src="${user.usHead}">
+			</td>
+			<td th:text="${user.usLabel}">标签</td>
+			<td th:text="${user.usIntroduce}">介绍</td>
+			<td th:text="${user.usMember}">会员编号</td>
+
+			<td>
+				<font  th:each="r,item:${user.roles}">
+					<b  th:text="${r.roName}">角色</b>
+					<b>   </b>
+				</font>
+      		</td>
+    		  <!-- th:each="o,item:${h.roles}"   -->
+			<td>
+				<p th:if="${user.usStatus == 1}">使用中</p>
+				<p th:if="${user.usStatus != 1}">已冻结</p>
+			</td>
+			<td>
+				<a th:href="@{/user/edit.do(id=${user.usId})}">修改</a>
+			</td>
+		</tr>
+	
+	</table>
+	<!--<div style="margin-left: 550px;">-->
+		<!--<b th:if="${poo} ne '1'">-->
+			<!--<a th:href="@{/user/show.do(page=${poo-1})}">上一页</a>-->
+		<!--</b>-->
+		<!--<span  th:each="page :${#numbers.sequence(1,num)}">-->
+			<!---->
+			 <!--<i th:if="${page} eq ${poo}">-->
+				<!--<b th:text="${page}"></b>-->
+			<!--</i>-->
+			<!--<i th:if="${page} ne ${poo}">-->
+				<!--<a th:href="@{/user/show.do(page=${page})}" th:text="${page}"></a>-->
+			<!--</i> -->
+		<!--</span>-->
+		 <!--<b th:if="${poo} ne ${num}">-->
+			<!--<a th:href="@{/user/show.do(page=${poo+1})}">下一页</a>-->
+		<!--</b>-->
+	<!--</div>-->
+
+</body>
+</html>

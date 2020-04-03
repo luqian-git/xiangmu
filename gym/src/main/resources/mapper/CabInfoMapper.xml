@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.zhiyou100.gym.mapper.CabInfoMapper">
+    <resultMap type="com.zhiyou100.gym.pojo.CabInfo" id="cabInfo">
+        <id column="cab_info_id" property="cabInfoId"/>
+        <result column="cab_info_number" property="cabInfoNumber"/>
+        <result column="cab_info_price" property="cabInfoPrice"/>
+        <result column="cab_info_duration" property="cabInfoDuration"/>
+        <result column="cab_info_create_time" property="cabInfoCreateTime"/>
+        <result column="cab_info_update_time" property="cabInfoUpdateTime"/>
+        <result column="cab_info_member" property="cabInfoMember"/>
+        <result column="cab_info_num" property="cabInfoNum"/>
+        <result column="cab_info_status" property="cabInfoStatus"/>
+    </resultMap>
+
+    <select id="findYAll" resultMap="cabInfo">
+          select * from gym_cab_info i
+          where i.cab_info_status = 1
+    </select>
+    <select id="findGAll"  resultMap="cabInfo">
+         select * from gym_cab_info i
+         where i.cab_info_status = 0
+    </select>
+    <select id="findById" resultMap="cabInfo" parameterType="integer">
+          select * from gym_cab_info
+          where cab_info_id = #{cabInfoId}
+    </select>
+    <insert id="add" parameterType="com.zhiyou100.gym.mapper.CabInfoMapper">
+          insert into gym_cab_info values(
+          null,
+          #{cabInfoNumber},
+          #{cabInfoPrice},
+          #{cabInfoDuration},
+          now(),
+          #{cabInfoUpdateTime},
+          #{cabInfoMember},
+          #{cabInfoNum},
+          1
+          );
+    </insert>
+    <delete id="deleteById" parameterType="integer">
+        update gym_cab_info set
+        cab_info_status = 0
+        where cab_info_id = #{cabInfoId}
+    </delete>
+
+    <update id="update"  parameterType="com.zhiyou100.gym.mapper.CabInfoMapper">
+          update gym_cab_info set
+          cab_info_price =#{cabInfoPrice},
+          cab_info_duration =  #{cabInfoDuration},
+          cab_info_update_time = #{cabInfoUpdateTime}
+          where cab_info_id = #{cabInfoId}
+    </update>
+
+
+
+</mapper>

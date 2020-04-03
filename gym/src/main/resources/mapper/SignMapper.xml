@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.zhiyou100.gym.mapper.SignMapper">
+    <resultMap type="com.zhiyou100.gym.pojo.Sign" id="sign">
+        <id column="sign_id" property="signId"/>
+        <result column="sign_number" property="signNumder"/>
+        <result column="sign_time" property="signTime"/>
+        <result column="sign_user_id" property="signUserId"/>
+        <result column="sign_desc" property="signDesc"/>
+        <result column="sign_status" property="signStatus"/>
+        <result column="us_member" property="usMember"/>
+        <result column="us_name" property="usName"/>
+        <result column="pot_number" property="potNumber"/>
+        <result column="pot_name" property="potName"/>
+    </resultMap>
+    <!-- 查询所有 员工签到-->
+    <select id="findAll0" resultMap="sign">
+          select s.*,u.us_name,u.us_member from gym_sign s
+          inner join gym_user u  on s.sign_user_id = u.us_id where s.sign_status = 0
+    </select>
+    <!-- 查询所有 会员签到-->
+    <select id="findAll1" resultMap="sign">
+          select s.*,u.us_name,u.us_member from gym_sign s
+          inner join gym_user u  on s.sign_user_id = u.us_id where s.sign_status = 1
+    </select>
+    <!-- 查询所有 潜客签到-->
+    <select id="findAll2" resultMap="sign">
+         select s.*,p.pot_number,p.pot_name from gym_sign s
+         INNER JOIN gym_potential p on s.sign_user_id = p.pot_id
+         where s.sign_status = 2
+    </select>
+    <!-- 依据id查单挑数据  小写-->
+    <select id="findById" resultMap="sign" parameterType="int">
+		select *  gym_sign
+		from mold where id = #{signId}
+	</select>
+    <select id="findMax" resultMap="sign">
+        select * from gym_sign where sign_id = (select max(sign_id) from gym_sign)
+    </select>
+    <!-- 添加数据  大写-->
+    <insert id="add" parameterType="com.zhiyou100.gym.mapper.SignMapper">
+--         insert into gym_sign values(null,7003,NOW(),4,'后勤签到',0);
+		insert into gym_sign values(null,#{signNumder},now(),#{signUserId},#{signDesc},#{signStatus})
+	</insert>
+    <!-- 依据id删除单挑数据  -->
+    <delete id="deleteById" parameterType="int">
+		delete from gym_sign  where sign_id = #{signId}
+	</delete>
+    <!-- 动态sql修改  大写-->
+    <update id="update" parameterType="com.zhiyou100.gym.mapper.SignMapper">
+		update  gym_sign
+        <set>
+            <if test="signNumder != null">sign_numder =#{signNumder},</if>
+        </set>
+		where sign_id = #{signId}
+	</update>
+</mapper>

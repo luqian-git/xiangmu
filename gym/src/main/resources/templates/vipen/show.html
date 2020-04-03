@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="UTF-8">
+<title>健身中心</title>
+<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+	<style type="text/css">
+		body {
+			margin: 40px;
+			text-align: center;
+			padding: 0px;
+			background-size: cover;
+		}
+	</style>
+</head>
+<body >
+
+	<h1>会员进场</h1>
+
+	<table class="table table-bordered">
+		<tr>
+			<td th:if="${q == 1}">
+				<a class="btn btn-primary" th:href="@{/vipen/show(q=0)}">查看进场会员</a>
+			</td>
+			<td th:if="${q == 0}">
+				<a class="btn btn-primary" th:href="@{/vipen/show(q=1)}">查看已出会员</a>
+			</td>
+		</tr>
+		<tr>
+			<td>序号</td>
+			<td>编号</td>
+			<td>签到人</td>
+			<td>进场时间</td>
+			<td>出场时间</td>
+			<td>状态</td>
+			<i th:if="${q == 0}">
+				<td >操作</td>
+			</i>
+		</tr>
+		<tr th:each="c,item:${vipens}">
+			<td th:text="${item.count}">序号</td>
+			<td th:text="${c.vipenNumber}"></td>
+			<td th:text="${c.usName}"></td>
+			<td th:text="${c.vipenEntryTime}"></td>
+			<td th:text="${c.vipenOutTime}"></td>
+			<td>
+				<p th:if="${c.vipenStatus == 0}">已进场</p>
+				<p th:if="${c.vipenStatus == 1}">已出场</p>
+			</td>
+			<td th:if="${q == 0}">
+				<a class="btn btn-primary" th:href="@{/vipen/update(vipenId=${c.vipenId})}">会员已出场</a>
+			</td>
+		</tr>
+
+	</table>
+</body>
+</html>

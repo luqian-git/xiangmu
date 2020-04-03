@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.zhiyou100.gym.mapper.PotentialMapper">
+    <resultMap type="com.zhiyou100.gym.pojo.Potential" id="potential">
+        <id column="pot_id" property="potId"/>
+        <result column="pot_number" property="potNumber"/>
+        <result column="pot_name" property="potName"/>
+        <result column="pot_phone" property="potPhone"/>
+        <result column="pot_sex" property="potSex"/>
+        <result column="pot_time" property="potTime"/>
+        <result column="pot_desc" property="potDesc"/>
+        <result column="pot_vocation" property="potVocation"/>
+        <result column="pot_like" property="potLike"/>
+        <result column="pot_address" property="potAddress"/>
+        <result column="pot_status" property="potStatus"/>
+    </resultMap>
+
+    <!-- 查询所有  小写-->
+    <select id="findAll" resultMap="potential">
+          select * from gym_potential where pot_status = 0
+    </select>
+    <!-- 依据id查单挑数据  小写-->
+    <select id="findById" resultMap="potential" parameterType="int">
+		select * from gym_potential where pot_id = #{potId}
+	</select>
+    <select id="findMax" resultMap="potential">
+         select pot_number from gym_potential where pot_id = (select max(pot_id) from gym_potential)
+    </select>
+    <select id="findByPhone" resultMap="potential" parameterType="long">
+        select * from gym_potential where pot_phone = #{potPhone}
+    </select>
+    <!-- 添加数据  大写-->
+    <insert id="add" parameterType="com.zhiyou100.gym.pojo.Potential">
+		insert into gym_potential values(
+		null,
+		#{potNumber},
+		#{potName},
+		#{potPhone},
+		#{potSex},
+        now(),
+        #{potDesc},
+        #{potVocation},
+        #{potLike},
+        #{potAddress},
+        0
+		)
+	</insert>
+    <!-- 依据id删除单挑数据  -->
+    <delete id="deleteById" parameterType="int">
+		update gym_potential set pot_status = 1
+		where pot_id = #{potId}
+	</delete>
+    <!-- 动态sql修改  大写-->
+    <update id="update" parameterType="com.zhiyou100.gym.pojo.Potential">
+		update gym_potential set
+        pot_number = #{potNumber},
+        pot_name = #{potName},
+        pot_phone = #{potPhone},
+        pot_sex = #{potSex},
+        pot_time = #{potTime},
+        pot_desc = #{potDesc},
+        pot_vocation = #{potVocation},
+        pot_like  = #{potLike},
+        pot_address = #{potAddress},
+        pot_status = #{potStatus}
+		where pot_id = #{potId}
+	</update>
+</mapper>

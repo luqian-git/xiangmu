@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="UTF-8">
+<title>健身中心</title>
+<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+	<style type="text/css">
+		body {
+			margin: 40px;
+			text-align: center;
+			padding: 0px;
+			background-size: cover;
+		}
+	</style>
+</head>
+<body >
+
+	<h1>潜客登记</h1>
+	<form action="/potential/update">
+		<input type="hidden" name="potId" th:value="${potential.potId}" />
+		<p>
+			<input type="text" name="potName" placeholder="姓名" th:value="${potential.potName}"/>
+		</p>
+		<p>
+			<input type="text" name="potPhone" placeholder="手机号" th:value="${potential.potPhone}"/>
+		</p>
+		<p th:if="${potential.potSex == '男'}">
+			男:<input checked type="radio" name="potSex"  value="男" />
+			女:<input type="radio" name="potSex"  value="女" />
+		</p>
+		<p th:if="${potential.potSex == '女'}">
+			男:<input  type="radio" name="potSex"  value="男" />
+			女:<input checked type="radio" name="potSex"  value="女" />
+		</p>
+		<p>
+			<input type="text" name="potDesc" placeholder="备注咨询内容" th:value="${potential.potDesc}"/>
+		</p>
+		<p>
+			<input type="text" name="potVocation" placeholder="职业"th:value="${potential.potVocation}"/>
+		</p>
+		<p>
+			<input type="text" name="potLike" placeholder="喜好"th:value="${potential.potLike}"/>
+		</p>
+		<p>
+			<input type="text" name="potAddress" placeholder="住址"th:value="${potential.potAddress}"/>
+		</p>
+		<p>
+			<button  class="btn btn-primary" >修改</button>
+			<a class="btn btn-primary" th:href="@{/potential/show}">取消</a>
+		</p>
+
+	</form>
+
+</body>
+</html>
