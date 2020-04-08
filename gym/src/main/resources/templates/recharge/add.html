@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="UTF-8">
+<title>健身中心</title>
+<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+	<style type="text/css">
+		body {
+			margin: 40px;
+			text-align: center;
+			padding: 0px;
+			background-size: cover;
+		}
+		#desc{
+			width: 40px;
+			height: 80px;
+		}
+		input{
+			width: 240px;
+			height: 40px;
+		}
+	</style>
+</head>
+<body >
+	<form action="/recharge/add" method="post" id="myform">
+		<p> <!-- rechTopId -->
+			<b>消费类型</b>
+			<select onchange="submitForm();" name="rechTopId" id="s1">
+				<option th:each="h,item:${tops}" th:value="${h.topId}"
+						th:text="${h.topName}"
+						th:selected="${top.topId == h.topId}?selected"
+				></option>
+			</select>
+		</p>
+	</form>
+
+	<form action="/recharge/insert" method="post">
+		<h1 th:text="${msg}"></h1>
+		<input type="hidden" th:value="${top.topId}" name="rechTopId">
+		<p>
+			金额<input th:readonly="${top.topPrice < 0}?readonly" th:value="${top.topPrice}" type="text" name="rechMoney" placeholder="充值整数如300,扣费负数如-300" onkeyup="this.value=this.value.replace(/[^\-?\d.]/g,'')" required="required"/>
+		</p>
+		<p>
+			卡号<input type="text" name="rechUserMember" placeholder="会员号为5位" pattern="[0-9]{5}" title="会员号为5位" required="required" />
+		</p>
+		<p>
+			业绩<input type="text" name="rechAch" placeholder="员工号" required="required" />
+		</p>
+		<p>
+			<button class="btn btn-primary" >确定</button>
+			<a class="btn btn-primary" href="/recharge/show">取消</a>
+		</p>
+	</form>
+	<script>
+        function submitForm(){
+            var form = document.getElementById("myform");
+            form.submit();
+        }
+	</script>
+	<script src="/lib/jquery/jquery.js"></script>
+</body>
+</html>

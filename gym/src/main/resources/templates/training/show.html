@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="UTF-8">
+<title>健身中心</title>
+<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+	<style type="text/css">
+		body {
+			margin: 40px;
+			text-align: center;
+			padding: 0px;
+			background-size: cover;
+		}
+	</style>
+</head>
+<body >
+	<h1 th:text="${msg}"></h1>
+	<a href="/training/add">添加训练记录</a>
+	<h5>
+		<a th:if="${t==0}" th:href="@{/training/show(t=1)}">查看已完成训练</a>
+		<a th:if="${t==1}" th:href="@{/training/show(t=0)}">查看未完成训练</a>
+	</h5>
+	<table class="table table-bordered">
+		<tr>
+			<td>序号</td>
+			<td>编号</td>
+			<td>会员编号</td>
+			<td>会员姓名</td>
+			<td>设备名称</td>
+			<td>开始时间</td>
+			<td>结束时间</td>
+			<td>本次时长</td>
+			<td>累计时长</td>
+			<td th:if="${t == 0}">操作</td>
+		</tr>
+		<tr th:each="c,item:${trainings}">
+			<td th:text="${item.count}">序号</td>
+			<td th:text="${c.trainingNumber}"></td>
+			<td th:text="${c.trainingUserNum}"></td>
+			<td th:text="${c.usName}"></td>
+			<td th:text="${c.equipName}"></td>
+			<td th:text="${c.trainingStartTime}"></td>
+			<td>
+				<b th:if="${t == 1}" th:text="${c.trainingEndTime}"></b>
+				<b th:if="${t == 0}">训练未结束</b>
+			</td>
+			<td>
+				<b th:if="${t == 1}" th:text="${c.trainingThisTime}"></b>
+				<b th:if="${t == 0}">训练未结束</b>
+			</td>
+			<td>
+				<b th:if="${t == 1}" th:text="${c.trainingRecordTime}"></b>
+				<b th:if="${t == 0}">训练未结束</b>
+			</td>
+			<td th:if="${c.trainingState == 0}">
+				<a th:href="@{/training/upTime(trainingId=${c.trainingId})}">结束</a>
+			</td>
+		</tr>
+
+	</table>
+</body>
+</html>

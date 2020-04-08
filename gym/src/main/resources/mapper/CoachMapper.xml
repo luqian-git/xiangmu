@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.zhiyou100.gym.mapper.CoachMapper">
+    <resultMap type="com.zhiyou100.gym.pojo.Coach" id="coach">
+        <id column="coach_id" property="coachId"/>
+        <result column="coach_number" property="coachNumber"/>
+        <result column="coach_date" property="coachDate"/>
+        <result column="coach_name" property="coachName"/>
+        <result column="coach_sex" property="coachSex"/>
+        <result column="coach_age" property="coachAge"/>
+        <result column="coach_head" property="coachHead"/>
+        <result column="coach_label" property="coachLabel"/>
+        <result column="coach_introduce" property="coachIntroduce"/>
+        <result column="coach_position" property="coachPosition"/>
+        <result column="coach_status" property="coachStatus"/>
+        <collection property="role" ofType="com.zhiyou100.gym.pojo.Role">
+            <result column="ro_id" property="roId"/>
+            <result column="ro_name" property="roName"/>
+            <result column="ro_desc" property="roDesc"/>
+        </collection>
+    </resultMap>
+    <!-- 查询所有  小写-->
+    <select id="findAll" resultMap="coach" parameterType="integer">
+          select * from gym_coach c
+          INNER JOIN gym_role r on r.ro_id = c.coach_position
+          where c.coach_position  &lt;= #{coachPosition}
+          and coach_status != "离职"
+          and coach_status != "辞退"
+    </select>
+
+    <select id="findAllD" resultMap="coach" parameterType="integer">
+          select * from gym_coach c
+          INNER JOIN gym_role r on r.ro_id = c.coach_position
+          where c.coach_position = #{coachPosition}
+          and c.coach_status != "离职"
+          and c.coach_status != "辞退"
+    </select>
+
+    <!-- 依据id查单挑数据  小写-->
+    <select id="findById" resultMap="coach" parameterType="int">
+		 select * from gym_coach c
+        INNER JOIN gym_role r on r.ro_id = c.coach_position
+		where c.coach_id = #{coachId}
+		and c.coach_status != "离职"
+        and c.coach_status != "辞退"
+	</select>
+
+    <select id="findByMax" resultMap="coach">
+        select * from gym_coach where coach_id = (select max(coach_id) from gym_coach)
+    </select>
+
+    <select id="findCoach" resultMap="coach">
+        select * from gym_coach where coach_position = 2
+        and coach_status != "离职"
+        and coach_status != "辞退"
+    </select>
+    <select id="findByNum" resultMap="coach">
+        select * from gym_coach
+        where coach_position = 4
+        and coach_status != "离职"
+        and coach_status != "辞退"
+        and coach_number = #{coachNumber}
+    </select>
+
+    <!-- 添加数据  大写-->
+    <insert id="add" parameterType="com.zhiyou100.gym.pojo.Coach">
+		insert into gym_coach values(
+		null,
+		#{coachNumber},
+		now(),
+		#{coachName},
+		#{coachSex},
+		#{coachAge},
+		#{coachHead},
+		#{coachLabel},
+		#{coachIntroduce},
+		#{coachPosition},
+		#{coachStatus}
+		)
+	</insert>
+
+    <!-- 依据id删除单挑数据  -->
+    <delete id="deleteById" parameterType="int">
+		delete from gym_coach where coach_id = #{coachId}
+	</delete>
+
+    <!-- 动态sql修改  大写-->
+    <update id="update" parameterType="com.zhiyou100.gym.pojo.Coach">
+		update gym_coach
+        <set>
+            <if test="coachNumber != null">coach_number =#{coachNumber},</if>
+            <if test="coachName != null">coach_name =#{coachName},</if>
+            <if test="coachSex != null">coach_sex =#{coachSex},</if>
+            <if test="coachAge != null">coach_age =#{coachAge},</if>
+            <if test="coachHead != null">coach_head =#{coachHead},</if>
+            <if test="coachLabel != null">coach_label =#{coachLabel},</if>
+            <if test="coachIntroduce != null">coach_introduce =#{coachIntroduce},</if>
+            <if test="coachPosition != null">coach_position =#{coachPosition},</if>
+            <if test="coachStatus != null">coach_status =#{coachStatus},</if>
+        </set>
+        where coach_id = #{coachId}
+	</update>
+</mapper>

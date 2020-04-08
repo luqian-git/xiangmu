@@ -10,6 +10,9 @@ import java.util.List;
 public interface RoleMapper{
 
     public List<Role> findAll();
+
+    public List<Role> findStaff();
+
     public Role findById(Integer roId);
     public void add(Role role);
     public void deleteById(Integer roId);

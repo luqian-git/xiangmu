@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+</head>
+<style type="text/css">
+	body {
+		margin: 40px;
+		text-align: center;
+		padding: 0px;
+		background-size: cover;
+	}
+</style>
+<body>
+<h1><b th:text="${league.leagueCourse}"> </b><b>详细信息</b></h1>
+<br>
+<h2 th:text="${msg}"></h2>
+<p>
+	<h3>时间:</h3><b th:text="${league.leagueWeek}"></b>/<b th:text="${league.leagueTimeSlot}"></b>
+	<br>
+	<h3>报名岂止时间</h3>
+	<br>
+	<b  th:text="${league.leagueStart}"/>--<b  th:text="${league.leagueEnd}"/>
+    <h5>类型 <b th:text="${league.leagueDesc}"></b></h5>
+</p>
+<form action="/leApp/insert"  method="post">
+	<input  type="hidden" name="leAppLeagueId" th:value="${league.leagueId}">
+	<input  type="hidden" name="leAppCoachNumber" th:value="${league.leagueCoachNumber}">
+	<p  th:if="${leAppCardNumber == null}">
+		<input type="text" name="leAppCardNumber"  placeholder="会员卡号" pattern="[0-9]{5}" title="会员号为5位" required="required">
+	</p>
+	<p  th:if="${leAppCardNumber != null}">
+		<input type="text" name="leAppCardNumber"  th:value="${leAppCardNumber}"  readonly="readonly">
+	</p>
+
+	<button class="btn btn-primary">预约</button>
+	<a class="btn btn-primary" href="/leApp/show">返回</a>
+</form>
+
+</body>
+</html>

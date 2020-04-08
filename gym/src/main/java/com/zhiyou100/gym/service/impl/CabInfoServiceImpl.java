@@ -45,9 +45,10 @@ public class CabInfoServiceImpl implements CabInfoService {
             int y = calendar.get(Calendar.YEAR);
             int m = calendar.get(Calendar.MONTH)+1;
             int d = calendar.get(Calendar.DAY_OF_MONTH);
-            int mm = calendar.get(Calendar.MILLISECOND);
+            int mmm = calendar.get(Calendar.MILLISECOND);
+            int mm =  Math.round(mmm/10);
             //System.out.println(y+"--"+m+"--"+d+"--"+mm); 毫秒值为 3位
-            int z = y*10000000+m*100000+d*1000+mm;
+            Integer z = y*1000000+m*10000+d*100+mm;
             //获取 编号
             cabInfo.setCabInfoNumber(z);
             //获取结束日期
@@ -70,9 +71,20 @@ public class CabInfoServiceImpl implements CabInfoService {
     }
 
     @Override
-    public void update(CabInfo cabInfo) {
+    public CabInfo findBycabInfoId(Integer cabInfoId) {
 
-        System.out.println(cabInfo);
-        //cabInfoMapper.update(cabInfo);
+        return cabInfoMapper.findById(cabInfoId);
+    }
+
+    @Override
+    public void update(CabInfo cabInfo) {
+        Calendar wl = Calendar.getInstance();
+        wl.setTime(cabInfo.getCabInfoUpdateTime());
+        //因为这个就是  12/ 6 / 3 / 1 月四个 档 单位都是月
+        wl.add(Calendar.MONTH, cabInfo.getCabInfoDuration());
+        //再把推日期之后的 时间 放进来
+        Timestamp time1 = new Timestamp(wl.getTimeInMillis());
+        cabInfo.setCabInfoUpdateTime(time1);
+        cabInfoMapper.update(cabInfo);
     }
 }

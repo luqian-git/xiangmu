@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.zhiyou100.gym.mapper.LeagueMapper">
+    <resultMap type="com.zhiyou100.gym.pojo.League" id="league">
+        <id column="league_id" property="leagueId"/>
+        <result column="league_week" property="leagueWeek"/>
+        <result column="league_time_slot" property="leagueTimeSlot"/>
+        <result column="league_start" property="leagueStart"/>
+        <result column="league_end" property="leagueEnd"/>
+        <result column="league_coach_number" property="leagueCoachNumber"/>
+        <result column="league_course" property="leagueCourse"/>
+        <result column="league_desc" property="leagueDesc"/>
+        <result column="coach_name" property="coachName"/>
+        <result column="league_week_group" property="leagueWeekGroup"></result>
+        <result column="league_group" property="leagueGroup"></result>
+        <result column="league_state" property="leagueState"></result>
+    </resultMap>
+    <!-- 查询所有  小写-->
+    <select id="findAll" resultMap="league">
+          select l.*,c.coach_name from gym_league l
+          LEFT JOIN gym_coach c on l.league_coach_number = c.coach_number
+    </select>
+    <!--  ORDER BY league_week-->
+    <!-- 依据id查单挑数据  小写-->
+    <select id="findById" resultMap="league" parameterType="integer">
+		select l.*,c.coach_name from gym_league l
+        INNER JOIN gym_coach c on c.coach_number = l.league_coach_number
+		where l.league_id = #{leagueId}
+	</select>
+    <select id="findWeekGroup" resultMap="league">
+        select league_week,league_week_group  from gym_league
+        GROUP BY league_week_group
+    </select>
+    <select id="findGroup" resultMap="league">
+        select  league_time_slot,league_group  from gym_league
+        GROUP BY league_time_slot
+    </select>
+    <!-- 添加数据  大写-->
+    <insert id="add" parameterType="com.zhiyou100.gym.pojo.League">
+		insert into gym_league values(
+		null,
+		#{leagueWeek},
+		#{leagueTimeSlot},
+		#{leagueCoachNumber},
+		#{leagueCourse}
+		)
+	</insert>
+    <!-- 依据id删除单挑数据  -->
+    <update id="deleteById" parameterType="integer">
+		update gym_league set
+		 league_start = "0001-01-01",
+        league_end = "0001-01-01" ,
+        league_coach_number = 0 ,
+        league_course = "空闲" ,
+        league_desc = "暂无" ,
+        league_state = 3
+		where league_id = #{leagueId}
+	</update>
+    <!-- 动态sql修改  大写-->
+    <update id="update" parameterType="com.zhiyou100.gym.pojo.League">
+		update gym_league
+        <set>
+            <if test="leagueStart != null">league_start =#{leagueStart},</if>
+            <if test="leagueEnd != null">league_end =#{leagueEnd},</if>
+            <if test="leagueCoachNumber != null">league_coach_number =#{leagueCoachNumber},</if>
+            <if test="leagueCourse != null">league_course =#{leagueCourse},</if>
+            <if test="leagueState != null">league_state =#{leagueState},</if>
+        </set>
+        where league_id = #{leagueId}
+	</update>
+    <update id="updateTimeSlot" parameterType="com.zhiyou100.gym.pojo.League">
+        update gym_league set
+        league_time_slot = #{leagueTimeSlot}
+        where league_group = #{leagueGroup}
+    </update>
+</mapper>

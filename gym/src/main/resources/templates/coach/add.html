@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+</head>
+<style type="text/css">
+	body {
+		margin: 40px;
+		text-align: center;
+		padding: 0px;
+		background-size: cover;
+	}
+</style>
+<body>
+<h1>入职教练</h1>
+<form action="/coach/insert"  method="post"  enctype="multipart/form-data">
+	<p>
+		姓名<input  type="text" name="coachName" value="吕布">
+	</p>
+	<p>
+		男:<input type="radio" name="coachSex"  value="男" checked />
+		女:<input type="radio" name="coachSex"  value="女" />
+	</p>
+	<p>
+		年龄<input  type="text" name="coachAge" value="23">
+	</p>
+	<p>头像</p>
+	<div  style="margin-left: 43%">
+		<input type="file" name="file">
+	</div>
+	<p>
+		标签<input  type="text" name="coachLabel" value="擅长有氧运动">
+	</p>
+	<p>
+		介绍<input  type="text" name="coachIntroduce" value="见多识广是一个健身教练起码的素质。">
+	</p>
+	<p>
+		<select readonly="readonly" name="coachPosition"  style="display: none">
+			<option  th:each="r,item:${roles}" th:selected="${r.roName == '教练'}?selected" th:value="${r.roId}" th:text="${r.roName}"></option>
+		</select>
+	</p>
+	<p>
+		状态
+		<select name="coachStatus">
+				<option selected value="实习">实习</option>
+				<option value="试用">试用</option>
+				<option value="正式">正式</option>
+		</select>
+	</p>
+	<p>
+		登录账号<input  type="text" name="account"><br>
+		登录密码<input  type="text" name="password">
+	</p>
+	<button class="btn btn-primary">添加</button>
+	<a class="btn btn-primary" href="/coach/show">取消</a>
+</form>
+
+</body>
+</html>

@@ -13,6 +13,12 @@ public interface CabInfoService {
 
     //出租
     public String add(CabInfo cabInfo);
+
+    //单挑查询
+    public CabInfo findBycabInfoId(Integer cabInfoId);
+
     //续费
     public void update(CabInfo cabInfo);
+
+
 }

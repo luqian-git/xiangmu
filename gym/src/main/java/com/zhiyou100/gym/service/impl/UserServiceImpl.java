@@ -3,6 +3,7 @@ package com.zhiyou100.gym.service.impl;
 import com.zhiyou100.gym.mapper.UserMapper;
 import com.zhiyou100.gym.pojo.User;
 import com.zhiyou100.gym.service.UserService;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -58,7 +59,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findByAccount(String account) {
+    public User findByUAccount(String account) {
         return userMapper.findByUAccount(account);
     }
 
@@ -81,12 +82,21 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findByUid(Integer usId) {
-        return userMapper.findByUId(usId);
+    public User findAccount(String usAccount) {
+        return userMapper.findAccount(usAccount);
     }
 
     @Override
     public User findByMember(Integer usMember) {
         return userMapper.findByMember(usMember);
+    }
+
+    @Override
+    public void updateinfo(User user) {
+        userMapper.updateinfo(user);
+    }
+    @Override
+    public User shiroUser() {
+        return (User) SecurityUtils.getSubject().getPrincipal();
     }
 }

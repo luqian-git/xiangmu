@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="UTF-8">
+<title>健身中心</title>
+<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+	<style type="text/css">
+		body {
+			margin: 40px;
+			text-align: center;
+			padding: 0px;
+			background-size: cover;
+		}
+	</style>
+</head>
+<body >
+	<h1 th:text="${msg}"></h1>
+	<form action="/training/insert" method="post">
+		<!--readonly="readonly"-->
+		<p th:if="${msg == null}">
+			<input type="text" name="trainingUserNum" placeholder="会员卡号" th:value="${trainingUserNum}"/>
+		</p>
+		<p  th:if="${msg != null}">
+			<input readonly="readonly" type="text" name="trainingUserNum" placeholder="会员卡号" th:value="${trainingUserNum}"/>
+		</p>
+		<p>
+			<b>训练设备</b>
+			<select name="trainingEquipId">
+				<option th:each="e,item:${equips}" th:value="${e.equipId}" th:text="${e.equipName}"></option>
+			</select>
+		</p>
+		<p>
+			<button class="btn btn-primary" >确定</button>
+			<a class="btn btn-primary" href="/training/show">取消</a>
+		</p>
+
+	</form>
+
+</body>
+</html>

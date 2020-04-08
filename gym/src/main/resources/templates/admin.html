@@ -39,36 +39,31 @@
 	<ul class="left-side">
 		<!--// active-->
 		<li class="menu-title">
-			<a>
+			<a >
 				<i class=" fa fa-users"></i>&nbsp;&nbsp;用户
 			</a>
 		</li>
 		<li class="sub-menu">
 			<ul>
 				<li class="active">
-					<a  target="pageBox" href="/show" >
+					<a  shiro:hasRole="会员" target="pageBox" href="/training/training" >
 						<i class=" fa fa-circle-thin"></i>&nbsp;&nbsp;运动报表
 					</a>
 				</li>
 				
 				<li class="active">
-					<a  target="pageBox" href="/show" >
+					<a  target="pageBox" href="/query/show" >
 						<i class=" fa fa-circle-thin"></i>&nbsp;&nbsp;教练查询
 					</a>
 				</li>
 				<li>
-					<a target="pageBox" href="/show">
+					<a target="pageBox" href="/leApp/show">
 					<i class=" fa fa-circle-thin"></i>&nbsp;&nbsp;团课预约
 					</a>
 				</li>
 				<li>
-					<a target="pageBox" href="/show">
-					<i class=" fa fa-circle-thin"></i>&nbsp;&nbsp;私教预约
-					</a>
-				</li>
-				<li>
-					<a target="pageBox" href="/show">
-						<i class=" fa fa-circle-thin"></i>&nbsp;&nbsp;私教预约
+					<a target="pageBox" href="/training/show">
+						<i class=" fa fa-circle-thin"></i>&nbsp;&nbsp;训练记录
 					</a>
 				</li>
 			</ul>
@@ -97,8 +92,8 @@
 					</a>
 				</li>
 				<li>
-					<a target="pageBox" href="/show">
-						<i class=" fa fa-circle-thin"></i>&nbsp;&nbsp;会员充值
+					<a target="pageBox" href="/recharge/show">
+						<i class=" fa fa-circle-thin"></i>&nbsp;&nbsp;充值/消费
 					</a>
 				</li>
 				<li>
@@ -107,7 +102,7 @@
 					</a>
 				</li>
 				<li>
-					<a target="pageBox" href="/show">
+					<a target="pageBox" href="/vipCard/show">
 						<i class=" fa fa-circle-thin"></i>&nbsp;&nbsp;会员卡管理
 					</a>
 				</li>
@@ -123,22 +118,17 @@
 		<li class="sub-menu">
 			<ul>
 				<li>
-					<a target="pageBox" href="/show">
+					<a target="pageBox" href="/student/show">
 						<i class=" fa fa-circle-thin"></i>&nbsp;&nbsp;排课管理
 					</a>
 				</li>
 				<li>
-					<a target="pageBox" href="/show">
-						<i class=" fa fa-circle-thin"></i>&nbsp;&nbsp;学员管理
-					</a>
-				</li>
-				<li>
-					<a target="pageBox" href="/show">
+					<a target="pageBox" href="/schedule/show">
 						<i class=" fa fa-circle-thin"></i>&nbsp;&nbsp;日程管理
 					</a>
 				</li>
 				<li>
-					<a target="pageBox" href="/show">
+					<a target="pageBox" href="/leApp/appShow">
 						<i class=" fa fa-circle-thin"></i>&nbsp;&nbsp;会员管理
 					</a>
 				</li>
@@ -154,27 +144,27 @@
 		<li class="sub-menu">
 			<ul>
 				<li>
-					<a target="pageBox" href="/show">
+					<a target="pageBox" href="/coach/show">
 						<i class=" fa fa-circle-thin"></i>&nbsp;&nbsp;教练管理
 					</a>
 				</li>
 				<li>
-					<a target="pageBox" href="/show">
+					<a target="pageBox" href="/staff/show">
 						<i class=" fa fa-circle-thin"></i>&nbsp;&nbsp;员工管理
 					</a>
 				</li>
 				<li>
-					<a target="pageBox" href="/show">
+					<a target="pageBox" href="/league/show">
 						<i class=" fa fa-circle-thin"></i>&nbsp;&nbsp;课程管理
 					</a>
 				</li>
 				<li>
-					<a target="pageBox" href="/show">
+					<a target="pageBox" href="/achievement/show">
 						<i class=" fa fa-circle-thin"></i>&nbsp;&nbsp;业绩管理
 					</a>
 				</li>
 				<li>
-					<a target="pageBox" href="/show">
+					<a target="pageBox" href="/leApp/statistics">
 						<i class=" fa fa-circle-thin"></i>&nbsp;&nbsp;统计分析
 					</a>
 				</li>
@@ -184,7 +174,7 @@
 					</a>
 				</li>
 				<li>
-					<a target="pageBox" href="/show">
+					<a target="pageBox" href="/leApp/cw">
 						<i class=" fa fa-circle-thin"></i>&nbsp;&nbsp;财务管理
 					</a>
 				</li>
@@ -204,11 +194,11 @@
 						<i class=" fa fa-circle-thin"></i>&nbsp;&nbsp;账号管理
 					</a>
 				</li>
-				<li>
+				<!--<li>
 					<a target="pageBox" href="/role/show.do">
 						<i class=" fa fa-circle-thin"></i>&nbsp;&nbsp;角色
 					</a>
-				</li>
+				</li>-->
 			</ul>
 		</li>
 
@@ -221,8 +211,13 @@
 		<li class="sub-menu">
 			<ul>
 				<li>
-					<a target="pageBox" href="/show">
+					<a target="pageBox" href="/maintain/show">
 						<i class=" fa fa-circle-thin"></i>&nbsp;&nbsp;维护记录
+					</a>
+				</li>
+				<li>
+					<a target="pageBox" href="/equip/show">
+						<i class=" fa fa-circle-thin"></i>&nbsp;&nbsp;设备管理
 					</a>
 				</li>
 			</ul>

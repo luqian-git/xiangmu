@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.zhiyou100.gym.mapper.LeagueAppointmentMapper">
+    <resultMap type="com.zhiyou100.gym.pojo.LeagueAppointment" id="leagueAppointment">
+        <id column="_id" property="leAppId"/>
+        <result column="le_app_coach_number" property="leAppCoachNumber"/>
+        <result column="le_app_league_id" property="leAppLeagueId"/>
+        <result column="le_app_card_number" property="leAppCardNumber"/>
+
+        <result column="coach_name" property="coachName"/>
+        <result column="league_course" property="leagueCourse"/>
+        <result column="us_name" property="usName"/>
+        <result column="num" property="num"/>
+        <!--多表联查-->
+        <!--<collection property="" ofType="">
+            <result column="ro_id" property="roId"/>
+            <result column="ro_name" property="roName"/>
+            <result column="ro_desc" property="roDesc"/>
+        </collection>-->
+    </resultMap>
+    <!-- 添加数据  大写-->
+    <insert id="add" parameterType="com.zhiyou100.gym.pojo.LeagueAppointment">
+		insert into gym_league_appointment values(
+		null,
+		#{leAppCoachNumber},
+		#{leAppLeagueId},
+		#{leAppCardNumber}
+		)
+	</insert>
+    <select id="notRepeat" resultMap="leagueAppointment">
+        select * from gym_league_appointment
+        where le_app_coach_number =#{leAppCoachNumber}
+        and le_app_league_id = #{leAppLeagueId}
+        and  le_app_card_number = #{leAppCardNumber}
+    </select>
+    <select id="byNum" resultMap="leagueAppointment">
+        select c.coach_name,l.league_course,count(l.league_course) num from gym_league_appointment a
+        INNER JOIN gym_coach c on a.le_app_coach_number = c.coach_number
+        INNER JOIN gym_league l on a.le_app_league_id = l.league_id
+        INNER JOIN gym_user u on a.le_app_card_number = u.us_member
+         GROUP BY a.le_app_coach_number,a.le_app_league_id
+    </select>
+    <select id="byGo" resultMap="leagueAppointment">
+       select *,count(le_app_league_id) num  from  gym_league_appointment a
+        INNER JOIN gym_sign s on a.le_app_card_number = s.sign_user_number
+        INNER JOIN gym_league l on a.le_app_league_id = l.league_id
+        where to_days(sign_time) = to_days(now())
+        GROUP BY a.le_app_coach_number,a.le_app_league_id
+    </select>
+    <select id="appShow" resultMap="leagueAppointment">
+         select * from gym_league_appointment a
+        INNER JOIN gym_league l on a.le_app_league_id = l.league_id
+        INNER JOIN gym_user u on a.le_app_card_number = u.us_member
+        where a.le_app_coach_number = #{leAppCoachNumber}
+    </select>
+</mapper>

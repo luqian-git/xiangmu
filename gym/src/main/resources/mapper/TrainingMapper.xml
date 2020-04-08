@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.zhiyou100.gym.mapper.TrainingMapper">
+    <resultMap type="com.zhiyou100.gym.pojo.Training" id="training">
+        <id column="training_id" property="trainingId"/>
+        <result column="training_number" property="trainingNumber"/>
+        <result column="training_user_num" property="trainingUserNum"/>
+        <result column="training_equip_id" property="trainingEquipId"/>
+        <result column="training_start_time" property="trainingStartTime"/>
+        <result column="training_end_time" property="trainingEndTime"/>
+        <result column="training_this_time" property="trainingThisTime"/>
+        <result column="training_record_time" property="trainingRecordTime"/>
+        <result column="training_state" property="trainingState"/>
+        <result column="us_name" property="usName"/>
+        <result column="equip_name" property="equipName"/>
+    </resultMap>
+    <!-- 查询所有  小写-->
+    <select id="findAll0" resultMap="training">
+        select t.*,u.us_name,e.equip_name from gym_training_record t
+        INNER JOIN gym_user u on t.training_user_num = u.us_member
+        INNER JOIN gym_equip e on t.training_equip_id = e.equip_id
+        where  t.training_state  = 0
+    </select>
+    <select id="findAll1" resultMap="training">
+        select t.*,u.us_name,e.equip_name from gym_training_record t
+        INNER JOIN gym_user u on t.training_user_num = u.us_member
+        INNER JOIN gym_equip e on t.training_equip_id = e.equip_id
+        where  t.training_state  = 1
+    </select>
+
+    <select id="findByUser0" resultMap="training" parameterType="integer">
+        select t.*,u.us_name,e.equip_name from gym_training_record t
+        INNER JOIN gym_user u on t.training_user_num = u.us_member
+        INNER JOIN gym_equip e on t.training_equip_id = e.equip_id
+        where  t.training_state  = 0
+        and t.training_user_num = #{trainingUserNum}
+    </select>
+    <select id="findByUser1" resultMap="training" parameterType="integer">
+        select t.*,u.us_name,e.equip_name from gym_training_record t
+        INNER JOIN gym_user u on t.training_user_num = u.us_member
+        INNER JOIN gym_equip e on t.training_equip_id = e.equip_id
+        where  t.training_state  = 1
+        and t.training_user_num = #{trainingUserNum}
+    </select>
+
+    <!-- 依据id查单挑数据  小写-->
+    <select id="findById" resultMap="training" parameterType="int">
+		select * from gym_training_record
+		where training_id = #{trainingId}
+	</select>
+
+    <!-- 添加数据  大写-->
+    <insert id="add" parameterType="com.zhiyou100.gym.pojo.Training">
+		insert into gym_training_record values(
+		null,
+		#{trainingNumber},#{trainingUserNum},#{trainingEquipId},now(),now(),0,0,0
+		)
+	</insert>
+    <!-- 结束时间 -->
+    <update id="upTime" parameterType="integer">
+		update gym_training_record set
+		training_end_time = now(),training_state = 1
+		where training_id = #{trainingId}
+	</update>
+
+    <!--获取本次时长-->
+    <select id="selectThisTime" resultMap="training">
+       select  training_id,training_user_num,training_equip_id,
+       TIMESTAMPDIFF(MINUTE,training_start_time,training_end_time) training_this_time
+       from gym_training_record
+      where training_id = #{trainingId}
+    </select>
+    <!--查询 该设备 累计时长-->
+    <select id="findLast" resultMap="training">
+        select * from gym_training_record
+        where
+        training_end_time = (
+        select MAX(training_end_time) from gym_training_record
+        where training_equip_id = #{trainingEquipId}
+        and training_user_num = #{trainingUserNum}
+        and training_state = 1
+        )
+    </select>
+    <!--同一时间 只有一个训练进行-->
+    <select id="oneGo" resultMap="training">
+        select * from gym_training_record
+        where training_user_num = #{trainingUserNum}
+        AND training_state = 0
+    </select>
+    <!--报表-->
+    <select id="findNow" resultMap="training">
+         SELECT a.*,e.* FROM gym_training_record a
+        LEFT JOIN gym_training_record b
+        on a.training_user_num = b.training_user_num
+        and a.training_equip_id = b.training_equip_id
+        AND a.training_record_time  &lt;  b.training_record_time
+         INNER JOIN gym_equip e on a.training_equip_id = e.equip_id
+         where a.training_state = 1
+        and a.training_user_num = #{trainingUserNum}
+        GROUP BY a.training_equip_id,a.training_id
+        HAVING count(b.training_id) &lt; 1
+        and to_days(training_end_time) = to_days(now())
+    </select>
+    <!--查询 会员 不同类型 运动琪才 累计的 最新数据 -->
+    <select id="findAllDate" resultMap="training">
+        SELECT a.*,e.* FROM gym_training_record a
+        LEFT JOIN gym_training_record b
+        on a.training_user_num = b.training_user_num
+        and a.training_equip_id = b.training_equip_id
+        AND a.training_record_time  &lt;  b.training_record_time
+         INNER JOIN gym_equip e on a.training_equip_id = e.equip_id
+         where a.training_state = 1
+        and a.training_user_num = #{trainingUserNum}
+        GROUP BY a.training_equip_id,a.training_id
+        HAVING count(b.training_id) &lt; 1
+    </select>
+
+    <!-- 更新 本次 累计时长-->
+    <update id="update" parameterType="com.zhiyou100.gym.pojo.Training">
+		update gym_training_record
+        <set>
+            <if test="trainingThisTime != null">training_this_time =#{trainingThisTime},</if>
+            <if test="trainingRecordTime != null">training_record_time =#{trainingRecordTime},</if>
+        </set>
+        where training_id = #{trainingId} and training_state = 1
+	</update>
+
+</mapper>

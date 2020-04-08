@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.zhiyou100.gym.mapper.RechargeMapper">
+    <resultMap type="com.zhiyou100.gym.pojo.Recharge" id="recharge">
+        <id column="rech_id" property="rechId"/>
+        <result column="rech_number" property="rechNumber"/>
+        <result column="rech_top_id" property="rechTopId"/>
+        <result column="rech_money" property="rechMoney"/>
+        <result column="rech_time" property="rechTime"/>
+        <result column="rech_ach" property="rechAch"/>
+        <result column="rech_user_member" property="rechUserMember"/>
+        <result column="rech_status" property="rechStatus"/>
+        <collection ofType="com.zhiyou100.gym.pojo.Top"  property="top">
+            <result column="top_id" property="topId"/>
+            <result column="top_name" property="topName"/>
+            <result column="top_desc" property="topDesc"/>
+        </collection>
+        <collection ofType="com.zhiyou100.gym.pojo.VipCard" property="vipCard">
+            <result column="card_id" property="cardId"/>
+            <result column="card_number" property="cardNumber"/>
+            <result column="card_user_id" property="cardUserId"/>
+            <result column="card_open_time" property="cardOpenTime"/>
+            <result column="card_end_time" property="cardEndTime"/>
+            <result column="card_balance" property="cardBalance"/>
+            <result column="card_status" property="cardStatus"/>
+            <result column="us_name" property="usName"/>
+        </collection>
+    </resultMap>
+    <!-- 查询所有  小写-->
+    <select id="findRTC" resultMap="recharge">
+        select * from gym_recharge r
+        INNER JOIN gym_top t on r.rech_top_id = t.top_id
+        INNER JOIN gym_vip_card v  on r.rech_user_member = v.card_number
+        INNER JOIN gym_user u on r.rech_user_member = u.us_member
+         ORDER BY card_id desc
+    </select>
+
+    <select id="findrechUserMember" resultMap="recharge" parameterType="int">
+        select * from gym_recharge r
+        INNER JOIN gym_top t on r.rech_top_id = t.top_id
+        INNER JOIN gym_vip_card v  on r.rech_user_member = v.card_number
+        INNER JOIN gym_user u on r.rech_user_member = u.us_member
+        where r.rech_user_member like CONCAT('%',#{rechUserMember},'%')
+    </select>
+
+    <!-- 依据id查单挑数据  小写-->
+    <select id="findById" resultMap="recharge" parameterType="int">
+		select * from gym_recharge
+
+		where rech_id = #{rechId}
+	</select>
+
+    <!-- 添加数据  大写-->
+    <insert id="add" parameterType="com.zhiyou100.gym.mapper.RechargeMapper">
+		insert into gym_recharge values(
+		null,
+		#{rechNumber},
+		#{rechTopId},
+		#{rechMoney},
+		now(),
+		#{rechUserMember},
+		#{rechAch},
+		1
+		)
+	</insert>
+    <!-- 依据id 假 删除单挑数据  -->
+    <update id="deleteById" parameterType="integer">
+		update from gym_recharge
+		set rech_status = 0
+		where rech_id = #{rechId}
+	</update>
+    <!-- 动态sql修改  大写-->
+    <!--<update id="update" parameterType="Mold">
+		update gym_recharge
+        <set>
+            <if test="password != null">password =#{password},</if>
+
+        </set>
+		where id = #{id}
+	</update>-->
+</mapper>

@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="UTF-8">
+<title>健身中心</title>
+<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+	<style type="text/css">
+		body {
+			margin: 40px;
+			text-align: center;
+			padding: 0px;
+			background-size: cover;
+		}
+	</style>
+</head>
+<body >
+	<table class="table table-bordered">
+		<tr>
+			<td><a href="/recharge/add">充值/消费</a></td>
+			<td><a href="/top/show">余额变动类型</a></td>
+			<td>
+				<form action="/recharge/show" id="myform">
+					会员编号:<input type="text" name="rechUserMember"  placeholder="会员卡号" pattern="[0-9]{5}" title="会员号为5位" required="required">
+				</form>
+			</td>
+		</tr>
+		<tr>
+			<td>记录序号</td>
+			<td>记录编号</td>
+			<td>记录类型</td>
+			<td>记录金额</td>
+			<td>记录时间</td>
+			<td>会员卡号</td>
+			<td>会员姓名</td>
+			<td>业绩</td>
+			<!-- 充值还是消费 -->
+		</tr>
+		<tr th:each="c,item:${recharges}">
+			<td th:text="${item.count}">序号</td>
+			<td th:text="${c.rechNumber}"></td>
+			<td th:text="${c.top.topName}"></td>
+			<td th:text="${c.rechMoney}"></td>
+			<td th:text="${c.rechTime}"></td>
+			<td th:text="${c.rechUserMember}"></td>
+			<td th:text="${c.vipCard.usName}"></td>
+			<td th:text="${c.rechAch}"></td>
+			<!--<td>
+				<a th:href="@{/recharge/update(rechId=${c.rechId})}">修改</a>
+			</td>-->
+		</tr>
+
+	</table>
+
+	<script>
+        function submitForm(){
+            var form = document.getElementById("myform");
+            form.submit();
+        }
+	</script>
+	<script src="/lib/jquery/jquery.js"></script>
+</body>
+</html>

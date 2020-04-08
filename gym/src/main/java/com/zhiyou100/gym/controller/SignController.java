@@ -9,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.sql.Timestamp;
+
 @Controller
 @RequestMapping("sign")
 public class SignController {
@@ -20,12 +22,16 @@ public class SignController {
 
 
     @RequestMapping("show")
-    public String show(Model model,Integer q){
+    public String show(Model model, Integer q,Integer signUserNumber){
         if (q == null||q > 2 || q < 0 ){
             q = 0;
         }
         model.addAttribute("q",q);
-        model.addAttribute("signs",signService.findAll(q));
+        if (signUserNumber != null){
+            model.addAttribute("signs",signService.findById(signUserNumber));
+        }else {
+            model.addAttribute("signs",signService.findAll(q));
+        }
         return "sign/show";
     }
     @RequestMapping("add")
@@ -37,7 +43,7 @@ public class SignController {
     public String insert(Sign sign){
         String r =  signService.add(sign);
         if (!r.equals("签到成功")){
-            return "redirect:add";
+            return "forward:add?msg="+r;
         }
         return "redirect:show";
     }

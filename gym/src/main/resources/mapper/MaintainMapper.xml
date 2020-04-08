@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.zhiyou100.gym.mapper.MaintainMapper">
+    <resultMap type="com.zhiyou100.gym.pojo.Maintain" id="maintain">
+        <id column="maintain_id" property="maintainId"/>
+        <result column="maintain_num" property="maintainNum"/>
+        <result column="maintain_region" property="maintainRegion"/>
+        <result column="maintain_equip_num" property="maintainEquipNum"/>
+        <result column="maintain_desc" property="maintainDesc"/>
+        <result column="maintain_time" property="maintainTime"/>
+        <result column="maintain_money" property="maintainMoney"/>
+        <result column="maintain_coach_number" property="maintainCoachNumber"/>
+        <result column="equip_name" property="equipName"/>
+        <result column="coach_name" property="coachName"/>
+    </resultMap>
+    <!-- 查询所有  小写-->
+    <select id="findAll" resultMap="maintain">
+          select * from gym_maintain_record m
+          INNER JOIN gym_equip e on m.maintain_equip_num = e.equip_num
+          INNER JOIN gym_coach c on m.maintain_coach_number = c.coach_number
+    </select>
+    <!-- 依据id查单挑数据  小写-->
+    <select id="findById" resultMap="maintain" parameterType="int">
+		select * from gym_maintain_record where maintain_id = #{maintainId}
+	</select>
+    <!-- 添加数据  大写-->
+    <insert id="add" parameterType="com.zhiyou100.gym.mapper.MaintainMapper">
+		insert into gym_maintain_record values(
+		null,
+		#{maintainNum},
+		#{maintainRegion},#{maintainEquipNum},#{maintainDesc},now(),
+		#{maintainMoney},#{maintainCoachNumber}
+		)
+	</insert>
+    <!-- 依据id删除单挑数据  -->
+    <delete id="deleteById" parameterType="int">
+		delete from gym_maintain_record
+		where maintain_id = #{maintainId}
+	</delete>
+    <!-- 动态sql修改  大写-->
+    <update id="update" parameterType="com.zhiyou100.gym.mapper.MaintainMapper">
+		update gym_maintain_record
+        <set>
+            <if test="maintainRegion != null">maintain_region =#{maintainRegion},</if>
+            <if test="maintainEquipNum != null">maintain_equip_num =#{maintainEquipNum},</if>
+            <if test="maintainDesc != null">maintain_desc =#{maintainDesc},</if>
+            <if test="maintainTime != null">maintain_time =#{maintainTime},</if>
+            <if test="maintainMoney != null">maintain_money =#{maintainMoney},</if>
+            <if test="maintainCoachNumber != null">maintain_coach_number =#{maintainCoachNumber},</if>
+        </set>
+        where maintain_id = #{maintainId}
+	</update>
+</mapper>

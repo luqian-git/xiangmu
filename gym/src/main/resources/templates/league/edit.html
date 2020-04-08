@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+</head>
+<style type="text/css">
+	body {
+		margin: 40px;
+		text-align: center;
+		padding: 0px;
+		background-size: cover;
+	}
+</style>
+<body>
+<h1>更改课程</h1>
+<a class="btn btn-primary" th:href="@{/league/delete(leagueId=${league.leagueId})}">删除课程</a>
+<br>
+<form action="/league/update"  method="post">
+	<input type="hidden" name="leagueId"  th:value="${league.leagueId}">
+	<p>
+		<input  type="text" name="leagueWeek"   th:value="${league.leagueWeek}" readonly="readonly">
+	</p>
+	<p>
+		<input  type="text" name="leagueTimeSlot"  readonly="readonly"  th:value="${league.leagueTimeSlot}">
+	</p>
+	<p>
+		<select name="homeId">
+			<option th:selected="${league.leagueState == 0}?selected" value="0" >报名中</option>
+			<option th:selected="${league.leagueState == 1}?selected" value="1" >进行中</option>
+			<option th:selected="${league.leagueState == 2}?selected" value="2" >已结束</option>
+		</select>
+	</p>
+
+	<p>
+		报名开始时间<input  type="date" name="leagueStart"  th:value="${league.leagueStart}">
+	</p>
+	<p>
+		报名结束时间<input  type="date" name="leagueEnd"  th:value="${league.leagueEnd}">
+	</p>
+	<p>
+		<input  type="text" name="leagueCourse" placeholder="课程名称" th:value="${league.leagueCourse}">
+	</p>
+	<p>
+		<input  type="text" name="leagueDesc" placeholder="课程类型" th:value="${league.leagueDesc}">
+	</p>
+	<p>
+		<!--league_coach_number-->
+		<select name="leagueCoachNumber">
+			<option th:each="h,item:${coachs}" th:value="${h.coachNumber}" th:text="${h.coachName}" th:selected="${league.leagueCoachNumber == h.coachNumber}?selected"></option>
+		</select>
+
+	</p>
+	<button class="btn btn-primary">修改</button>
+	<a class="btn btn-primary" href="/league/show">取消</a>
+</form>
+
+</body>
+</html>

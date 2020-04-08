@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.zhiyou100.gym.mapper.ScheduleMapper">
+    <resultMap type="com.zhiyou100.gym.pojo.Schedule" id="schedule">
+        <id column="schedule_id" property="scheduleId"/>
+        <result column="schedule_num" property="scheduleNum"/>
+        <result column="schedule_date" property="scheduleDate"/>
+        <result column="schedule_coach_num" property="scheduleCoachNum"/>
+        <result column="schedule_arrange" property="scheduleArrange"/>
+        <result column="schedule_no" property="scheduleNo"/>
+        <result column="schedule_desc" property="scheduleDesc"/>
+        <result column="coach_name" property="coachName"/>
+    </resultMap>
+    <!-- 查询所有  小写-->
+    <select id="findAll" resultMap="schedule">
+         select * from gym_schedule s
+         INNER JOIN gym_coach c on s.schedule_coach_num = c.coach_number
+         GROUP BY s.schedule_date desc
+    </select>
+    <!-- 依据id查单挑数据  小写-->
+    <select id="findById" resultMap="schedule" parameterType="int">
+		select * from gym_schedule where schedule_id = #{scheduleId}
+	</select>
+    <select id="findHave" resultMap="schedule">
+        select * from gym_schedule where schedule_coach_num = #{scheduleCoachNum}
+    </select>
+    <select id="findNum" resultMap="schedule">
+        select * from gym_schedule s
+        INNER JOIN gym_coach c on s.schedule_coach_num = c.coach_number
+        where  schedule_coach_num = #{scheduleCoachNum}
+        GROUP BY s.schedule_date desc
+    </select>
+    <!-- 添加数据  大写-->
+    <insert id="add" parameterType="com.zhiyou100.gym.mapper.ScheduleMapper">
+		insert into gym_schedule values(
+		null,
+		#{scheduleNum},
+		now(),
+		#{scheduleCoachNum},
+		#{scheduleArrange},
+		#{scheduleNo},
+		#{scheduleDesc}
+		)
+	</insert>
+    <!-- 依据id删除单挑数据  -->
+    <delete id="deleteById" parameterType="int">
+		delete from gym_schedule
+		where schedule_id = #{scheduleId}
+	</delete>
+    <!-- 动态sql修改  大写-->
+    <update id="update" parameterType="com.zhiyou100.gym.mapper.ScheduleMapper">
+		update gym_schedule
+        <set>
+            <if test="scheduleCoachNum != null">schedule_num = #{scheduleNum},</if>
+            <if test="scheduleArrange != null">schedule_arrange = #{scheduleArrange},</if>
+            <if test="scheduleNo != null">schedule_no = #{scheduleNo},</if>
+            <if test="scheduleDesc != null">schedule_desc = #{scheduleDesc},</if>
+        </set>
+        where schedule_id = #{scheduleId}
+	</update>
+</mapper>

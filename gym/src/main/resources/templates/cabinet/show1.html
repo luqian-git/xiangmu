@@ -24,7 +24,7 @@
 	<table class="table table-bordered">
 		<tr>
 			<td>序号</td>
-			<td>编号</td>
+			<td>租柜编号</td>
 			<td>容量</td>
 			<td>记录编号</td>
 			<td>规格</td>
@@ -41,8 +41,7 @@
 				<p th:if="${c.cabCapacity == 0}">40*40*50</p>
 				<p th:if="${c.cabCapacity == 1}">80*80*100</p>
 			</td>
-			<td th:text="${c.cabInfo.cabInfoNum}">
-
+			<td th:text="${c.cabInfo.cabInfoNumber}">
 			</td>
 			<td>
 				<p th:if="${c.cabInfo.cabInfoDuration == 12}">一年</p>
@@ -55,7 +54,7 @@
 			<td th:text="${c.cabInfo.cabInfoMember}"></td>
 			<td th:text="${c.cabInfo.usName}"></td>
 			<td>
-				<a href="">续费</a>
+				<a th:href="@{/cabinet/edit(cabInfoId=${c.cabInfo.cabInfoId})}">续费</a>
 			</td>
 		</tr>
 

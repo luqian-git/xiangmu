@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="UTF-8">
+<title>健身中心</title>
+<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+	<style type="text/css">
+		body {
+			margin: 40px;
+			text-align: center;
+			padding: 0px;
+			background-size: cover;
+		}
+	</style>
+</head>
+<body >
+	<h1>学员管理</h1>
+	<table class="table table-bordered">
+		<tr>
+			<td>序号</td>
+			<td>会员卡号</td>
+			<td>会员姓名</td>
+			<td>时间</td>
+			<td>操作</td>
+		</tr>
+		<tr>
+			<th colspan="6">
+				<h4>预约学员</h4>
+			</th>
+		</tr>
+		<tr th:each="c,item:${students}" th:if="${c.studentState == 0}">
+			<td th:text="${item.count}">序号</td>
+			<td th:text="${c.studentVipNum}"></td>
+			<td th:text="${c.usName}"></td>
+			<td >
+				<b th:if="${c.studentWeek == 1}">周一</b>
+				<b th:if="${c.studentWeek == 2}">周二</b>
+				<b th:if="${c.studentWeek == 3}">周三</b>
+				<b th:if="${c.studentWeek == 4}">周四</b>
+				<b th:if="${c.studentWeek == 5}">周五</b>
+				<b th:if="${c.studentWeek == 6}">周六</b>
+				<b th:if="${c.studentWeek == 7}">周日</b>
+				<p  th:each="g,item:${groups}" >
+					<b th:if="${c.studentTime == g.leagueGroup}" th:text="${g.leagueTimeSlot}"></b>
+				</p>
+			</td>
+			<td>
+				已预约
+			</td>
+		</tr>
+		<tr>
+			<th colspan="6">
+				<h4>本周学员</h4>
+			</th>
+		</tr>
+		<tr th:each="c,item:${students}" th:if="${c.studentState == 1}">
+			<td th:text="${item.count}">序号</td>
+			<td th:text="${c.studentVipNum}"></td>
+			<td th:text="${c.usName}"></td>
+			<td >
+				<b th:if="${c.studentWeek == 1}">周一</b>
+				<b th:if="${c.studentWeek == 2}">周二</b>
+				<b th:if="${c.studentWeek == 3}">周三</b>
+				<b th:if="${c.studentWeek == 4}">周四</b>
+				<b th:if="${c.studentWeek == 5}">周五</b>
+				<b th:if="${c.studentWeek == 6}">周六</b>
+				<b th:if="${c.studentWeek == 7}">周日</b>
+				<p  th:each="g,item:${groups}" >
+					<b th:if="${c.studentTime == g.leagueGroup}" th:text="${g.leagueTimeSlot}"></b>
+				</p>
+			</td>
+			<td>
+				<a th:href="@{/student/update(studentId=${c.studentId})}">消课</a>
+			</td>
+		</tr>
+	</table>
+</body>
+</html>

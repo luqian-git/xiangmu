@@ -16,10 +16,11 @@
 </style>
 <body>
 <h1>员工会员签到表</h1>
+<h6 th:text="${msg}"></h6>
 <form action="/sign/insert"  method="post">
 	<p>
 		员工号/会员号<br>
-		<input type="text" name="signUserId" required="required">
+		<input type="text" name="signUserNumber" required="required">
 	</p>
 	<p>
 		签到备注<br>

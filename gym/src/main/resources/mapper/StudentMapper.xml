@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.zhiyou100.gym.mapper.StudentMapper">
+    <resultMap type="com.zhiyou100.gym.pojo.Student" id="student">
+        <id column="student_id" property="studentId"/>
+        <result column="student_coach_num" property="studentCoachNum"/>
+        <result column="student_vip_num" property="studentVipNum"/>
+        <result column="student_week" property="studentWeek"/>
+        <result column="student_time" property="studentTime"/>
+        <result column="student_date" property="studentDate"/>
+        <result column="student_state" property="studentState"/>
+        <result column="us_name" property="usName"/>
+    </resultMap>
+    <!-- 查询所有  小写-->
+    <select id="findAll" resultMap="student">
+          select * from gym_student
+    </select>
+    <!-- 依据id查单挑数据  小写-->
+    <select id="findById" resultMap="student" parameterType="int">
+		select * from  gym_student
+		where student_id = #{studentId}
+	</select>
+    <select id="findNum" resultMap="student" >
+         select * from gym_student s
+         INNER JOIN gym_user u on s.student_vip_num = u.us_member
+         where s.student_coach_num = #{studentCoachNum}
+         and  student_state = 0
+    </select>
+    <select id="findNum01" resultMap="student" >
+         select * from gym_student s
+         INNER JOIN gym_user u on s.student_vip_num = u.us_member
+         where s.student_coach_num = #{studentCoachNum}
+         and  student_state = 0
+         or student_state = 1
+    </select>
+    <!-- 添加数据  大写-->
+    <insert id="add" parameterType="com.zhiyou100.gym.pojo.Student">
+		insert into  gym_student values(
+		null,
+		#{studentCoachNum},
+		#{studentVipNum},
+		#{studentWeek},
+		#{studentTime},
+		now(),
+		0
+		)
+	</insert>
+    <!-- 依据id删除单挑数据  -->
+    <delete id="deleteById" parameterType="int">
+		delete from  gym_student
+		where student_id = #{studentId}
+	</delete>
+    <!-- 动态sql修改  大写-->
+    <update id="update" parameterType="integer">
+		update  gym_student set
+        student_state = 2
+        where student_id = #{studentId}
+	</update>
+    <update id="updateState">
+        update  gym_student set
+        student_state = 1
+        where  student_state = 0
+    </update>
+</mapper>

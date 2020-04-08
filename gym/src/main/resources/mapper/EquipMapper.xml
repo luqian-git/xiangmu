@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.zhiyou100.gym.mapper.EquipMapper">
+    <resultMap type="com.zhiyou100.gym.pojo.Equip" id="equip">
+        <id column="equip_id" property="equipId"/>
+        <result column="equip_num" property="equipNum"></result>
+        <result column="equip_name" property="equipName"/>
+    </resultMap>
+    <!-- 查询所有  小写-->
+    <select id="findAll" resultMap="equip">
+          select * from gym_equip
+    </select>
+    <!-- 依据id查单挑数据  小写-->
+    <select id="findById" resultMap="equip" parameterType="int">
+		select * from gym_equip where equip_id = #{equipId}
+	</select>
+    <select id="findMax" resultMap="equip">
+        select * from gym_equip where equip_id = (select max(equip_id) from gym_equip)
+    </select>
+    <select id="findByNum" resultMap="equip">
+        select * from gym_equip where equip_num = #{equipNum}
+    </select>
+    <!-- 添加数据  大写-->
+    <insert id="add" parameterType="com.zhiyou100.gym.mapper.EquipMapper">
+		insert into gym_equip values(
+		null,
+		#{equipNum},
+		#{equipName}
+		)
+	</insert>
+    <!-- 依据id删除单挑数据  -->
+    <delete id="deleteById" parameterType="int">
+		delete from gym_equip
+		where equip_id = #{equipId}
+	</delete>
+    <!-- 动态sql修改  大写-->
+    <update id="update" parameterType="com.zhiyou100.gym.mapper.EquipMapper">
+		update gym_equip
+        <set>
+            <if test="equipName != null">equip_name =#{equipName},</if>
+        </set>
+		where equip_id = #{equipId}
+	</update>
+</mapper>

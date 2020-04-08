@@ -1,0 +1,120 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.w3.org/1999/xhtml">
+<head>
+<head>
+    <meta charset="UTF-8">
+    <title>统计分析</title>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <script src="/js/echarts.min.js"></script>
+</head>
+<style>
+    body {
+        margin: 40px;
+        text-align: center;
+        padding: 0px;
+        background-size: cover;
+    }
+    #main{
+        position: absolute;
+        top: 80px;
+        left: 50px;
+    }
+    #main2{
+        position: absolute;
+        top: 80px;
+        left: 580px;
+    }
+</style>
+<body>
+        <h1>左报名表单,右出勤表单</h1>
+        <p>人数/课程</p>
+        <div id="main" style="width: 500px;height:400px;"> </div>
+        <div id="main2" style="width: 500px;height:400px;"> </div>
+        <script type="text/javascript">
+           // 基于准备好的dom，初始化echarts实例
+           var myChart = echarts.init(document.getElementById('main'));
+           var xz=[];    //类别数组（实际用来盛放X轴坐标值）
+           var yz=[];    //销量数组（实际用来盛放Y坐标值）
+           show();
+           function show() {
+               $.ajax({
+                   url: "http://localhost:8080/statistics/analyshow",
+                   type: "get",
+                   success: function (result) {
+                       for(var i=0;i<result.length;i++){
+                           xz.push(result[i].leagueCourse);//挨个取出类别并填入类别数组
+                           yz.push(result[i].num); //挨个取出销量并填入销量数组
+                       }
+                       f()
+                   }
+
+               });
+
+           }
+           function f(){
+               option = {
+                   xAxis: {
+                       type: 'category',
+                       data: xz
+                   },
+                   yAxis: {
+                       type: 'value'
+                   },
+                   series: [{
+                       data: yz,
+                       type: 'line'
+                   }]
+               };
+
+               // 使用刚指定的配置项和数据显示图表。
+               myChart.setOption(option);
+
+           }
+       </script>
+
+        <script >
+            // 基于准备好的dom，初始化echarts实例
+            var myChart2 = echarts.init(document.getElementById('main2'));
+            var xz2=[];    //类别数组（实际用来盛放X轴坐标值）
+            var yz2=[];    //销量数组（实际用来盛放Y坐标值）
+            show2();
+            function show2() {
+                $.ajax({
+                    url: "http://localhost:8080/statistics/analysigns",
+                    type: "get",
+                    success: function (result) {
+                        for(var i=0;i<result.length;i++){
+                            xz2.push(result[i].leagueCourse);//挨个取出类别并填入类别数组
+                            yz2.push(result[i].num); //挨个取出销量并填入销量数组
+                        }
+                        f2()
+                    }
+
+                });
+
+            }
+            function f2(){
+                options = {
+                    xAxis: {
+                        type: 'category',
+                        data: xz2
+                    },
+                    yAxis: {
+                        type: 'value'
+                    },
+                    series: [{
+                        data: yz2,
+                        type: 'line'
+                    }]
+                };
+
+            // 使用刚指定的配置项和数据显示图表。
+               myChart2.setOption(options);
+
+            }
+
+        </script>
+
+
+</body>
+</html>

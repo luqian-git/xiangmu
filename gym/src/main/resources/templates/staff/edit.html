@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+</head>
+<style type="text/css">
+	body {
+		margin: 40px;
+		text-align: center;
+		padding: 0px;
+		background-size: cover;
+	}
+	img{
+		width: 80px;
+		height: 60px;
+	}
+</style>
+<body>
+<form action="/staff/update"  method="post" enctype="multipart/form-data">
+	<input type="hidden" name="coachId" th:value="${coach.coachId}">
+	<p>
+		姓名<input  type="text" name="coachName" th:value="${coach.coachName}">
+	</p>
+	<p th:if="${coach.coachSex == '男'}">
+		男:<input type="radio" name="coachSex"  value="男" checked />
+		女:<input type="radio" name="coachSex"  value="女" />
+	</p>
+	<p th:if="${coach.coachSex == '女'}">
+		男:<input type="radio" name="coachSex"  value="男"  />
+		女:<input type="radio" name="coachSex"  value="女" checked />
+	</p>
+	<p>
+		年龄<input  type="text" name="coachAge" th:value="${coach.coachAge}">
+	</p>
+	<div>
+		<img th:src="${coach.coachHead}">
+	</div>
+	<p>头像</p>
+	<div  style="margin-left: 43%">
+		<input type="file" name="file">
+	</div>
+	<p>
+		标签<input  type="text" name="coachLabel" th:value="${coach.coachLabel}">
+	</p>
+	<p>
+		介绍<input  type="text" name="coachIntroduce" th:value="${coach.coachIntroduce}">
+	</p>
+	<p>
+		<select name="coachPosition">
+			<option  th:each="r,item:${roles}" th:selected="${r.roId == coach.coachPosition}?selected" th:value="${r.roId}" th:text="${r.roName}"></option>
+		</select>
+	</p>
+	<p>
+		状态
+		<select name="coachStatus">
+				<option th:selected="${coach.coachStatus == '实习'}?selected" value="实习">实习</option>
+				<option th:selected="${coach.coachStatus == '试用'}?selected"  value="试用">试用</option>
+				<option th:selected="${coach.coachStatus == '正式'}?selected" value="正式">正式</option>
+				<option th:selected="${coach.coachStatus == '离职'}?selected"  value="离职">离职</option>
+				<option th:selected="${coach.coachStatus == '辞退'}?selected"  value="辞退">辞退</option>
+		</select>
+	</p>
+	<button class="btn btn-primary">修改</button>
+	<a class="btn btn-primary" href="/staff/show">取消</a>
+</form>
+
+</body>
+</html>

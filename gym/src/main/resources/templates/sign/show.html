@@ -23,13 +23,17 @@
 				<a href="/sign/add">签到</a>
 			</td>
 			<td>
-				<form href="/sign/show">
-					<select name="q">
+				<form href="/sign/show"  id="myform">
+					<select name="q" onchange="submitForm();">
 						<option  value="0" th:selected="${q == 0}?selected">员工</option>
 						<option  value="1" th:selected="${q == 1}?selected">会员</option>
 						<option  value="2" th:selected="${q == 2}?selected">游客</option>
 					</select>
-					<button>查询</button>
+				</form>
+			</td>
+			<td>
+				<form href="/sign/show"  id="myform2" onchange="submitForm2();">
+					<input type="text" name="signUserNumber"  placeholder="会员卡号/员工编号">
 				</form>
 			</td>
 		</tr>
@@ -40,6 +44,11 @@
 			<td>签到人</td>
 			<td>签到人编号</td>
 			<td>备注</td>
+			<td>
+				<b th:if="${q == 0}">员工编号</b>
+				<b th:if="${q == 1}">会员卡号</b>
+				<b th:if="${q == 2}">游客编号</b>
+			</td>
 			<td>所属</td>
 		</tr>
 		<tr th:each="c,item:${signs}">
@@ -55,6 +64,7 @@
 				<p th:text="${c.potNumber}"></p>
 			</td>
 			<td th:text="${c.signDesc}"></td>
+			<td th:text="${c.signUserNumber}"></td>
 			<td>
 				<p th:if="${c.signStatus == 0}">员工</p>
 				<p th:if="${c.signStatus == 1}">会员</p>
@@ -63,5 +73,16 @@
 		</tr>
 
 	</table>
+	<script>
+        function submitForm(){
+            var form = document.getElementById("myform");
+            form.submit();
+        }
+        function submitForm2(){
+            var form = document.getElementById("myform2");
+            form.submit();
+        }
+	</script>
+	<script src="/lib/jquery/jquery.js"></script>
 </body>
 </html>

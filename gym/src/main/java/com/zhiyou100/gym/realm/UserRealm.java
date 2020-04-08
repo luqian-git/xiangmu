@@ -38,7 +38,7 @@ public class UserRealm extends AuthorizingRealm{
 		String account = (String)token.getPrincipal();
 		String password = new String((char[]) token.getCredentials());
 		
-		User user = userService.findByAccount(account);
+		User user = userService.findByUAccount(account);
 		if (user == null) {
 			throw new UnknownAccountException("账号不存在");
 		}

@@ -6,6 +6,7 @@ import com.zhiyou100.gym.service.CabinetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -44,8 +45,19 @@ public class CabinetController {
     public String lease(CabInfo cabInfo){
         String msg = cabInfoService.add(cabInfo);
         if (msg.equals("无输入的会员编号")){
-            return "forward:add?msg="+msg+"&cabNumber="+cabInfo.getCabInfoNumber();
+            return "forward:add?msg="+msg+"&cabNumber="+cabInfo.getCabInfoNum();
         }
+        return "redirect:show";
+    }
+
+    @RequestMapping("edit")
+    public String edit(Integer cabInfoId,Model model){
+        model.addAttribute("cabInfo",cabInfoService.findBycabInfoId(cabInfoId));
+        return "cabinet/edit";
+    }
+    @RequestMapping("update4")
+    public String update4(CabInfo cabInfo){
+        cabInfoService.update(cabInfo);
         return "redirect:show";
     }
 

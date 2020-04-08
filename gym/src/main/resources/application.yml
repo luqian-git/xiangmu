@@ -9,6 +9,15 @@ mybatis-plus:
 logging:
   level:
     com.zhiyou100.gym.mapper: debug
+qiniu:
+  #  七牛云账号对应的  AccessKey
+  accessKey: AlTBoKuS-B_2hAWJZes0ES8QVHryjAXPAfjl0U6s
+  #  七牛云账号对应的  SecretKey
+  secretKey: iLXtpnGAhwSgRFZMCyW_Qu18QM3VcvHFx39cdBgY
+  #  存储空间名字
+  bucket: lqqny
+  #   图片上传成功后的返回地址,我们图片一般上传完之后需要回显
+  path: q7zrwcfii.bkt.clouddn.com
 #pagehelper分页插件
 #pagehelper:
 #  helper-dialect: mysql

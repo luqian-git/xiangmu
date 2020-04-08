@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.w3.org/1999/xhtml">
+<head>
+<head>
+    <meta charset="UTF-8">
+    <title>财务</title>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <script src="/js/echarts.min.js"></script>
+</head>
+<style>
+    body {
+        margin: 10px;
+        text-align: center;
+        padding: 0px;
+        background-size: cover;
+    }
+    #main{
+        position: absolute;
+        top: 80px;
+        left: 0px;
+    }
+</style>
+<body>
+        <h1>左报名表单,右出勤表单</h1>
+        <div id="main" style="width: 1100px;height:400px;"> </div>
+        <script type="text/javascript">
+            var myChart = echarts.init(document.getElementById('main'));
+            option = {
+                legend: {},
+                tooltip: {},
+                dataset: {
+                    source: [
+                        ['product', '成本', '收入', '利润'],
+                        ['一月', 43.3, 85.8, 42.5],
+                        ['二月', 43.1, 73.4, 29.2],
+                        ['三月', 33.3, 99.3, 66],
+                        ['四月', 83.1, 73.4, 55.1],
+                        ['五月', 43.3, 85.8, 93.7],
+                        ['六月', 83.1, 73.4, 55.1],
+                        ['七月', 43.3, 85.8, 93.7],
+                        ['八月', 83.1, 73.4, 55.1],
+                        ['九月', 43.3, 85.8, 93.7],
+                        ['十月', 83.1, 73.4, 55.1],
+                        ['十一月', 43.3, 85.8, 93.7],
+                        ['十二月', 83.1, 73.4, 55.1],
+
+                    ]
+                },
+                xAxis: {type: 'category'},
+                yAxis: {},
+                series: [
+                    {type: 'bar'},
+                    {type: 'bar'},
+                    {type: 'bar'}
+                ]
+            };
+            // 使用刚指定的配置项和数据显示图表。
+            myChart.setOption(option);
+
+        </script>
+
+</body>
+</html>

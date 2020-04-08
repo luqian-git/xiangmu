@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+	<script src="/lib/jquery/jquery.js"></script>
+</head>
+<style type="text/css">
+	body {
+		margin: 40px;
+		text-align: center;
+		padding: 0px;
+		background-size: cover;
+	}
+</style>
+<body>
+<!--
+cab_info_price			金额398 288 138 58(与下方对应)
+-->
+<form action="/cabinet/update4">
+	<input type="hidden" name="cabInfoId" th:value="${cabInfo.cabInfoId}" readonly="readonly">
+	<p>
+		柜子编号:<input type="text" name="cabInfoNum" th:value="${cabInfo.cabInfoNum}" readonly="readonly">
+	</p>
+	<p>
+		会员编号:<input type="text" name="cabInfoMember" th:value="${cabInfo.cabInfoMember}" readonly="readonly">
+	</p>
+	<p>
+		到期时间:<input type="datetime" name="cabInfoUpdateTime" th:value="${cabInfo.cabInfoUpdateTime}" readonly="readonly">
+	</p>
+	<p>
+		支付金额:<input id="price" type="text" name="cabInfoPrice" value="398" readonly="readonly">
+	</p>
+	<p>
+		续费期限:
+		<select id="xl" name="cabInfoDuration">
+			<option selected value="12">12个月</option>
+			<option value="6">6个月</option>
+			<option value="3">3个月</option>
+			<option value="1">1个月</option>
+		</select>
+	</p>
+	<button class="btn btn-primary">续费</button><a class="btn btn-primary" href="/cabinet/show">取消</a>
+</form> 
+	<script>
+        $("#xl").bind("change", function() {
+            var id = $(this).find("option:selected").attr("value"); //获取当前下拉框value属性的值
+			if (id == 12){
+			    $(price).val(398);
+			}else if (id == 6){
+                $(price).val(288);
+            } else if (id == 3){
+                $(price).val(138);
+            }else if (id == 1){
+                $(price).val(58);
+            }
+        })
+	</script>
+
+</body>
+</html>

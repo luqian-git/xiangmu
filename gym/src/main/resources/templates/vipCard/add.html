@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+</head>
+<style type="text/css">
+	body {
+		margin: 40px;
+		text-align: center;
+		padding: 0px;
+		background-size: cover;
+	}
+</style>
+<body>
+<h1>开通会员</h1>
+<h6 th:text="${msg}"></h6>
+<form action="/vipCard/insert"  method="post" >
+	<p>
+		<select style="display: none" name="usRole">
+			<option  th:each="r,item:${roles}" th:selected="${r.roName == '会员'}?selected" th:value="${r.roId}" th:text="${r.roName}"></option>
+		</select>
+	</p>
+		<input  type="text" name="usAccount" placeholder="登录账号"><br>
+		<input  type="text" name="usPassword" placeholder="登录密码"><br>
+		<input  type="text" name="usName" placeholder="名字"><br>
+		男:<input type="radio" name="usSex"  value="男" checked />
+		女:<input type="radio" name="usSex"  value="女" /><br>
+		<input  type="text" name="usAge" value="23"  placeholder="年龄">
+	</p>
+
+	<button class="btn btn-primary">添加</button>
+	<a class="btn btn-primary" href="/vipCard/show">取消</a>
+</form>
+
+</body>
+</html>

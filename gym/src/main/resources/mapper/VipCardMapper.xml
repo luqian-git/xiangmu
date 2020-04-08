@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.zhiyou100.gym.mapper.VipCardMapper">
+    <resultMap type="com.zhiyou100.gym.pojo.VipCard" id="vipCard">
+        <id column="card_id" property="cardId"/>
+        <result column="card_number" property="cardNumber"/>
+        <result column="card_user_id" property="cardUserId"/>
+        <result column="card_open_time" property="cardOpenTime"/>
+        <result column="card_end_time" property="cardEndTime"/>
+        <result column="card_balance" property="cardBalance"/>
+        <result column="card_status" property="cardStatus"/>
+        <!--多表联查-->
+        <!--<collection property="" ofType="">
+            <result column="ro_id" property="roId"/>
+            <result column="ro_name" property="roName"/>
+            <result column="ro_desc" property="roDesc"/>
+        </collection>-->
+    </resultMap>
+    <!-- 查询所有  小写-->
+    <select id="findAll" resultMap="vipCard">
+          select * from gym_vip_card
+    </select>
+    <select id="findByNum" resultMap="vipCard">
+          select * from gym_vip_card
+           where card_number = #{cardNumber}
+           and card_status = 1
+    </select>
+    <!-- 添加数据  大写-->
+    <insert id="add" parameterType="com.zhiyou100.gym.pojo.VipCard">
+		insert into gym_vip_card values(
+		null,
+		#{cardNumber},
+		#{cardUserId},
+		now(),
+		"9999-12-31",
+		0,
+		1
+		)
+	</insert>
+    <!-- 注销  大写-->
+    <update id="update" parameterType="integer">
+		update gym_vip_card set
+        card_end_time = now(),
+        card_balance = 0,
+        card_status = 0
+		where card_number = #{cardNumber}
+	</update>
+    <update id="updateBalance" parameterType="com.zhiyou100.gym.pojo.VipCard">
+        update gym_vip_card set
+        card_balance = #{cardBalance}
+        where card_id = #{cardId}
+    </update>
+</mapper>

@@ -12,6 +12,8 @@ import com.zhiyou100.gym.service.VipenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.List;
 @Service
 public class SignServiceImpl implements SignService {
@@ -37,14 +39,18 @@ public class SignServiceImpl implements SignService {
     }
 
     @Override
-    public Sign findById(Integer singId) {
-        return signMapper.findById(singId);
+    public List<Sign> findById(Integer signUserNumber) {
+        return signMapper.findByUserNumber(signUserNumber);
     }
 
     @Override
     public String add(Sign sign) {
+        //判断是否今天签到过
+        if (signMapper.findByNum(sign.getSignUserNumber())!=null){
+            return "今已签到";
+        }
         //获取该 员工号 或者  会员号 的账号信息 0 为员工 1  为会员
-        Integer member = sign.getSignUserId();
+        Integer member = sign.getSignUserNumber();
         if (member < 10000 && member < 0){
             //获取状态
             sign.setSignStatus(0);
@@ -56,8 +62,6 @@ public class SignServiceImpl implements SignService {
         if (user == null){
             return "员工号/会员号填写错误";
         }
-        //获取账号的id
-        sign.setSignUserId(user.getUsId());
         //获取最大 编号
         sign.setSignNumder(signMapper.findMax().getSignNumder()+1);
         signMapper.add(sign);
@@ -71,7 +75,7 @@ public class SignServiceImpl implements SignService {
         Sign sign = new Sign();
         if (potentialMapper.findByPhone(phone).getPotId() != null){
             sign.setSignDesc(desc);
-            sign.setSignUserId(potentialMapper.findByPhone(phone).getPotId());
+            sign.setSignNumder(potentialMapper.findByPhone(phone).getPotNumber());
             sign.setSignStatus(2);
             sign.setSignNumder(signMapper.findMax().getSignNumder()+1);
             signMapper.add(sign);
@@ -89,4 +93,6 @@ public class SignServiceImpl implements SignService {
     public void update(Sign sign) {
         signMapper.update(sign);
     }
+
+
 }

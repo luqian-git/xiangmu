@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="UTF-8">
+<title>健身中心</title>
+<script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+	<style type="text/css">
+		body {
+			margin: 40px;
+			text-align: center;
+			padding: 0px;
+			background-size: cover;
+		}
+		.y{
+			display: none;
+		}
+		.x{
+			display: block;
+		}
+	</style>
+</head>
+<body >
+
+	<h1>
+		预约团课
+		<b th:text="${msg}"></b>
+	</h1>
+	<p>点击课程查看详细信息</p>
+	<table class="table table-bordered">
+		<tr>
+			<td>时间段/日程</td>
+			<td th:each="w,item:${weeks}" th:text="${w.leagueWeek}"></td>
+		</tr>
+		<tr th:each="g,item:${groups}" th:class="tr+${g.leagueId}">
+			<!--js 事件 循环时间段 x 是显示 y 是隐藏 只显示所有 tr xia 第一个 td-->
+			<td class="y" th:if="${g.leagueGroup == c.leagueGroup}" th:each="c,item:${leagues}" th:text="${g.leagueGroup == c.leagueGroup}?${g.leagueTimeSlot}"></td>
+			<!--循环课程-->
+			<td th:if="${g.leagueGroup == c.leagueGroup}" th:each="c,item:${leagues}">
+				<a th:if="${c.leagueCourse}!= '空闲'" th:href="@{/leApp/add(leagueId=${c.leagueId})}">
+					<b  th:text="${g.leagueGroup == c.leagueGroup}?${c.leagueCourse}"></b>
+				</a>
+				<b th:if="${c.leagueCourse}== '空闲'">暂无</b>
+				/<b th:if="${c.leagueCoachNumber > 1}" th:text="${g.leagueGroup == c.leagueGroup}?${c.coachName}"></b>
+				 <b th:if="${c.leagueCoachNumber < 1}">暂无</b>
+			</td>
+		</tr>
+	</table>
+
+	<script>
+		mq();
+       function mq(){
+		   $("tr td:first-child").attr("class","x");
+        };
+	</script>
+</body>
+</html>

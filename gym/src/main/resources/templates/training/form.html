@@ -1,0 +1,129 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.w3.org/1999/xhtml">
+<head>
+<head>
+    <meta charset="UTF-8">
+    <title>统计分析</title>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <script src="/js/echarts.min.js"></script>
+</head>
+<style>
+    body {
+        margin: 40px;
+        text-align: center;
+        padding: 0px;
+        background-size: cover;
+    }
+    #main{
+        position: relative;
+        left: 40px;
+    }
+    #main{
+        position: absolute;
+        top: 100px;
+        left: 0px;
+    }
+    #main2{
+        position: absolute;
+        top: 100px;
+        left: 600px;
+    }
+</style>
+<body>
+        <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+        <h1>运动报表</h1>
+        <p>左今天右累计;x为器械,y为使用时间</p>
+        <div id="main" style="width: 500px;height:300px;">
+
+        </div>
+        <div id="main2" style="width: 500px;height:300px;">
+
+        </div>
+        <script type="text/javascript">
+            // 基于准备好的dom，初始化echarts实例
+            var myChart = echarts.init(document.getElementById('main'));
+            var xz=[];    //类别数组（实际用来盛放X轴坐标值）
+            var yz=[];    //销量数组（实际用来盛放Y坐标值）
+            show();
+            function show() {
+                $.ajax({
+                    url: "http://localhost:8080/statistics/trainingNow",
+                    type: "get",
+                    success: function (result) {
+                            for(var i=0;i<result.length;i++){
+                                xz.push(result[i].equipName);    //挨个取出类别并填入类别数组
+                                yz.push(result[i].trainingRecordTime); //挨个取出销量并填入销量数组
+                            }
+                            f();
+
+                    }
+
+                });
+
+            }
+            function f() {
+                option = {
+                    xAxis: {
+                        type: 'category',
+                        name: '运动器械',
+                        data: xz
+                    },
+                    yAxis: {
+                        type: 'value'
+                    },
+                    series: [{
+                        name: '累计时间',
+                        data: yz,
+                        type: 'line'
+                    }]
+                };
+                // 使用刚指定的配置项和数据显示图表。
+                myChart.setOption(option);
+            }
+        </script>
+
+        <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+
+        <script type="text/javascript">
+            // 基于准备好的dom，初始化echarts实例
+            var myChart2 = echarts.init(document.getElementById('main2'));
+            var xz2=[];    //类别数组（实际用来盛放X轴坐标值）
+            var yz2=[];    //销量数组（实际用来盛放Y坐标值）
+            show2();
+            function show2() {
+                $.ajax({
+                    url: "http://localhost:8080/statistics/trainingDate",
+                    type: "get",
+                    success: function (result) {
+                      for(var i=0;i<result.length;i++){
+                                xz2.push(result[i].equipName);    //挨个取出类别并填入类别数组
+                                yz2.push(result[i].trainingRecordTime);    //挨个取出销量并填入销量数组
+                       }
+                        f2();
+                    }
+
+                });
+
+            }
+            function f2() {
+                option = {
+                    xAxis: {
+                        type: 'category',
+                        name: '运动器械',
+                        data: xz2
+                    },
+                    yAxis: {
+                        type: 'value'
+                    },
+                    series: [{
+                        name: '累计时间',
+                        data: yz2,
+                        type: 'line'
+                    }]
+                };
+                // 使用刚指定的配置项和数据显示图表。
+                myChart2.setOption(option);
+            }
+        </script>
+</body>
+</html>

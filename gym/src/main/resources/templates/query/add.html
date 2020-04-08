@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>健身中心</title>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <style type="text/css">
+        body {
+            margin: 40px;
+            text-align: center;
+            padding: 0px;
+            background-size: cover;
+        }
+
+        td {
+            width: 40px;
+            height: 80px;
+            line-height: 80px;
+            text-align: center;
+        }
+
+        input {
+            display: none;
+        }
+
+       .red {
+            background: red;
+        }
+
+        .green {
+            background: #08f542;
+        }
+
+        .blue {
+            background: blue;
+        }
+        .yy{
+
+        }
+    </style>
+</head>
+<body>
+<h1 th:text="${msg}"></h1>
+<h1>此次预约为下周</h1>
+<p>绿色空闲,红色已被预约,蓝色选中</p>
+<form action="/query/insert" method="post">
+    <input type="hidden" name="studentVipNum" th:value="${vipNum}" readonly="readonly"/>
+    <input type="hidden" name="studentCoachNum" th:value="${coachNumber}" readonly="readonly"/>
+    <hr>
+    <table class="table table-bordered">
+        <tr>
+            <td>时间段/日程</td>
+            <td th:each="w,item:${weeks}" th:text="${w.leagueWeek}"></td>
+        </tr>
+
+        <tr th:each="g,item:${groups}">
+            <td>
+                <b th:text="${g.leagueTimeSlot}"></b>
+            </td>
+
+
+            <td  th:each="w,item:${weeks}"
+                    class="td green">
+                <p  th:each="s,item:${students}">
+                    <input type="radio" name="studentWeek" th:value="${w.leagueWeekGroup}">
+
+                     <input th:class="${s.studentWeek == w.leagueWeekGroup and s.studentTime == h.leagueGroup}?xx:yy" class="in" th:each="h,item:${groups}"
+                           type="radio"g
+                           name="studentTime"
+                           th:value="${h.leagueGroup}"
+                           th:if="${g.leagueGroup == h.leagueGroup}">
+                <p/>
+            </td>
+
+        </tr>
+    </table>
+    <p>
+        <button class="btn btn-primary">确定</button>
+        <a class="btn btn-primary" href="/query/show">取消</a>
+    </p>
+</form>
+<script>
+    $(".td").click(function () {
+        $(this).children().children().attr("checked", "checked");
+        $(".blue").toggleClass("blue").toggleClass("green");
+        $(this).toggleClass("blue");
+        $(this).toggleClass("green");
+
+    })
+    f();
+    function f() {
+     $(".xx").parent().parent().removeClass("td green");
+      var $td = $("<td></td>").attr("class","red");
+      $(".xx").parent().parent().before($td);
+      $(".xx").parent().parent().toggle();
+    }
+</script>
+</body>
+</html>
