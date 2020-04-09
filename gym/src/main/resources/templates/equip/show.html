@@ -1,37 +1,54 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="zh_CN" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.w3.org/1999/xhtml">
 <head>
-<meta charset="UTF-8">
-<title>健身中心</title>
-<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
-	<style type="text/css">
-		body {
-			margin: 40px;
-			text-align: center;
-			padding: 0px;
-			background-size: cover;
-		}
-	</style>
+    <meta charset="UTF-8">
+    <title>健身中心</title>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <style type="text/css">
+        body {
+            margin: 40px;
+            text-align: center;
+            padding: 0px;
+            background-size: cover;
+        }
+    </style>
 </head>
-<body >
-	<a href="/equip/add">添加设备</a>
-	<table class="table table-bordered">
-		<tr>
-			<td>序号</td>
-			<td>设备编号</td>
-			<td>设备名称</td>
-			<td>操作</td>
-		</tr>
-		<tr th:each="c,item:${equips}">
-			<td th:text="${item.count}">序号</td>
-			<td th:text="${c.equipNum}"></td>
-			<td th:text="${c.equipName}"></td>
-			<td>
-				<a th:href="@{/equip/delete(equipId=${c.equipId})}">删除</a>
-				<a th:href="@{/equip/edit(equipId=${c.equipId})}">修改</a>
-			</td>
-		</tr>
+<body>
+<a href="/equip/add">添加设备</a>
+<table class="table table-bordered">
+    <tr>
+        <td>序号</td>
+        <td>设备编号</td>
+        <td>设备名称</td>
+        <td>操作</td>
+    </tr>
+    <tr th:each="c,item:${equips}">
+        <td th:text="${item.count}">序号</td>
+        <td th:text="${c.equipNum}"></td>
+        <td th:text="${c.equipName}"></td>
+        <td>
+            <a th:href="@{/equip/delete(equipId=${c.equipId})}">删除</a>
+            <a th:href="@{/equip/edit(equipId=${c.equipId})}">修改</a>
+        </td>
+    </tr>
 
-	</table>
+</table>
+<div style="margin-left: -40px;">
+    <b th:if="${poo} ne '1'">
+        <a th:href="@{/equip/show(page=${poo -1 })}">上一页</a>
+    </b>
+    <span th:each="page :${#numbers.sequence(1,num)}">
+
+       <i th:if="${page} eq ${poo}">
+         <b th:text="${page}"></b>
+      </i>
+      <i th:if="${page} ne ${poo}">
+         <a th:href="@{/equip/show(page=${page})}" th:text="${page}"></a>
+      </i>
+   </span>
+    <b th:if="${poo} ne ${num}">
+        <a th:href="@{/equip/show(page=${poo+1})}">下一页</a>
+    </b>
+</div>
 </body>
 </html>

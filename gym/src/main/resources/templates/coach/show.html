@@ -59,6 +59,22 @@
 		</tr>
 
 	</table>
+	<div style="margin-left: -40px;"  th:if="${num != 0}">
+		<b th:if="${poo} ne '1'">
+			<a th:href="@{/coach/show(page=${poo -1 })}">上一页</a>
+		</b>
+		<span  th:each="page :${#numbers.sequence(1,num)}">
 
+       <i th:if="${page} eq ${poo}">
+         <b th:text="${page}"></b>
+      </i>
+      <i th:if="${page} ne ${poo}">
+         <a th:href="@{/coach/show(page=${page})}" th:text="${page}"></a>
+      </i>
+   </span>
+		<b th:if="${poo} ne ${num}">
+			<a th:href="@{/coach/show(page=${poo+1})}">下一页</a>
+		</b>
+	</div>
 </body>
 </html>

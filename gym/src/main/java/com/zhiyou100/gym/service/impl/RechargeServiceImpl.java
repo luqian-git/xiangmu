@@ -7,6 +7,7 @@ import com.zhiyou100.gym.service.AchievementService;
 import com.zhiyou100.gym.service.RechargeService;
 import com.zhiyou100.gym.service.VipCardService;
 import com.zhiyou100.gym.util.NumTimeNowUtil;
+import com.zhiyou100.gym.util.PageNumUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -64,5 +65,49 @@ public class RechargeServiceImpl implements RechargeService {
             achievement.setAchUserNum(recharge.getRechUserMember());
             achievementService.add(achievement);
         return row;
+    }
+    public Integer num = PageNumUtil.PageNum;
+    @Override
+    public Integer findCount() {
+        // 获取 数据库 中 数量
+        int count = rechargeMapper.findCount();
+        int Page = count / num;
+        if (count % num != 0) {
+            Page++;
+        }
+        return Page;
+    }
+
+    @Override
+    public Integer findrechUserMemberCount(Integer rechUserMember) {
+        // 获取 数据库 中 数量
+        int count = rechargeMapper.findrechUserMemberCount(rechUserMember);
+        int Page = count / num;
+        if (count % num != 0) {
+            Page++;
+        }
+        return Page;
+    }
+
+    @Override
+    public List<Recharge> findRTCByPage(Integer page) {
+        if (page == null || page < 1) {
+            page = 1;
+        }
+        int size = num;
+        //跳过多条数据
+        int pages = (page - 1) * size;
+        return rechargeMapper.findRTCByPage(pages, size);
+    }
+
+    @Override
+    public List<Recharge> findrechUserMemberByPage(Integer page ,Integer rechUserMember) {
+        if (page == null || page < 1) {
+            page = 1;
+        }
+        int size = num;
+        //跳过多条数据
+        int pages = (page - 1) * size;
+        return rechargeMapper.findrechUserMemberByPage(pages, size,rechUserMember);
     }
 }

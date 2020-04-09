@@ -2,6 +2,7 @@ package com.zhiyou100.gym.mapper;
 
 import com.zhiyou100.gym.pojo.Potential;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -16,4 +17,8 @@ public interface PotentialMapper {
 
     public Potential findMax();
     public Potential findByPhone(Long potPhone);
+
+    public Integer findCount();
+    public List<Potential> findByPage(@Param("start") int start, @Param("size") int size);
+
 }

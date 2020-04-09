@@ -31,6 +31,16 @@
     <select id="findByPhone" resultMap="potential" parameterType="long">
         select * from gym_potential where pot_phone = #{potPhone}
     </select>
+
+    <select id="findCount" resultType="java.lang.Integer">
+      select  count(pot_id) from gym_potential
+    </select>
+
+    <select id="findByPage" resultMap="potential" parameterType="integer">
+          select * from gym_potential
+          LIMIT #{start},#{size}
+    </select>
+
     <!-- 添加数据  大写-->
     <insert id="add" parameterType="com.zhiyou100.gym.pojo.Potential">
 		insert into gym_potential values(

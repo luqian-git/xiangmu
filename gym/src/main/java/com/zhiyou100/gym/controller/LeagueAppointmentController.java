@@ -44,9 +44,14 @@ public class LeagueAppointmentController {
     }
 
     @RequestMapping("appShow")
-    public String appShow(Model model){
-        model.addAttribute("leApps",
-        leagueAppointmentService.appShow(userService.shiroUser().getUsMember()));
+    public String appShow(Model model,Integer page){
+        if (page == null) {
+            page = 1;
+        }
+        model.addAttribute("poo", page);
+        model.addAttribute("num",leagueAppointmentService.findCount(userService.shiroUser().getUsMember()));
+        //分页
+        model.addAttribute("leApps", leagueAppointmentService.findByPage(page,userService.shiroUser().getUsMember()));
         return "leApp/appShow";
     }
 

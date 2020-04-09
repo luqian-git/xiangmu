@@ -52,4 +52,32 @@
 		ach_state = 1
 		where ach_id = #{achId}
 	</update>
+    <select id="findCount" resultType="java.lang.Integer">
+        select  count(ach_id) from gym_achievement
+         where  ach_state = 0
+    </select>
+
+    <select id="findByPage" resultMap="achievement" parameterType="integer">
+        select * from gym_achievement a
+         INNER JOIN gym_coach c on a.ach_coach_num = c.coach_number
+         INNER JOIN gym_user u on a.ach_user_num = u.us_member
+         INNER JOIN gym_top t on a.ach_top_id = t.top_id
+         where  a.ach_state = 0
+       LIMIT #{start},#{size}
+    </select>
+    <select id="findCoachNumCount" resultType="java.lang.Integer">
+        select  count(ach_id) from gym_achievement
+         where  ach_state = 0 and  ach_coach_num = #{achCoachNum}
+    </select>
+    <select id="findCoachNumByPage" resultMap="achievement" parameterType="integer">
+          select * from gym_achievement a
+         INNER JOIN gym_coach c on a.ach_coach_num = c.coach_number
+         INNER JOIN gym_user u on a.ach_user_num = u.us_member
+         INNER JOIN gym_top t on a.ach_top_id = t.top_id
+         where  a.ach_state = 0
+          and  a.ach_coach_num = #{achCoachNum}
+          LIMIT #{start},#{size}
+    </select>
+
+
 </mapper>

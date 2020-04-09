@@ -32,8 +32,7 @@
          select * from gym_student s
          INNER JOIN gym_user u on s.student_vip_num = u.us_member
          where s.student_coach_num = #{studentCoachNum}
-         and  student_state = 0
-         or student_state = 1
+         and  student_state &lt; 2
     </select>
     <!-- 添加数据  大写-->
     <insert id="add" parameterType="com.zhiyou100.gym.pojo.Student">

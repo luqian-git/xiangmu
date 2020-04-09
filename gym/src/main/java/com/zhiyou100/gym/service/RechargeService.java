@@ -23,4 +23,10 @@ public interface RechargeService {
 
     public String add(Recharge recharge);
 
+    public Integer findCount();
+    public Integer findrechUserMemberCount(Integer rechUserMember);
+    public List<Recharge> findRTCByPage(Integer page);
+    public List<Recharge> findrechUserMemberByPage(Integer page,Integer rechUserMember);
+
+
 }

@@ -16,8 +16,14 @@ public class PotentialController {
 
 
     @RequestMapping("show")
-    public String show(Model model){
-        model.addAttribute("potentials",potentialService.findAll());
+    public String show(Model model,Integer page){
+        if (page == null) {
+            page = 1;
+        }
+        model.addAttribute("poo", page);
+        model.addAttribute("num",potentialService.findCount());
+        //分页
+        model.addAttribute("potentials", potentialService.findByPage(page));
         return "potential/show";
     }
     @RequestMapping("add")

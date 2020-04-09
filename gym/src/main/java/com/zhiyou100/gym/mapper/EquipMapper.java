@@ -2,6 +2,7 @@ package com.zhiyou100.gym.mapper;
 
 import com.zhiyou100.gym.pojo.Equip;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -18,4 +19,10 @@ public interface EquipMapper {
 
     //通过编号查询
     public Equip findByNum(Integer equipNum);
+
+    //分页
+    public Integer findCount();
+    public List<Equip> findByPage(@Param("start") int start, @Param("size") int size);
+
+
 }

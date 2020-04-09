@@ -22,6 +22,14 @@
         </collection>
 
     </resultMap>
+    <insert id="insert">
+        insert into gym_cabinet values (
+        null,
+        #{cabNumber},
+        #{cabCapacity},
+        1
+        )
+    </insert>
 
     <select id="findWAll" resultMap="cabinet">
           select * from gym_cabinet where cab_status = 1 or cab_status = 3
@@ -40,7 +48,28 @@
     <select id="findById" resultMap="cabinet">
           select * from gym_cabinet where cab_id = #{cabId}
     </select>
-
+    <select id="findCount13" resultType="java.lang.Integer">
+          select count(cab_id) from gym_cabinet where cab_status = 1 or cab_status = 3
+    </select>
+    <select id="findCount2" resultType="java.lang.Integer">
+         select count(cab_id) from gym_cabinet where cab_status = 2
+    </select>
+    <select id="findByPage13" resultMap="cabinet" parameterType="integer">
+         select * from gym_cabinet where cab_status = 1 or cab_status = 3
+         LIMIT #{start},#{size}
+    </select>
+    <select id="findByPage2" resultMap="cabinet" parameterType="integer">
+        select c.*,i.*,u.* from gym_cabinet c
+        INNER JOIN gym_cab_info i on i.cab_info_num  =  c.cab_number
+        INNER JOIN gym_user u on i.cab_info_member = u.us_member
+        INNER JOIN gym_user_role ur on u.us_id = ur.u_id
+        INNER JOIN gym_role r on ur.r_id = r.ro_id
+        where c.cab_status = 2
+        and i.cab_info_status = 1
+        and u.us_status = 1
+        and ur.r_id = 5
+        LIMIT #{start},#{size}
+    </select>
     <update id="update1" parameterType="integer">
           update gym_cabinet set
           cab_status = 1

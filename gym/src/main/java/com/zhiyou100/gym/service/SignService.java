@@ -13,4 +13,14 @@ public interface SignService {
     public void deleteById(Integer singId);
     public void update(Sign sign);
 
+    public Sign findNum(Integer signUserNumer);
+
+    public Integer findCount(Integer q);
+
+    public List<Sign> findByPage(Integer page,Integer q);
+
+    public List<Sign> findByPageNum(Integer page,Integer signUserNumer);
+
+    public Integer findCountNum(Integer signUserNumber);
+
 }

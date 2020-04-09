@@ -6,6 +6,7 @@ import com.zhiyou100.gym.pojo.CabInfo;
 import com.zhiyou100.gym.pojo.User;
 import com.zhiyou100.gym.service.CabInfoService;
 import com.zhiyou100.gym.service.UserService;
+import com.zhiyou100.gym.util.PageNumUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -86,5 +87,29 @@ public class CabInfoServiceImpl implements CabInfoService {
         Timestamp time1 = new Timestamp(wl.getTimeInMillis());
         cabInfo.setCabInfoUpdateTime(time1);
         cabInfoMapper.update(cabInfo);
+    }
+
+    public Integer num = PageNumUtil.PageNum;
+
+    @Override
+    public Integer findCount(Integer cabInfoStatus) {
+        // 获取 数据库 中 数量
+        int count = cabInfoMapper.findCount(cabInfoStatus);
+        int Page = count / num;
+        if (count % num != 0) {
+            Page++;
+        }
+        return Page;
+    }
+
+    @Override
+    public List<CabInfo> findByPage(Integer page, Integer cabInfoStatus) {
+        if (page == null || page < 1) {
+            page = 1;
+        }
+        int size = num;
+        //跳过多条数据
+        int pages = (page - 1) * size;
+        return cabInfoMapper.findByPage(pages, size,cabInfoStatus);
     }
 }

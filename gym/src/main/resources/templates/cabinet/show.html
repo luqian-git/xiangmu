@@ -19,9 +19,9 @@
 </head>
 <body >
 	<h1>未被出租 租柜</h1>
-	<a href="/cabinet/show2">查看租柜记录</a>
-	<a href="/cabinet/show1">查看已租租柜</a>
-
+	<a href="/cabinet/show2">查看租柜记录</a>/
+	<a href="/cabinet/show1">查看已租租柜</a>/
+	<a href="/cabinet/addCab">添加租柜</a>
 	<table class="table table-bordered">
 		<tr>
 			<td>序号</td>
@@ -53,5 +53,22 @@
 		</tr>
 
 	</table>
+	<div style="margin-left: -40px;">
+		<b th:if="${poo} ne '1'">
+			<a th:href="@{/cabinet/show(page=${poo -1 })}">上一页</a>
+		</b>
+		<span  th:each="page :${#numbers.sequence(1,num)}">
+
+       <i th:if="${page} eq ${poo}">
+         <b th:text="${page}"></b>
+      </i>
+      <i th:if="${page} ne ${poo}">
+         <a th:href="@{/cabinet/show(page=${page})}" th:text="${page}"></a>
+      </i>
+   </span>
+		<b th:if="${poo} ne ${num}">
+			<a th:href="@{/cabinet/show(page=${poo+1})}">下一页</a>
+		</b>
+	</div>
 </body>
 </html>

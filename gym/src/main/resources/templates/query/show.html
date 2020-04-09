@@ -76,6 +76,11 @@
     /
     <b>点击教练查看详情</b>
 </h1>
+
+    <form action="/query/show" id="myform">
+        搜索教练:<input type="text" name="coachNumber"  placeholder="教练工号">
+    </form>
+
 <div id="zk" th:each="c,item:${coachs}">
         <div class="k0">
             <div class="k0-t">
@@ -104,6 +109,12 @@
         $(this).toggleClass("k0f");
         $(this).next().toggleClass("no")
     });
+</script>
+<script>
+    function submitForm(){
+        var form = document.getElementById("myform");
+        form.submit();
+    }
 </script>
 
 </body>

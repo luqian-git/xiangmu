@@ -21,8 +21,14 @@ public class VipCardController {
     private RoleService roleService;
 
     @RequestMapping("show")
-    public String show(Model model){
-        model.addAttribute("vipCards",vipCardService.findAll());
+    public String show(Model model,Integer page){
+        if (page == null) {
+            page = 1;
+        }
+        model.addAttribute("poo", page);
+        model.addAttribute("num",vipCardService.findCount());
+        //分页
+        model.addAttribute("vipCards", vipCardService.findByPage(page));
         return "vipCard/show";
     }
     @RequestMapping("add")

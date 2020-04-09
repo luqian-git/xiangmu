@@ -63,6 +63,26 @@
         and coach_status != "辞退"
         and coach_number = #{coachNumber}
     </select>
+    <select id="findByCoachNum" resultMap="coach">
+        select * from gym_coach
+        where coach_position = 2
+        and coach_status != "离职"
+        and coach_status != "辞退"
+        and coach_number = #{coachNumber}
+
+    </select>
+    <select id="findAllCount" resultType="java.lang.Integer">
+        select  count(coach_id) from gym_coach where
+        coach_position = #{coachPosition}
+    </select>
+    <select id="findDByPage" resultMap="coach">
+          select * from gym_coach c
+          INNER JOIN gym_role r on r.ro_id = c.coach_position
+          where c.coach_position   = #{coachPosition}
+          and coach_status != "离职"
+          and coach_status != "辞退"
+          LIMIT #{start},#{size}
+    </select>
 
     <!-- 添加数据  大写-->
     <insert id="add" parameterType="com.zhiyou100.gym.pojo.Coach">

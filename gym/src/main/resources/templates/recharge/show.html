@@ -50,6 +50,23 @@
 		</tr>
 
 	</table>
+	<div style="margin-left: -40px;" th:if="${num != 0}">
+		<b th:if="${poo} ne '1'">
+			<a th:href="@{/recharge/show(page=${poo -1},rechUserMember=${rechUserMember})}">上一页</a>
+		</b>
+		<span  th:each="page :${#numbers.sequence(1,num)}">
+
+       <i th:if="${page} eq ${poo}">
+         <b th:text="${page}"></b>
+      </i>
+      <i th:if="${page} ne ${poo}">
+         <a th:href="@{/recharge/show(page=${page},rechUserMember=${rechUserMember})}" th:text="${page}"></a>
+      </i>
+   </span>
+		<b th:if="${poo} ne ${num}">
+			<a th:href="@{/recharge/show(page=${poo +1},rechUserMember=${rechUserMember})}">下一页</a>
+		</b>
+	</div>
 
 	<script>
         function submitForm(){

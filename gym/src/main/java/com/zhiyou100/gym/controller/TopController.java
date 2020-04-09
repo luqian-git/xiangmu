@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("top")
@@ -16,6 +17,15 @@ public class TopController {
     private TopService topService;
     
     
+ /* @RequestMapping("show")
+    public String show(Model model,
+        @RequestParam(defaultValue = "1") int pageNum,
+        @RequestParam(defaultValue = "3") int pageSize){
+        PageHelper.startPage(pageNum,pageSize);
+        PageInfo pageInfo=new PageInfo(topService.findAll());
+        model.addAttribute("pageInfo",pageInfo);
+        return "top/show";
+    }*/
     @RequestMapping("show")
     public String show(Model model){
         model.addAttribute("tops",topService.findAll());

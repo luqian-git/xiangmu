@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @Controller
 @RequestMapping("sign")
@@ -22,16 +23,26 @@ public class SignController {
 
 
     @RequestMapping("show")
-    public String show(Model model, Integer q,Integer signUserNumber){
+    public String show(Model model, Integer q,Integer signUserNumber,Integer page,String msg){
         if (q == null||q > 2 || q < 0 ){
             q = 0;
         }
+        if (page == null){
+            page = 1;
+        }
+        if (msg!= null){
+            model.addAttribute("msg","请确认编号,编号错误");
+        }
+        model.addAttribute("poo", page);
         model.addAttribute("q",q);
         if (signUserNumber != null){
-            model.addAttribute("signs",signService.findById(signUserNumber));
+            model.addAttribute("signs",signService.findByPageNum(page,signUserNumber));
+            model.addAttribute("num",signService.findCountNum(signUserNumber));
         }else {
-            model.addAttribute("signs",signService.findAll(q));
+            model.addAttribute("signs",signService.findByPage(page,q));
+            model.addAttribute("num",signService.findCount(q));
         }
+
         return "sign/show";
     }
     @RequestMapping("add")

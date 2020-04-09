@@ -2,6 +2,7 @@ package com.zhiyou100.gym.mapper;
 
 import com.zhiyou100.gym.pojo.Training;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -11,12 +12,21 @@ public interface TrainingMapper {
     public List<Training> findAll0();
     public List<Training> findAll1();
 
+
+    //分页
+    public Integer findCount0();
+    public Integer findCount1();
+
+    public List<Training> findByPage(@Param("start") int start, @Param("size") int size,Integer trainingState,Integer trainingUserNum);
+    public List<Training> findByPageAll(@Param("start") int start, @Param("size") int size,Integer trainingState);
+
     public List<Training> findByUser0(Integer trainingUserNum);
     public List<Training> findByUser1(Integer trainingUserNum);
 
     public Training findById(Integer trainingId);
 
     public void add(Training training);
+
 
     // 同一时间只有一个 训练 进行
 

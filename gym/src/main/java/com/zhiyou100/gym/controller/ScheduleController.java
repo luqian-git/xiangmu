@@ -19,11 +19,24 @@ public class ScheduleController {
     private UserService userService;
     
     @RequestMapping("show")
-    public String show(Model model){
-        if (userService.shiroUser().getUsId() == 1){
-            model.addAttribute("schedules",scheduleService.findAll());
+    public String show(Model model,Integer page,Integer UsMember){
+        if (page == null) {
+            page = 1;
+        }
+        if (UsMember == null){
+            UsMember = userService.shiroUser().getUsMember();
+        }
+        model.addAttribute("UsMember",UsMember);
+        model.addAttribute("poo", page);
+        if (userService.shiroUser().getUsAccount().equals("admin")){
+            model.addAttribute("num",scheduleService.findCount());
+            //分页
+            model.addAttribute("schedules", scheduleService.findByPage(page));
         }else {
-            model.addAttribute("schedules",scheduleService.findNum(userService.shiroUser().getUsMember()));
+            model.addAttribute("num",scheduleService.findDCount(UsMember));
+            //分页
+            model.addAttribute("schedules", scheduleService.findDByPage(page,UsMember));
+
         }
         return "schedule/show";
     }

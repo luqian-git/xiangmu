@@ -15,7 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.FileInputStream;
 import java.io.IOException;
 
-@Slf4j
+
 @Controller
 @RequestMapping("staff")
 public class StaffController {
@@ -30,12 +30,17 @@ public class StaffController {
     // 员工管理
 
     @RequestMapping("show")
-    public String show(Model model,Integer coachPosition){
+    public String show(Model model,Integer coachPosition,Integer page){
         if (coachPosition == null){
-            model.addAttribute("coachs",coachService.findAll(4));
-        }else {
-            model.addAttribute("coachs",coachService.findAllD(coachPosition));
+            coachPosition = 2;
         }
+        if (page == null) {
+            page = 1;
+        }
+        model.addAttribute("poo", page);
+        model.addAttribute("num",coachService.findCount(coachPosition));
+        //分页
+        model.addAttribute("coachs", coachService.findByPage(page,coachPosition));
         model.addAttribute("coachPosition",coachPosition);
         model.addAttribute("roles",roleService.findStaff());
         return "staff/show";

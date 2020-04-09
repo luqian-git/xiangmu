@@ -15,7 +15,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.FileInputStream;
 import java.io.IOException;
 
-@Slf4j
 @Controller
 @RequestMapping("coach")
 public class CoachController {
@@ -28,11 +27,17 @@ public class CoachController {
     private QiniuUtil qiniuUtil;
 
     @RequestMapping("show")
-    public String show(Model model,Integer coachPosition){
+    public String show(Model model,Integer coachPosition,Integer page){
         if (coachPosition == null){
             coachPosition = 2;
         }
-        model.addAttribute("coachs",coachService.findAll(coachPosition));
+        if (page == null) {
+            page = 1;
+        }
+        model.addAttribute("poo", page);
+        model.addAttribute("num",coachService.findCount(coachPosition));
+        //分页
+        model.addAttribute("coachs", coachService.findByPage(page,coachPosition));
         return "coach/show";
     }
     @RequestMapping("add")

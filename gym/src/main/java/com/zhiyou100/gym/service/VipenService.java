@@ -10,4 +10,9 @@ public interface VipenService {
     public void add(Integer vipenUserId);
     public void update(Integer vipenId);
 
+
+    public Integer findCount(Integer vipenStatus);
+
+    public List<Vipen> findByPage(Integer page,Integer vipenStatus);
+
 }

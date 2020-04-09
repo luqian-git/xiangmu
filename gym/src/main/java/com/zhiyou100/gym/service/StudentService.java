@@ -18,4 +18,7 @@ public interface StudentService {
     public String update(Integer studentId);
     public void deleteById(Integer studentId);
 
+    //定时任务定时 每周日 凌晨 把预约 成员 改为 本周的
+    public void updateState();
+
 }

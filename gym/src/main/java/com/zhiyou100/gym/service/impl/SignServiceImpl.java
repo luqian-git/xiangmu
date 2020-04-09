@@ -9,6 +9,7 @@ import com.zhiyou100.gym.pojo.Vipen;
 import com.zhiyou100.gym.service.SignService;
 import com.zhiyou100.gym.service.UserService;
 import com.zhiyou100.gym.service.VipenService;
+import com.zhiyou100.gym.util.PageNumUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -94,5 +95,56 @@ public class SignServiceImpl implements SignService {
         signMapper.update(sign);
     }
 
+    public Integer num = PageNumUtil.PageNum;
+    @Override
+    public Integer findCount(Integer q) {
+        // 获取 数据库 中 数量
+        int count = signMapper.findCount(q);
+        int Page = count / num;
+        if (count % num != 0) {
+            Page++;
+        }
+        return Page;
+    }
 
+    @Override
+    public List<Sign> findByPage(Integer page, Integer q) {
+        if (page == null || page < 1) {
+            page = 1;
+        }
+        int size = num;
+        int pages = (page - 1) * size;
+        if (q != 2){
+            return signMapper.findByPage01(pages, size,q);
+        } else {
+            return signMapper.findByPage2(pages, size);
+        }
+    }
+
+    @Override
+    public Sign findNum(Integer signUserNumer) {
+        return signMapper.findNum(signUserNumer);
+    }
+
+    @Override
+    public List<Sign> findByPageNum(Integer page, Integer signUserNumer) {
+        if (page == null || page < 1) {
+            page = 1;
+        }
+        int size = num;
+        //跳过多条数据
+        int pages = (page - 1) * size;
+        return signMapper.findByPageNum(pages, size,signUserNumer);
+    }
+
+    @Override
+    public Integer findCountNum(Integer signUserNumber) {
+        // 获取 数据库 中 数量
+        int count = signMapper.findCountNum(signUserNumber);
+        int Page = count / num;
+        if (count % num != 0) {
+            Page++;
+        }
+        return Page;
+    }
 }

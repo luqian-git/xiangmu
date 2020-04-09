@@ -11,4 +11,8 @@ public interface MaintainService {
     public String add(Maintain maintain);
     public String update(Maintain maintain);
     public void deleteById(Integer maintainId);
+
+    public Integer findCount();
+
+    public List<Maintain> findByPage(Integer page);
 }

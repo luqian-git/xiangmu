@@ -3,23 +3,52 @@ package com.zhiyou100.gym.service.impl;
 import com.zhiyou100.gym.mapper.UserMapper;
 import com.zhiyou100.gym.pojo.User;
 import com.zhiyou100.gym.service.UserService;
+import com.zhiyou100.gym.util.PageNumUtil;
+import org.apache.ibatis.annotations.Param;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service(value = "userService")
+@Service
 public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserMapper userMapper;
+
+    public Integer ys = PageNumUtil.PageNum;
 
     @Override
     public List<User> findAll() {
         return userMapper.findAllUR();
     }
 
+
+
+    // 用 数据库的 数量 计算出 分几页
+    @Override
+    public Integer findUserCount() {
+        // 获取 数据库 中 数量
+        int count = userMapper.findUserCount();
+        int Page = count / ys;
+        if (count % ys != 0) {
+            Page++;
+        }
+        return Page;
+    }
+
+    @Override
+    public List<User> findByPage(Integer page) {
+        if (page == null || page < 1) {
+            page = 1;
+        }
+        int size = ys;
+        //跳过多条数据
+        int pages = (page - 1) * size;
+        //第一个参数为
+        return userMapper.findByPage(pages,size);
+    }
 
     @Override
     public String add(User user) {

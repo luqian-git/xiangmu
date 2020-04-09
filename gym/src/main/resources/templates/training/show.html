@@ -15,7 +15,7 @@
 </head>
 <body >
 	<h1 th:text="${msg}"></h1>
-	<a href="/training/add">添加训练记录</a>
+	<a th:if="${msg == null}" href="/training/add">添加训练记录</a>
 	<h5>
 		<a th:if="${t==0}" th:href="@{/training/show(t=1)}">查看已完成训练</a>
 		<a th:if="${t==1}" th:href="@{/training/show(t=0)}">查看未完成训练</a>
@@ -58,5 +58,22 @@
 		</tr>
 
 	</table>
+	<div style="margin-left: -40px;">
+		<b th:if="${poo} ne '1'">
+			<a th:href="@{/training/show(page=${poo -1 })}">上一页</a>
+		</b>
+		<span  th:each="page :${#numbers.sequence(1,num)}">
+
+       <i th:if="${page} eq ${poo}">
+         <b th:text="${page}"></b>
+      </i>
+      <i th:if="${page} ne ${poo}">
+         <a th:href="@{/training/show(page=${page})}" th:text="${page}"></a>
+      </i>
+   </span>
+		<b th:if="${poo} ne ${num}">
+			<a th:href="@{/training/show(page=${poo+1})}">下一页</a>
+		</b>
+	</div>
 </body>
 </html>

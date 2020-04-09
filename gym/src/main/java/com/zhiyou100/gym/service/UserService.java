@@ -1,6 +1,7 @@
 package com.zhiyou100.gym.service;
 
 import com.zhiyou100.gym.pojo.User;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -30,4 +31,9 @@ public interface UserService {
 
     //当前登录的账号信息
     public User shiroUser();
+
+    //分页多少条数据
+    public Integer findUserCount();
+    //分页
+    public List<User> findByPage(Integer page);
 }

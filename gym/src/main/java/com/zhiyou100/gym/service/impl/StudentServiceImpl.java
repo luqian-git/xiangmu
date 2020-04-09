@@ -36,7 +36,6 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public String add(Student student) {
-        System.out.println(student);
         studentMapper.add(student);
         return "成功";
     }
@@ -50,5 +49,10 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public void deleteById(Integer studentId) {
         studentMapper.deleteById(studentId);
+    }
+    //定时任务定时 每周日 凌晨 把预约 成员 改为 本周的
+    @Override
+    public void updateState() {
+        studentMapper.updateState();
     }
 }

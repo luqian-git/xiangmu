@@ -41,7 +41,7 @@
 	</delete>
     <!-- 动态sql修改  大写-->
     <update id="update" parameterType="com.zhiyou100.gym.mapper.MaintainMapper">
-		update gym_maintain_record
+        update gym_maintain_record
         <set>
             <if test="maintainRegion != null">maintain_region =#{maintainRegion},</if>
             <if test="maintainEquipNum != null">maintain_equip_num =#{maintainEquipNum},</if>
@@ -51,5 +51,18 @@
             <if test="maintainCoachNumber != null">maintain_coach_number =#{maintainCoachNumber},</if>
         </set>
         where maintain_id = #{maintainId}
-	</update>
+    </update>
+
+    <select id="findCount" resultType="java.lang.Integer">
+        select count(maintain_id) from gym_maintain_record
+    </select>
+
+    <select id="findByPage" resultMap="maintain" parameterType="integer">
+      select * from gym_maintain_record m
+      INNER JOIN gym_equip e on m.maintain_equip_num = e.equip_num
+      INNER JOIN gym_coach c on m.maintain_coach_number = c.coach_number
+       LIMIT #{start},#{size}
+    </select>
+
+
 </mapper>

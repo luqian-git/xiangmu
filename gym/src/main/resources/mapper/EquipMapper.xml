@@ -43,4 +43,14 @@
         </set>
 		where equip_id = #{equipId}
 	</update>
+    <select id="findCount" resultType="java.lang.Integer">
+        select count(equip_id)  from gym_equip
+    </select>
+
+    <select id="findByPage" resultMap="equip" parameterType="integer">
+      select * from gym_equip
+      LIMIT #{start},#{size}
+</select>
+
+
 </mapper>

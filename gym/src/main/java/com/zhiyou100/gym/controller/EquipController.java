@@ -16,8 +16,14 @@ public class EquipController {
 
 
     @RequestMapping("show")
-    public String show(Model model){
-        model.addAttribute("equips",equipService.findAll());
+    public String show(Model model,Integer page){
+        if (page == null) {
+            page = 1;
+        }
+        model.addAttribute("poo", page);
+        model.addAttribute("num",equipService.findCount());
+        //分页
+        model.addAttribute("equips", equipService.findByPage(page));
         return "equip/show";
     }
     @RequestMapping("add")

@@ -116,6 +116,27 @@
         GROUP BY a.training_equip_id,a.training_id
         HAVING count(b.training_id) &lt; 1
     </select>
+    <select id="findCount0" resultType="java.lang.Integer">
+      select  count(training_id) from gym_training_record where training_state = 0
+    </select>
+    <select id="findCount1" resultType="java.lang.Integer">
+      select  count(training_id) from gym_training_record where training_state = 0
+    </select>
+    <select id="findByPage" resultMap="training" parameterType="integer">
+        select t.*,u.us_name,e.equip_name from gym_training_record t
+        INNER JOIN gym_user u on t.training_user_num = u.us_member
+        INNER JOIN gym_equip e on t.training_equip_id = e.equip_id
+        where  t.training_state  = #{trainingState}
+        and t.training_user_num = #{trainingUserNum}
+        LIMIT #{start},#{size}
+    </select>
+    <select id="findByPageAll" resultMap="training" parameterType="integer">
+        select t.*,u.us_name,e.equip_name from gym_training_record t
+        INNER JOIN gym_user u on t.training_user_num = u.us_member
+        INNER JOIN gym_equip e on t.training_equip_id = e.equip_id
+        where  t.training_state  = #{trainingState}
+        LIMIT #{start},#{size}
+    </select>
 
     <!-- 更新 本次 累计时长-->
     <update id="update" parameterType="com.zhiyou100.gym.pojo.Training">

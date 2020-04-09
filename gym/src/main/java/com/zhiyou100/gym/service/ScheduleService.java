@@ -12,4 +12,12 @@ public interface ScheduleService {
     public void update(Schedule schedule);
 
     public List<Schedule> findNum(Integer scheduleCoachNum);
+
+    public Integer findCount();
+    public Integer findDCount(Integer scheduleCoachNum);
+
+    public List<Schedule> findByPage(Integer page);
+    public List<Schedule> findDByPage(Integer page,Integer scheduleCoachNum);
+
+
 }

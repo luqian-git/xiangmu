@@ -20,5 +20,8 @@ public interface CabInfoService {
     //续费
     public void update(CabInfo cabInfo);
 
+    public Integer findCount(Integer cabInfoStatus);
+
+    public List<CabInfo> findByPage(Integer page,Integer cabInfoStatus);
 
 }

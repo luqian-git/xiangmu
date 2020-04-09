@@ -10,13 +10,20 @@ public interface TrainingService {
 
     public List<Training> findAll(Integer t,Integer trainingUserNum);
 
+    //分页
+    public Integer findCount(Integer t);
+
+    public List<Training> findByPage(Integer t,Integer trainingUserNum,Integer page);
+
 
     public Training findById(Integer trainingId);
     public String upTime(Integer trainingId);
     public String add(Training training);
 
     //今日运动报表
+
     public List<Training> findNow(Integer trainingUserNum);
     //累计运动报表
+
     public List<Training> findAllDate(Integer trainingUserNum);
 }

@@ -22,11 +22,19 @@ public class RechargeController {
 
 
     @RequestMapping("show")
-    public String show(Model model,Integer rechUserMember){
+    public String show(Model model,Integer rechUserMember,Integer page){
+        if (page == null) {
+            page = 1;
+        }
+        model.addAttribute("poo", page);
         if (rechUserMember == null){
-            model.addAttribute("recharges",rechargeService.findRTC());
+            model.addAttribute("num",rechargeService.findCount());
+            //分页
+            model.addAttribute("recharges", rechargeService.findRTCByPage(page));
         }else {
-            model.addAttribute("recharges",rechargeService.findrechUserMember(rechUserMember));
+            model.addAttribute("num",rechargeService.findrechUserMemberCount(rechUserMember));
+            model.addAttribute("recharges",rechargeService.findrechUserMemberByPage(page,rechUserMember));
+            model.addAttribute("rechUserMember",rechUserMember);
         }
         return "recharge/show";
     }

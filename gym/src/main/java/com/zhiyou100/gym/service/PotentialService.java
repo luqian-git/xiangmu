@@ -12,4 +12,8 @@ public interface PotentialService {
     public void deleteById(Integer potId);
     public void update(Potential potential);
 
+    public Integer findCount();
+
+    public List<Potential> findByPage(Integer page);
+
 }

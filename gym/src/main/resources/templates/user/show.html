@@ -36,7 +36,9 @@
 			<td>状态</td>
 			<td>操作</td>
 		</tr>
-		<tr th:each="user,item:${users}">
+		<font th:each="ur,item:${dan}">
+		<tr th:if="${ur.usId == user.usId}" th:each="user,item:${users}">
+
 			<td th:text="${item.count}">序号</td>
 			<td th:text="${user.usAccount}">账号</td>
 			<td th:text="${user.usPassword}">密码</td>
@@ -66,25 +68,25 @@
 				<a th:href="@{/user/edit.do(id=${user.usId})}">修改</a>
 			</td>
 		</tr>
-	
+		</font>
 	</table>
-	<!--<div style="margin-left: 550px;">-->
-		<!--<b th:if="${poo} ne '1'">-->
-			<!--<a th:href="@{/user/show.do(page=${poo-1})}">上一页</a>-->
-		<!--</b>-->
-		<!--<span  th:each="page :${#numbers.sequence(1,num)}">-->
-			<!---->
-			 <!--<i th:if="${page} eq ${poo}">-->
-				<!--<b th:text="${page}"></b>-->
-			<!--</i>-->
-			<!--<i th:if="${page} ne ${poo}">-->
-				<!--<a th:href="@{/user/show.do(page=${page})}" th:text="${page}"></a>-->
-			<!--</i> -->
-		<!--</span>-->
-		 <!--<b th:if="${poo} ne ${num}">-->
-			<!--<a th:href="@{/user/show.do(page=${poo+1})}">下一页</a>-->
-		<!--</b>-->
-	<!--</div>-->
+	<div style="margin-left: -40px;">
+		<b th:if="${poo} ne '1'">
+			<a th:href="@{/user/show(page=${poo -1 })}">上一页</a>
+		</b>
+		<span  th:each="page :${#numbers.sequence(1,num)}">
+
+			 <i th:if="${page} eq ${poo}">
+				<b th:text="${page}"></b>
+			</i>
+			<i th:if="${page} ne ${poo}">
+				<a th:href="@{/user/show(page=${page})}" th:text="${page}"></a>
+			</i>
+		</span>
+		 <b th:if="${poo} ne ${num}">
+			<a th:href="@{/user/show(page=${poo+1})}">下一页</a>
+		</b>
+	</div>
 
 </body>
 </html>

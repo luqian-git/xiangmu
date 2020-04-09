@@ -37,8 +37,16 @@ public class UserController {
     }
 
     @RequestMapping("show")
-    public String show(Model model){
-        model.addAttribute("users",userService.findAll());
+    public String show(Model model,Integer page){
+        if (page == null) {
+            page = 1;
+        }
+        model.addAttribute("poo", page);
+        model.addAttribute("num",userService.findUserCount());
+        //分页
+        model.addAttribute("dan", userService.findByPage(page));
+        //链接 role
+        model.addAttribute("users", userService.findAll());
         return "user/show";
     }
     @RequestMapping("loginOut")

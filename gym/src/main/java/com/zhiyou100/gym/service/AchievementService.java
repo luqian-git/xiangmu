@@ -11,4 +11,9 @@ public interface AchievementService {
     public void add(Achievement achievement);
     public void update1(Integer achId);
 
+    public Integer findCount();
+    public List<Achievement> findByPage(Integer page);
+
+    public Integer findCoachNumCount(Integer achCoachNum);
+    public List<Achievement> findCoachNumByPage(Integer page,Integer achCoachNum);
 }

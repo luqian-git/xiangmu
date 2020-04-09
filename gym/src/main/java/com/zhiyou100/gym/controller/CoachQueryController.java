@@ -24,11 +24,15 @@ public class CoachQueryController {
     private LeagueService leagueService;
 
     @RequestMapping("show")
-    public String show(Model model){
+    public String show(Model model,Integer coachNumber){
         if (userService.shiroUser().getUsMember()<10000){
             model.addAttribute("msg","不是会员账户");
         }
-        model.addAttribute("coachs",coachService.findAll(2));
+        if (coachNumber != null){
+            model.addAttribute("coachs",coachService.findcoachNumber(coachNumber));
+        }else {
+            model.addAttribute("coachs",coachService.findAll(2));
+        }
         return "query/show";
     }
     @RequestMapping("add")

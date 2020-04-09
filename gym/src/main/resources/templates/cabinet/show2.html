@@ -54,6 +54,24 @@
 		</tr>
 	
 	</table>
+	<div style="margin-left: -40px;">
+		<b th:if="${pooy} ne '1'">
+			<a th:href="@{/cabinet/show2(pagey=${pooy -1 })}">上一页</a>
+		</b>
+		<span  th:each="page :${#numbers.sequence(1,numy)}">
+
+       <i th:if="${page} eq ${pooy}">
+         <b th:text="${page}"></b>
+      </i>
+      <i th:if="${page} ne ${pooy}">
+         <a th:href="@{/cabinet/show2(pagey=${page})}" th:text="${page}"></a>
+      </i>
+   </span>
+		<b th:if="${pooy} ne ${numy}">
+			<a th:href="@{/cabinet/show2(pagey=${pooy+1})}">下一页</a>
+		</b>
+	</div>
+
 	<h1>已过期租柜记录</h1>
 	<table class="table table-bordered">
 		<tr th:each="g,item:${infog}">
@@ -78,5 +96,23 @@
 			<td>已过期</td>
 		</tr>
 	</table>
+	<div style="margin-left: -40px;">
+		<b th:if="${poog} ne '1'">
+			<a th:href="@{/cabinet/show2(pageg=${poog -1 })}">上一页</a>
+		</b>
+		<span  th:each="pageg :${#numbers.sequence(1,numg)}">
+
+       <i th:if="${pageg} eq ${poog}">
+         <b th:text="${pageg}"></b>
+      </i>
+      <i th:if="${pageg} ne ${poog}">
+         <a th:href="@{/cabinet/show2(pageg=${pageg})}" th:text="${pageg}"></a>
+      </i>
+   </span>
+		<b th:if="${poog} ne ${numg}">
+			<a th:href="@{/cabinet/show2(pageg=${poog+1})}">下一页</a>
+		</b>
+	</div>
+	
 </body>
 </html>

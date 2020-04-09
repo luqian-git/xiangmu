@@ -4,7 +4,7 @@
 
 <mapper namespace="com.zhiyou100.gym.mapper.LeagueAppointmentMapper">
     <resultMap type="com.zhiyou100.gym.pojo.LeagueAppointment" id="leagueAppointment">
-        <id column="_id" property="leAppId"/>
+        <id column="le_app_id" property="leAppId"/>
         <result column="le_app_coach_number" property="leAppCoachNumber"/>
         <result column="le_app_league_id" property="leAppLeagueId"/>
         <result column="le_app_card_number" property="leAppCardNumber"/>
@@ -55,4 +55,19 @@
         INNER JOIN gym_user u on a.le_app_card_number = u.us_member
         where a.le_app_coach_number = #{leAppCoachNumber}
     </select>
+
+    <select id="findCount" resultType="java.lang.Integer">
+      select  count(le_app_id)
+      from gym_league_appointment  where le_app_coach_number = #{leAppCoachNumber}
+</select>
+
+    <select id="findByPage" resultMap="leagueAppointment" parameterType="integer">
+      select * from gym_league_appointment a
+      INNER JOIN gym_league l on a.le_app_league_id = l.league_id
+      INNER JOIN gym_user u on a.le_app_card_number = u.us_member
+      where a.le_app_coach_number = #{leAppCoachNumber}
+      LIMIT #{start},#{size}
+</select>
+
+
 </mapper>

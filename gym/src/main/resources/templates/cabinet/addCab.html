@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+	<script src="/lib/jquery/jquery.js"></script>
+</head>
+<style type="text/css">
+	body {
+		margin: 40px;
+		text-align: center;
+		padding: 0px;
+		background-size: cover;
+	}
+	input{
+		width: 300px;
+		height: 40px;
+	}
+</style>
+<body>
+<!--
+cab_info_price			金额398 288 138 58(与下方对应)
+-->
+<form action="/cabinet/insertCab">
+	<p>
+		柜子编号:<input type="text" name="cabNumber" placeholder="柜号+柜子编号/如101888001 九位数" pattern="[0-9]{9}" title="九位数字">
+	</p>
+	<p>
+		柜子容量:
+		<select id="xl" name="cabCapacity">
+			<option selected value="0">40*40*50</option>
+			<option value="1">80*80*100</option>
+		</select>
+	</p>
+	<button class="btn btn-primary">确定</button><a class="btn btn-primary" href="/cabinet/show">取消</a>
+</form> 
+
+</body>
+</html>

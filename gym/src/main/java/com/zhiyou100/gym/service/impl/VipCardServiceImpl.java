@@ -5,10 +5,9 @@ import com.zhiyou100.gym.mapper.VipCardMapper;
 import com.zhiyou100.gym.pojo.User;
 import com.zhiyou100.gym.pojo.VipCard;
 import com.zhiyou100.gym.service.VipCardService;
+import com.zhiyou100.gym.util.PageNumUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import javax.xml.transform.Result;
 import java.util.List;
 
 @Service
@@ -79,5 +78,28 @@ public class VipCardServiceImpl implements VipCardService {
     public void update(Integer cardNumber) {
         userMapper.cancellation(cardNumber);
         vipCardMapper.update(cardNumber);
+    }
+    //展示数据
+    public Integer num = PageNumUtil.PageNum;
+
+    @Override
+    public Integer findCount() {
+        // 获取 数据库 中 数量
+        int count = vipCardMapper.findCount();
+        int Page = count / num;
+        if (count % num != 0) {
+            Page++;
+        }
+        return Page;
+    }
+    @Override
+    public List<VipCard> findByPage(Integer page){
+        if (page == null || page < 1) {
+            page = 1;
+        }
+        int size = num;
+        //跳过多条数据
+        int pages = (page - 1) * size;
+        return vipCardMapper.findByPage(pages, size);
     }
 }

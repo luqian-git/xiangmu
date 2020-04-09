@@ -5,6 +5,7 @@ import com.zhiyou100.gym.mapper.UserMapper;
 import com.zhiyou100.gym.pojo.Coach;
 import com.zhiyou100.gym.pojo.User;
 import com.zhiyou100.gym.service.CoachService;
+import com.zhiyou100.gym.util.PageNumUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,6 +30,10 @@ public class CoachServiceImpl implements CoachService {
         return coachMapper.findAllD(coachPosition);
     }
 
+    @Override
+    public Coach findcoachNumber(Integer coachNumber) {
+        return coachMapper.findByCoachNum(coachNumber);
+    }
 
     @Override
     public Coach findById(Integer coachId) {
@@ -86,5 +91,28 @@ public class CoachServiceImpl implements CoachService {
     @Override
     public List<Coach> findCoach() {
         return coachMapper.findCoach();
+    }
+
+    public Integer num = PageNumUtil.PageNum;
+    @Override
+    public Integer findCount(Integer coachPosition) {
+        // 获取 数据库 中 数量
+        int count = coachMapper.findAllCount(coachPosition);
+        int Page = count / num;
+        if (count % num != 0) {
+            Page++;
+        }
+        return Page;
+    }
+
+    @Override
+    public List<Coach> findByPage(Integer page, Integer coachPosition) {
+        if (page == null || page < 1) {
+            page = 1;
+        }
+        int size = num;
+        //跳过多条数据
+        int pages = (page - 1) * size;
+        return coachMapper.findDByPage(pages, size,coachPosition);
     }
 }

@@ -22,6 +22,6 @@ public interface StudentMapper {
 
     public void deleteById(Integer studentId);
 
-    public void updateState(Integer studentState);
+    public void updateState();
 
 }

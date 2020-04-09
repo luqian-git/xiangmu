@@ -1,6 +1,7 @@
 package com.zhiyou100.gym.service;
 
 import com.zhiyou100.gym.pojo.VipCard;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -18,5 +19,10 @@ public interface VipCardService {
     //余额变动
 
     public String balanceChange(Integer cardNumber,Double change);
+
+    public Integer findCount();
+
+    public List<VipCard> findByPage(Integer page);
+
 
 }

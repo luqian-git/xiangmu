@@ -25,6 +25,7 @@
 	</select>
     <select id="findHave" resultMap="schedule">
         select * from gym_schedule where schedule_coach_num = #{scheduleCoachNum}
+        and to_days(schedule_date) = to_days(now())
     </select>
     <select id="findNum" resultMap="schedule">
         select * from gym_schedule s
@@ -32,6 +33,33 @@
         where  schedule_coach_num = #{scheduleCoachNum}
         GROUP BY s.schedule_date desc
     </select>
+
+    <select id="findCount" resultType="java.lang.Integer">
+          select count(schedule_id) from gym_schedule
+    </select>
+
+    <select id="findByPage" resultMap="schedule" parameterType="integer">
+        select * from gym_schedule s
+        INNER JOIN gym_coach c on s.schedule_coach_num = c.coach_number
+         GROUP BY s.schedule_id desc
+        LIMIT #{start},#{size}
+    </select>
+
+    <select id="findCountD" resultType="java.lang.Integer">
+        select count(schedule_id) from gym_schedule
+        where  schedule_coach_num = #{scheduleCoachNum}
+    </select>
+
+    <select id="findDByPage" resultMap="schedule" parameterType="integer">
+         select * from gym_schedule s
+        INNER JOIN gym_coach c on s.schedule_coach_num = c.coach_number
+        where  schedule_coach_num = #{scheduleCoachNum}
+         GROUP BY s.schedule_id desc
+        LIMIT #{start},#{size}
+    </select>
+
+
+
     <!-- 添加数据  大写-->
     <insert id="add" parameterType="com.zhiyou100.gym.mapper.ScheduleMapper">
 		insert into gym_schedule values(

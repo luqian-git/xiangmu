@@ -50,6 +50,39 @@
          where s.sign_user_number = #{signUserNumber}
          ORDER BY s.sign_time desc
     </select>
+    <select id="findCount" resultType="java.lang.Integer" parameterType="integer">
+         select  count(sign_status) from gym_sign where sign_status = #{signStatus}
+    </select>
+    <select id="findByPage01" resultMap="sign" parameterType="int">
+          select s.*,u.us_name,u.us_member from gym_sign s
+          inner join gym_user u  on s.sign_user_number = u.us_member
+          where s.sign_status = #{signStatus}
+          ORDER BY s.sign_time desc
+         LIMIT #{start},#{size}
+    </select>
+    <select id="findByPage2" resultMap="sign" parameterType="int">
+          select s.*,p.pot_number,p.pot_name from gym_sign s
+         INNER JOIN gym_potential p on p.pot_number = s.sign_user_number
+         where s.sign_status = 2
+         ORDER BY s.sign_time desc
+         LIMIT #{start},#{size}
+    </select>
+    <select id="findNum" resultMap="sign">
+        select * from gym_sign
+        where sign_user_number = #{signUserNumber}
+    </select>
+    <select id="findByPageNum" resultType="com.zhiyou100.gym.pojo.Sign">
+        select s.*,u.us_name,u.us_member from gym_sign s
+          inner join gym_user u  on s.sign_user_number = u.us_member
+          where s.sign_user_number = #{signUserNumber}
+          ORDER BY s.sign_time desc
+         LIMIT #{start},#{size}
+    </select>
+    <select id="findCountNum" resultType="java.lang.Integer">
+        select  count(sign_status)  from gym_sign
+        where sign_user_number = #{signUserNumber}
+    </select>
+
     <!-- 添加数据  大写-->
     <insert id="add" parameterType="com.zhiyou100.gym.mapper.SignMapper">
 --         insert into gym_sign values(null,7003,NOW(),4,'后勤签到',0);

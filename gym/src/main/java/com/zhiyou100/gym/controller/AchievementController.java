@@ -15,11 +15,20 @@ public class AchievementController {
 
 
     @RequestMapping("show")
-    public String show(Model model,Integer achCoachNum){
+    public String show(Model model,Integer achCoachNum,Integer page){
+        if (page == null) {
+            page = 1;
+        }
+        model.addAttribute("poo", page);
         if (achCoachNum == null){
-            model.addAttribute("achs",achievementService.findAll());
+            model.addAttribute("num",achievementService.findCount());
+            //分页
+            model.addAttribute("achs", achievementService.findByPage(page));
         }else {
-            model.addAttribute("achs",achievementService.findCoachNum(achCoachNum));
+            model.addAttribute("achCoachNum",achCoachNum);
+            model.addAttribute("num",achievementService.findCoachNumCount(achCoachNum));
+            //分页
+            model.addAttribute("achs", achievementService.findCoachNumByPage(page,achCoachNum));
         }
         return "achievement/show";
     }

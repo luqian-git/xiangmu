@@ -12,16 +12,27 @@
         <result column="vipen_status" property="vipenStatus"/>
         <result column="us_name" property="usName"/>
     </resultMap>
-    <!-- 查询所有  小写-->
+    <!-- 查询所有 -->
     <select id="findAll0" resultMap="vipen">
           select v.*,u.us_name from gym_vipen v
           inner join gym_user u  on v.vipen_user_id = u.us_id where v.vipen_status = 0
     </select>
-    <!-- 查询所有  小写-->
+    <!-- 查询所有  -->
     <select id="findAll1" resultMap="vipen">
           select v.*,u.us_name from gym_vipen v
           inner join gym_user u  on v.vipen_user_id = u.us_id where v.vipen_status = 1
     </select>
+    <select id="findCount" resultType="java.lang.Integer">
+          select count(vipen_user_id) from gym_vipen v
+          inner join gym_user u  on v.vipen_user_id = u.us_id where v.vipen_status = #{vipenStatus}
+    </select>
+    <select id="findByPage" resultMap="vipen">
+          select v.*,u.us_name from gym_vipen v
+          inner join gym_user u  on v.vipen_user_id = u.us_id where v.vipen_status = #{vipenStatus}
+           LIMIT #{start},#{size}
+    </select>
+
+
     <!-- 添加数据-->
     <insert id="add" parameterType="com.zhiyou100.gym.pojo.Vipen">
 		insert into gym_vipen values(null,#{vipenUserId},#{vipenNumber},now(),now(),0)

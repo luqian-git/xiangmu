@@ -1,8 +1,8 @@
 package com.zhiyou100.gym.mapper;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.zhiyou100.gym.pojo.CabInfo;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -17,6 +17,10 @@ public interface CabInfoMapper{
 
     public List<CabInfo> findYAll();
     public List<CabInfo> findGAll();
+
+    public Integer findCount(Integer cabInfoStatus);
+
+    public List<CabInfo> findByPage(@Param("start") int start, @Param("size") int size,Integer cabInfoStatus);
 
     public CabInfo findById(Integer cabInfoId);
 

@@ -11,6 +11,7 @@
         <result column="card_end_time" property="cardEndTime"/>
         <result column="card_balance" property="cardBalance"/>
         <result column="card_status" property="cardStatus"/>
+        <result column="us_name" property="usName"/>
         <!--多表联查-->
         <!--<collection property="" ofType="">
             <result column="ro_id" property="roId"/>
@@ -27,6 +28,17 @@
            where card_number = #{cardNumber}
            and card_status = 1
     </select>
+
+    <select id="findCount" resultType="java.lang.Integer">
+          select  count(card_id) from gym_vip_card
+    </select>
+
+    <select id="findByPage" resultMap="vipCard" parameterType="integer">
+          select * from gym_vip_card g
+         INNER JOIN gym_user u on g.card_number = u.us_member
+          LIMIT #{start},#{size}
+    </select>
+
     <!-- 添加数据  大写-->
     <insert id="add" parameterType="com.zhiyou100.gym.pojo.VipCard">
 		insert into gym_vip_card values(

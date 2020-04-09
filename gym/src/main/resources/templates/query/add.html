@@ -62,10 +62,19 @@
 
             <td  th:each="w,item:${weeks}"
                     class="td green">
-                <p  th:each="s,item:${students}">
+                <p  th:each="s,item:${students}" th:if="${students != null}">
                     <input type="radio" name="studentWeek" th:value="${w.leagueWeekGroup}">
 
                      <input th:class="${s.studentWeek == w.leagueWeekGroup and s.studentTime == h.leagueGroup}?xx:yy" class="in" th:each="h,item:${groups}"
+                           type="radio"g
+                           name="studentTime"
+                           th:value="${h.leagueGroup}"
+                           th:if="${g.leagueGroup == h.leagueGroup}">
+                <p/>
+                <p   th:if="${students != null}">
+                    <input type="radio" name="studentWeek" th:value="${w.leagueWeekGroup}">
+
+                    <input th:class="${g.leagueWeekGroup == w.leagueWeekGroup and g.leagueGroup == h.leagueGroup}?xx:yy" class="in" th:each="h,item:${groups}"
                            type="radio"g
                            name="studentTime"
                            th:value="${h.leagueGroup}"

@@ -25,17 +25,17 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <!--引入mybatis-plus-->
-        <dependency>
+       <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
             <version>3.3.1</version>
         </dependency>
         <!--引入mysql依赖,使用springboot2.X版本引入的mysql的jar包版本是8.X的他的驱动类发生了变化-->
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>5.1.47</version>
-        </dependency>
+         <dependency>
+             <groupId>mysql</groupId>
+             <artifactId>mysql-connector-java</artifactId>
+             <version>5.1.47</version>
+         </dependency>
         <!--lombok插件 管理set get tostring方法-->
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -79,31 +79,21 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-quartz</artifactId>
         </dependency>
-        <!--引入日志文件  -->
-        <!-- https://mvnrepository.com/artifact/log4j/log4j -->
-        <!--引入分页插件  -->
-        <dependency>
+        <!--分页插件-->
+        <!--在version 下面添加 exclusions依赖(排除)-->
+        <!-- pagehelper-->
+        <!--<dependency>
             <groupId>com.github.pagehelper</groupId>
-            <artifactId>pagehelper</artifactId>
-            <version>5.1.8</version>
-        </dependency>
+            <artifactId>pagehelper-spring-boot-starter</artifactId>
+            <version>1.2.5</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.mybatis</groupId>
+                    <artifactId>mybatis</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>-->
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-devtools</artifactId>
-            <optional>true</optional>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
     </dependencies>
 
     <build>

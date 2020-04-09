@@ -1,6 +1,7 @@
 package com.zhiyou100.gym.controller;
 
 import com.zhiyou100.gym.pojo.CabInfo;
+import com.zhiyou100.gym.pojo.Cabinet;
 import com.zhiyou100.gym.service.CabInfoService;
 import com.zhiyou100.gym.service.CabinetService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,20 +20,43 @@ public class CabinetController {
     private CabInfoService cabInfoService;
 
     @RequestMapping("show")
-    public String show(Model model){
-        model.addAttribute("cabinets",cabinetService.findWAll());
+    public String show(Model model,Integer page){
+        if (page == null) {
+            page = 1;
+        }
+        model.addAttribute("poo", page);
+        model.addAttribute("num",cabinetService.findCount13());
+        //分页
+        model.addAttribute("cabinets", cabinetService.findByPage13(page));
         return "cabinet/show";
     }
 
     @RequestMapping("show1")
-    public String show1(Model model){
-        model.addAttribute("cabinets",cabinetService.findYAll());
+    public String show1(Model model,Integer page){
+        if (page == null) {
+            page = 1;
+        }
+        model.addAttribute("poo", page);
+        model.addAttribute("num",cabinetService.findCount2());
+        //分页
+        model.addAttribute("cabinets", cabinetService.findByPage2(page));
         return "cabinet/show1";
     }
     @RequestMapping("show2")
-    public String show2(Model model){
-        model.addAttribute("infoy",cabInfoService.findYAll());
-        model.addAttribute("infog",cabInfoService.findGAll());
+    public String show2(Model model,Integer pagey,Integer pageg){
+        if (pagey == null) {
+            pagey = 1;
+        }
+        if (pageg == null) {
+            pageg = 1;
+        }
+        model.addAttribute("pooy", pagey);
+        model.addAttribute("poog", pageg);
+        model.addAttribute("numy",cabInfoService.findCount(1));
+        model.addAttribute("numg",cabInfoService.findCount(0));
+        //分页
+        model.addAttribute("infoy", cabInfoService.findByPage(pagey,1));
+        model.addAttribute("infog",cabInfoService.findByPage(pageg,0));
         return "cabinet/show2";
     }
     @RequestMapping("add")
@@ -74,6 +98,16 @@ public class CabinetController {
     public String Update1(Integer cabId){
         cabinetService.update1(cabId);
         return "redirect:show";
+    }
+
+    @RequestMapping("addCab")
+    public String addCab(){
+        return "cabinet/addCab";
+    }
+    @RequestMapping("insertCab")
+    public String insertCab(Cabinet cabinet){
+        cabinetService.insertCab(cabinet);
+        return "redirect:addCab";
     }
 
 }

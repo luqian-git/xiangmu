@@ -24,4 +24,5 @@ public class Potential {
     private String potLike;
     private String potAddress;
     private Integer potStatus;
+
 }

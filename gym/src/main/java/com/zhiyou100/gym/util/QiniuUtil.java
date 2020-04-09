@@ -22,7 +22,6 @@ import java.io.FileInputStream;
  */
 @Component
 //使用log.info打印日志数据
-@Slf4j
 //ConfigurationProperties这个注解一般和@Value注解来比较
 //之前我们获取配置文件中的数据使用@Value注解
 //该注解有一个prefix属性，前缀，前缀都是qiniu，会将值存储到属性名和配置文件名一样的变量中
@@ -55,7 +54,7 @@ public class QiniuUtil {
                 //解析上传成功的结果
                 DefaultPutRet putRet = JSON.parseObject(response.bodyString(), DefaultPutRet.class);
                 String return_path = path + "/" + putRet.key;
-                log.info("保存地址={}", return_path);
+
                 return return_path;
             } catch (QiniuException ex) {
                 Response r = ex.response;
@@ -91,7 +90,7 @@ public class QiniuUtil {
 //                System.out.println(putRet.key);
 //                System.out.println(putRet.hash);
                 String return_path = path + "/" + putRet.key;
-                log.info("保存地址={}", return_path);
+                System.out.println(return_path);
                 return return_path;
             } catch (QiniuException ex) {
                 Response r = ex.response;

@@ -12,4 +12,9 @@ public interface EquipService {
     public void add(Equip equip);
     public void deleteById(Integer equipId);
     public void update(Equip equip);
+
+    public Integer findCount();
+
+    public List<Equip> findByPage(Integer page);
+
 }

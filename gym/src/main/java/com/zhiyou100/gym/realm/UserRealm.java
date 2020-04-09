@@ -24,7 +24,6 @@ public class UserRealm extends AuthorizingRealm{
 
 		SimpleAuthorizationInfo info  = new SimpleAuthorizationInfo();
 		User user = (User)collection.getPrimaryPrincipal();
-		//System.out.println(user);
 		for(Role role : user.getRoles()){
 			info.addRole(role.getRoName());
 		}
@@ -37,7 +36,6 @@ public class UserRealm extends AuthorizingRealm{
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
 		String account = (String)token.getPrincipal();
 		String password = new String((char[]) token.getCredentials());
-		
 		User user = userService.findByUAccount(account);
 		if (user == null) {
 			throw new UnknownAccountException("账号不存在");

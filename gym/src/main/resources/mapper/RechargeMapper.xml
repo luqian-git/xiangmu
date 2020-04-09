@@ -71,13 +71,33 @@
 		set rech_status = 0
 		where rech_id = #{rechId}
 	</update>
-    <!-- 动态sql修改  大写-->
-    <!--<update id="update" parameterType="Mold">
-		update gym_recharge
-        <set>
-            <if test="password != null">password =#{password},</if>
+    <select id="findCount" resultType="java.lang.Integer">
+        select  count(rech_user_member) from gym_recharge
+  </select>
+    <select id="findrechUserMemberCount" resultType="java.lang.Integer">
+        select count(rech_user_member) from gym_recharge r
+        INNER JOIN gym_top t on r.rech_top_id = t.top_id
+        INNER JOIN gym_vip_card v  on r.rech_user_member = v.card_number
+        INNER JOIN gym_user u on r.rech_user_member = u.us_member
+        where r.rech_user_member like CONCAT('%',#{rechUserMember},'%')
+    </select>
+    <select id="findRTCByPage" resultMap="recharge" parameterType="integer">
+        select * from gym_recharge r
+        INNER JOIN gym_top t on r.rech_top_id = t.top_id
+        INNER JOIN gym_vip_card v  on r.rech_user_member = v.card_number
+        INNER JOIN gym_user u on r.rech_user_member = u.us_member
+        ORDER BY card_id desc
+        LIMIT #{start},#{size}
+    </select>
+    <select id="findrechUserMemberByPage" resultMap="recharge" parameterType="integer">
+        select * from gym_recharge r
+        INNER JOIN gym_top t on r.rech_top_id = t.top_id
+        INNER JOIN gym_vip_card v  on r.rech_user_member = v.card_number
+        INNER JOIN gym_user u on r.rech_user_member = u.us_member
+        where r.rech_user_member like CONCAT('%',#{rechUserMember},'%')
+        LIMIT #{start},#{size}
+    </select>
 
-        </set>
-		where id = #{id}
-	</update>-->
+
+
 </mapper>

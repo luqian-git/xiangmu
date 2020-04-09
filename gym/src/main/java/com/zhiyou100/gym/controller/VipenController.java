@@ -14,12 +14,18 @@ public class VipenController {
     private VipenService vipenService;
 
     @RequestMapping("show")
-    public String show(Model model,Integer q){
+    public String show(Model model,Integer q,Integer page){
         if (q == null){
             q = 0;
         }
+        if (page == null) {
+            page = 1;
+        }
+        model.addAttribute("poo", page);
+        model.addAttribute("num",vipenService.findCount(q));
+        //分页
+        model.addAttribute("vipens", vipenService.findByPage(page,q));
         model.addAttribute("q",q);
-        model.addAttribute("vipens",vipenService.findAll(q));
         return "vipen/show";
     }
     @RequestMapping("update")

@@ -15,7 +15,7 @@
 </head>
 <body >
 
-	<h1>签到记录</h1>
+	<h1>签到记录/<b th:text="${msg}"></b></h1>
 
 	<table class="table table-bordered">
 		<tr>
@@ -73,6 +73,24 @@
 		</tr>
 
 	</table>
+	<div style="margin-left: -40px;"  th:if="${num != 0}">
+		<b th:if="${poo} ne '1'">
+			<a th:href="@{/sign/show(page=${poo -1 },q=${q})}">上一页</a>
+		</b>
+		<span  th:each="page :${#numbers.sequence(1,num)}">
+
+       <i th:if="${page} eq ${poo}">
+         <b th:text="${page}"></b>
+      </i>
+      <i th:if="${page} ne ${poo}">
+         <a th:href="@{/sign/show(page=${page},q=${q})}" th:text="${page}"></a>
+      </i>
+   </span>
+		<b th:if="${poo} ne ${num}">
+			<a th:href="@{/sign/show(page=${poo+1},q=${q})}">下一页</a>
+		</b>
+	</div>
+
 	<script>
         function submitForm(){
             var form = document.getElementById("myform");

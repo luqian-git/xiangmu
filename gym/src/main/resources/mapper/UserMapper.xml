@@ -30,10 +30,18 @@
         INNER JOIN gym_role r on ur.r_id = r.ro_id
        where u.us_account =#{usAccount}  and us_status = 1
     </select>
-    <select id="findAllUR" resultMap="user">
-        select u.*,r.* from gym_user u
-        INNER JOIN gym_user_role ur on u.us_id = ur.u_id
-        INNER JOIN gym_role r on ur.r_id = r.ro_id
+    <select id="findAllUR" resultMap="user" >
+      select u.*,r.* from gym_user u
+      INNER JOIN gym_user_role ur on u.us_id = ur.u_id
+      INNER JOIN gym_role r on ur.r_id = r.ro_id
+      ORDER BY u.us_id
+    </select>
+    <select id="findUserCount" resultType="java.lang.Integer">
+        select  count(us_id)  from gym_user where us_status = 1
+    </select>
+    <select id="findByPage" resultMap="user" parameterType="integer">
+        select * from gym_user
+        ORDER BY us_id limit #{start},#{size}
     </select>
     <select id="findByMember" resultMap="user" parameterType="integer">
         select * from gym_user u where u.us_status = 1
@@ -47,6 +55,7 @@
     <select id="findByHMax" resultMap="user">
         select * from gym_user where us_id = (select max(us_id) from gym_user where us_member > 10000)
     </select>
+
     <insert id="add" parameterType="com.zhiyou100.gym.pojo.User">
         insert  into  gym_user values (
         null,#{usAccount},#{usPassword},#{usName},#{usSex},#{usAge},#{usHead},#{usLabel},

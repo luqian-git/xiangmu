@@ -4,11 +4,15 @@ spring:
     url: jdbc:mysql://localhost:3306/jianshen?useUnicode=true&characterEncoding=UTF8&useSSL=false&serverTimezone=Asia/Shanghai
     username: root
     password: 123
+  thymeleaf:
+    cache: false
 mybatis-plus:
   mapper-locations: classpath:/mapper/*Mapper.xml
 logging:
+  ##config: classpath:/log/log.xml
   level:
     com.zhiyou100.gym.mapper: debug
+   # cn.jay.repository: trace
 qiniu:
   #  七牛云账号对应的  AccessKey
   accessKey: AlTBoKuS-B_2hAWJZes0ES8QVHryjAXPAfjl0U6s
@@ -18,7 +22,7 @@ qiniu:
   bucket: lqqny
   #   图片上传成功后的返回地址,我们图片一般上传完之后需要回显
   path: q7zrwcfii.bkt.clouddn.com
-#pagehelper分页插件
+##pagehelper分页插件
 #pagehelper:
 #  helper-dialect: mysql
 #  params: count=countSql

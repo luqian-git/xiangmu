@@ -1,8 +1,8 @@
 package com.zhiyou100.gym.mapper;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.zhiyou100.gym.pojo.User;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -47,4 +47,8 @@ public interface UserMapper{
 
     public void updateinfo(User user);
 
+    //分页多少条数据
+    public Integer findUserCount();
+    //分页
+    public List<User> findByPage(@Param("start") int start, @Param("size") int size);
 }

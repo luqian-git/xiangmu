@@ -16,8 +16,14 @@ public class MaintainController {
 
 
     @RequestMapping("show")
-    public String show(Model model){
-        model.addAttribute("maintains",maintainService.findAll());
+    public String show(Model model,Integer page){
+        if (page == null) {
+            page = 1;
+        }
+        model.addAttribute("poo", page);
+        model.addAttribute("num",maintainService.findCount());
+        //分页
+        model.addAttribute("maintains", maintainService.findByPage(page));
         return "maintain/show";
     }
     @RequestMapping("add")

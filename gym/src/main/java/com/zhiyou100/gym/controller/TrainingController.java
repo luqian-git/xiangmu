@@ -1,11 +1,9 @@
 package com.zhiyou100.gym.controller;
 
 import com.zhiyou100.gym.pojo.Training;
-import com.zhiyou100.gym.pojo.User;
 import com.zhiyou100.gym.service.EquipService;
 import com.zhiyou100.gym.service.TrainingService;
 import com.zhiyou100.gym.service.UserService;
-import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,20 +22,23 @@ public class TrainingController {
 
 
     @RequestMapping("show")
-    public String show(Model model,Integer t){
+    public String show(Model model,Integer t,Integer page){
         if (t == null){
             t = 0;
         }
+        if (page == null) {
+            page = 1;
+        }
+        model.addAttribute("t",t);
+        model.addAttribute("poo", page);
+        model.addAttribute("num",trainingService.findCount(t));
+        Integer trainingUserNum = userService.shiroUser().getUsMember();
+        System.out.println(t+"===="+trainingUserNum+"===="+page);
+        model.addAttribute("trainings",trainingService.findByPage(t,trainingUserNum,page));
         if (userService.shiroUser().getUsMember()<10000){
             model.addAttribute("msg","当前不是会员账户");
-            model.addAttribute("t",t);
-            model.addAttribute("trainings",trainingService.findAll(t,1));
-            return "training/show";
-        }else {
-            model.addAttribute("t", t);
-            model.addAttribute("trainings", trainingService.findAll(t, userService.shiroUser().getUsMember()));
-            return "training/show";
         }
+        return "training/show";
     }
 
 

@@ -1,51 +1,69 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="zh_CN" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.w3.org/1999/xhtml">
 <head>
-<meta charset="UTF-8">
-<title>健身中心</title>
-<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
-	<style type="text/css">
-		body {
-			margin: 40px;
-			text-align: center;
-			padding: 0px;
-			background-size: cover;
-		}
-	</style>
+    <meta charset="UTF-8">
+    <title>健身中心</title>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <style type="text/css">
+        body {
+            margin: 40px;
+            text-align: center;
+            padding: 0px;
+            background-size: cover;
+        }
+    </style>
 </head>
-<body >
-	<a href="/maintain/add">添加维修记录</a>
-	<table class="table table-bordered">
-		<tr>
-			<td>序号</td>
-			<td>编号</td>
-			<td>区域</td>
-			<td>设备</td>
-			<td>设备编号</td>
-			<td>故障信息</td>
-			<td>维修时间</td>
-			<td>维修金额</td>
-			<td>员工编号</td>
-			<td>负责人</td>
-			<td>操作</td>
-		</tr>
-		<tr th:each="c,item:${maintains}">
-			<td th:text="${item.count}">序号</td>
-			<td th:text="${c.maintainNum}"></td>
-			<td th:text="${c.maintainRegion}"></td>
-			<td th:text="${c.equipName}"></td>
-			<td th:text="${c.maintainEquipNum}"></td>
-			<td th:text="${c.maintainDesc}"></td>
-			<td th:text="${c.maintainTime}"></td>
-			<td th:text="${c.maintainMoney}"></td>
-			<td th:text="${c.maintainCoachNumber}"></td>
-			<td th:text="${c.coachName}"></td>
-			<td>
-				<a th:href="@{/maintain/delete(maintainId=${c.maintainId})}">删除</a>
-				<a th:href="@{/maintain/edit(maintainId=${c.maintainId})}">修改</a>
-			</td>
-		</tr>
+<body>
+<a href="/maintain/add">添加维修记录</a>
+<table class="table table-bordered">
+    <tr>
+        <td>序号</td>
+        <td>编号</td>
+        <td>区域</td>
+        <td>设备</td>
+        <td>设备编号</td>
+        <td>故障信息</td>
+        <td>维修时间</td>
+        <td>维修金额</td>
+        <td>员工编号</td>
+        <td>负责人</td>
+        <td>操作</td>
+    </tr>
+    <tr th:each="c,item:${maintains}">
+        <td th:text="${item.count}">序号</td>
+        <td th:text="${c.maintainNum}"></td>
+        <td th:text="${c.maintainRegion}"></td>
+        <td th:text="${c.equipName}"></td>
+        <td th:text="${c.maintainEquipNum}"></td>
+        <td th:text="${c.maintainDesc}"></td>
+        <td th:text="${c.maintainTime}"></td>
+        <td th:text="${c.maintainMoney}"></td>
+        <td th:text="${c.maintainCoachNumber}"></td>
+        <td th:text="${c.coachName}"></td>
+        <td>
+            <a th:href="@{/maintain/delete(maintainId=${c.maintainId})}">删除</a>
+            <a th:href="@{/maintain/edit(maintainId=${c.maintainId})}">修改</a>
+        </td>
+    </tr>
 
-	</table>
+</table>
+
+<div style="margin-left: -40px;">
+    <b th:if="${poo} ne '1'">
+        <a th:href="@{/maintain/show(page=${poo -1 })}">上一页</a>
+    </b>
+    <span th:each="page :${#numbers.sequence(1,num)}">
+
+       <i th:if="${page} eq ${poo}">
+         <b th:text="${page}"></b>
+      </i>
+      <i th:if="${page} ne ${poo}">
+         <a th:href="@{/maintain/show(page=${page})}" th:text="${page}"></a>
+      </i>
+   </span>
+    <b th:if="${poo} ne ${num}">
+        <a th:href="@{/maintain/show(page=${poo+1})}">下一页</a>
+    </b>
+</div>
 </body>
 </html>

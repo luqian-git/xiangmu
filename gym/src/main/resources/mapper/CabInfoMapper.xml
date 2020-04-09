@@ -27,6 +27,17 @@
           select * from gym_cab_info
           where cab_info_id = #{cabInfoId}
     </select>
+    <select id="findCount" resultType="java.lang.Integer">
+          select count(cab_info_status) from gym_cab_info i
+          where i.cab_info_status = #{cabInfoStatus}
+    </select>
+    <select id="findByPage" resultMap="cabInfo" parameterType="integer">
+          select * from gym_cab_info i
+          where i.cab_info_status = #{cabInfoStatus}
+          LIMIT #{start},#{size}
+    </select>
+
+
     <insert id="add" parameterType="com.zhiyou100.gym.mapper.CabInfoMapper">
           insert into gym_cab_info values(
           null,

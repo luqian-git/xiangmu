@@ -26,7 +26,7 @@
 		<tr>
 			<td>序号</td>
 			<td>编号</td>
-			<td>会员id</td>
+			<td>会员姓名</td>
 			<td>开通时间</td>
 			<td>注销时间</td>
 			<td>余额</td>
@@ -35,9 +35,12 @@
 		<tr th:each="c,item:${vipCards}">
 			<td th:text="${item.count}">序号</td>
 			<td th:text="${c.cardNumber}"></td>
-			<td th:text="${c.cardUserId}"></td>
+			<td th:text="${c.usName}"></td>
 			<td th:text="${c.cardOpenTime}"></td>
-			<td th:text="${c.cardEndTime}"></td>
+			<td>
+				<b th:if="${c.cardStatus == 1}">----</b>
+				<b th:if="${c.cardStatus == 0}" th:text="${c.cardEndTime}"></b>
+			</td>
 			<td th:text="${c.cardBalance}"></td>
 			<td >
 				<a th:if="${c.cardStatus == 1}" th:href="@{/vipCard/update(cardNumber=${c.cardNumber})}">注销</a>
@@ -46,5 +49,22 @@
 		</tr>
 
 	</table>
+	<div style="margin-left: -40px;">
+		<b th:if="${poo} ne '1'">
+			<a th:href="@{/vipCard/show(page=${poo -1 })}">上一页</a>
+		</b>
+		<span  th:each="page :${#numbers.sequence(1,num)}">
+
+			 <i th:if="${page} eq ${poo}">
+				<b th:text="${page}"></b>
+			</i>
+			<i th:if="${page} ne ${poo}">
+				<a th:href="@{/vipCard/show(page=${page})}" th:text="${page}"></a>
+			</i>
+		</span>
+		<b th:if="${poo} ne ${num}">
+			<a th:href="@{/vipCard/show(page=${poo+1})}">下一页</a>
+		</b>
+	</div>
 </body>
 </html>

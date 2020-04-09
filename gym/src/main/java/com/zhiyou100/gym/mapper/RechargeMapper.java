@@ -2,6 +2,7 @@ package com.zhiyou100.gym.mapper;
 
 import com.zhiyou100.gym.pojo.Recharge;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -22,5 +23,9 @@ public interface RechargeMapper {
 
     public void add(Recharge recharge);
 
-   // public void update(Recharge recharge);
+    public Integer findCount();
+    public Integer findrechUserMemberCount(Integer rechUserMember);
+    public List<Recharge> findRTCByPage(@Param("start") int start, @Param("size") int size);
+    public List<Recharge> findrechUserMemberByPage(@Param("start") int start, @Param("size") int size,Integer rechUserMember);
+
 }
