@@ -83,6 +83,7 @@ public class CoachServiceImpl implements CoachService {
         userMapper.updateinfo(user);
         System.out.println(coach+"==========="+coach.getCoachNumber());
         if (coach.getCoachStatus().equals("离职") || coach.getCoachStatus().equals("辞退")){
+            System.out.println(coach.getCoachStatus());
             userMapper.cancellation(coach.getCoachNumber());
         }
         coachMapper.update(coach);

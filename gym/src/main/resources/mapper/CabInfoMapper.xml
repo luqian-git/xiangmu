@@ -37,6 +37,10 @@
           LIMIT #{start},#{size}
     </select>
 
+    <select id="expired"  resultMap="cabInfo">
+        select  * from  gym_cab_info where cab_info_status = 1 and  to_days( cab_info_create_time ) = to_days(now())
+    </select>
+
 
     <insert id="add" parameterType="com.zhiyou100.gym.mapper.CabInfoMapper">
           insert into gym_cab_info values(

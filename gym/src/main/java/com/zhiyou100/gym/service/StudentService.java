@@ -19,6 +19,12 @@ public interface StudentService {
     public void deleteById(Integer studentId);
 
     //定时任务定时 每周日 凌晨 把预约 成员 改为 本周的
+
     public void updateState();
+    //周日 把所有的 本周课程剩余 改为 消课
+
+    public void updateState2();
+
+    public void haveClass();
 
 }

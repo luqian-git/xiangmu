@@ -22,6 +22,12 @@ public interface StudentMapper {
 
     public void deleteById(Integer studentId);
 
+    //周日 把所有的 预约 改为 本周课程
+
     public void updateState();
+
+    //周日 把所有的 本周课程剩余 改为 消课
+
+    public void updateState2();
 
 }

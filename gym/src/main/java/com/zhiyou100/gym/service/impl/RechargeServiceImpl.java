@@ -46,6 +46,7 @@ public class RechargeServiceImpl implements RechargeService {
     @Override
     public String add(Recharge recharge) {
         recharge.setRechNumber(NumTimeNowUtil.NowTime());
+        System.out.println(recharge.getRechMoney());
         String row = vipCardService.balanceChange(recharge.getRechUserMember(),recharge.getRechMoney());
         rechargeMapper.add(recharge);
         //私教

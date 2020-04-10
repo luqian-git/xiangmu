@@ -39,13 +39,13 @@ public class TrainingServiceImpl implements TrainingService {
 
     @Override
     public String upTime(Integer trainingId) {
-        System.out.println("id"+trainingId);
+
         //获取本次时长
         Training training  = trainingMapper.selectThisTime(trainingId);
         //累计时长
         Training training1 = trainingMapper.findLast(training);
-        System.out.println("本次时长"+training);
-        System.out.println("累计时长"+training1);
+        //System.out.println("本次时长"+training);
+        //System.out.println("累计时长"+training1);
         //设置运动结束时间 状态 <-- 如果先 设置结束 哪累计永远都是 本条数据
         trainingMapper.upTime(trainingId);
         //查询本会员 使用设备的累计时长

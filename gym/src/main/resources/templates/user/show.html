@@ -34,7 +34,6 @@
 			<td>编号</td>
 			<td>角色</td>
 			<td>状态</td>
-			<td>操作</td>
 		</tr>
 		<font th:each="ur,item:${dan}">
 		<tr th:if="${ur.usId == user.usId}" th:each="user,item:${users}">
@@ -63,9 +62,6 @@
 			<td>
 				<p th:if="${user.usStatus == 1}">使用中</p>
 				<p th:if="${user.usStatus != 1}">已冻结</p>
-			</td>
-			<td>
-				<a th:href="@{/user/edit.do(id=${user.usId})}">修改</a>
 			</td>
 		</tr>
 		</font>

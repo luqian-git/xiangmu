@@ -1,5 +1,6 @@
 package com.zhiyou100.gym.config;
 
+import com.zhiyou100.gym.MyRegularTask.MyCabInfoExpired;
 import com.zhiyou100.gym.MyRegularTask.MyTast;
 import org.quartz.*;
 import org.springframework.context.annotation.Bean;
@@ -21,6 +22,7 @@ public class QuartzConfig {
         return JobBuilder.newJob(MyTast.class).storeDurably().withIdentity("myjob").build();
     }
 
+    //MyCabInfoExpired
     @Bean
     public Trigger trigger(){
         //设置任务的执行方  这里有很多方法
@@ -28,14 +30,26 @@ public class QuartzConfig {
                 .withIdentity("trigger3", "group1")
                 //每周凌晨一点 0 0 1 ? * L || 0 15 12 ? * THU 每周四
                 //SUN, MON, TUE, WED, THU, FRI SAT 周日 到 周六
-                .withSchedule(cronSchedule("0 26 12 ? * THU")).forJob(MyTast()).build();
+                //.withSchedule(cronSchedule("0 26 12 ? * THU")).forJob(MyTast()).build();
 
-                //.withSchedule(cronSchedule("0 0 1 ? * SUN")).forJob(MyTast()).build();
+                .withSchedule(cronSchedule("0 11 10 ? * FRI")).forJob(MyTast()).build();
 
         return trigger;
-
-
-
-
+    }
+    @Bean
+    public JobDetail MyCabInfoExpired(){
+        //构建一个任务对象
+        return JobBuilder.newJob(MyCabInfoExpired.class).storeDurably().withIdentity("MyCabInfoExpired").build();
+    }
+    @Bean
+    public Trigger trigger2(){
+        //设置任务的执行方  这里有很多方法
+        Trigger trigger = TriggerBuilder.newTrigger()
+                .withIdentity("trigger3", "group1")
+                //每周凌晨一点 0 0 1 ? * L || 0 15 12 ? * THU 每周四
+                //SUN, MON, TUE, WED, THU, FRI SAT 周日 到 周六
+                .withSchedule(cronSchedule("0 0 23 * * ?")).forJob(MyCabInfoExpired()).build();
+                //.withSchedule(cronSchedule("0 0 1 ? * SUN")).forJob(MyTast()).build();
+        return trigger;
     }
 }

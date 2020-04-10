@@ -25,9 +25,8 @@
     <!--  ORDER BY league_week-->
     <!-- 依据id查单挑数据  小写-->
     <select id="findById" resultMap="league" parameterType="integer">
-		select l.*,c.coach_name from gym_league l
-        INNER JOIN gym_coach c on c.coach_number = l.league_coach_number
-		where l.league_id = #{leagueId}
+		select * from gym_league
+		where league_id = #{leagueId}
 	</select>
     <select id="findWeekGroup" resultMap="league">
         select league_week,league_week_group  from gym_league
@@ -36,6 +35,9 @@
     <select id="findGroup" resultMap="league">
         select  league_time_slot,league_group  from gym_league
         GROUP BY league_time_slot
+    </select>
+    <select id="haveClass" resultMap="league">
+        select * from gym_league where league_coach_number != 0
     </select>
     <!-- 添加数据  大写-->
     <insert id="add" parameterType="com.zhiyou100.gym.pojo.League">

@@ -85,7 +85,6 @@
 
     <!-- 添加数据  大写-->
     <insert id="add" parameterType="com.zhiyou100.gym.mapper.SignMapper">
---         insert into gym_sign values(null,7003,NOW(),4,'后勤签到',0);
 		insert into gym_sign values(
 		null,
 		#{signNumder},

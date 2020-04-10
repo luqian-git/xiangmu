@@ -53,4 +53,6 @@ public class LeagueServiceImpl implements LeagueService {
     public void updateTimeSlot(League league) {
         leagueMapper.updateTimeSlot(league);
     }
+
+
 }

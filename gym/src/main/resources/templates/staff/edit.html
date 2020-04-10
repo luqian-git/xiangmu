@@ -21,6 +21,7 @@
 <body>
 <form action="/staff/update"  method="post" enctype="multipart/form-data">
 	<input type="hidden" name="coachId" th:value="${coach.coachId}">
+	<input type="hidden" name="coachNumber" th:value="${coach.coachNumber}">
 	<p>
 		姓名<input  type="text" name="coachName" th:value="${coach.coachName}">
 	</p>

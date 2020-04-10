@@ -33,7 +33,6 @@ public class TrainingController {
         model.addAttribute("poo", page);
         model.addAttribute("num",trainingService.findCount(t));
         Integer trainingUserNum = userService.shiroUser().getUsMember();
-        System.out.println(t+"===="+trainingUserNum+"===="+page);
         model.addAttribute("trainings",trainingService.findByPage(t,trainingUserNum,page));
         if (userService.shiroUser().getUsMember()<10000){
             model.addAttribute("msg","当前不是会员账户");

@@ -23,4 +23,7 @@ public interface LeagueMapper {
 
     //修改时间段
     public void updateTimeSlot(League league);
+
+    //查询有课的 教练
+    public List<League> haveClass();
 }

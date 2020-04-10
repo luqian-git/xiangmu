@@ -90,5 +90,10 @@
           cab_status = 0
           where cab_id = #{cabId}
     </update>
+    <update id="updateNum">
+          update gym_cabinet set
+          cab_status = 1
+          where cab_number = #{cabNumber}
+    </update>
 
 </mapper>

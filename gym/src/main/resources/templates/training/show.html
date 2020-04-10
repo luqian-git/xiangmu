@@ -58,7 +58,7 @@
 		</tr>
 
 	</table>
-	<div style="margin-left: -40px;">
+	<div style="margin-left: -40px;"  th:if="${num != 0}">
 		<b th:if="${poo} ne '1'">
 			<a th:href="@{/training/show(page=${poo -1 })}">上一页</a>
 		</b>

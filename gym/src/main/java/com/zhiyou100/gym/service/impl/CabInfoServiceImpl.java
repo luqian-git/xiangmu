@@ -7,6 +7,7 @@ import com.zhiyou100.gym.pojo.User;
 import com.zhiyou100.gym.service.CabInfoService;
 import com.zhiyou100.gym.service.UserService;
 import com.zhiyou100.gym.util.PageNumUtil;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +16,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.TimeZone;
 
+@Log4j2
 @Service
 public class CabInfoServiceImpl implements CabInfoService {
 
@@ -111,5 +113,19 @@ public class CabInfoServiceImpl implements CabInfoService {
         //跳过多条数据
         int pages = (page - 1) * size;
         return cabInfoMapper.findByPage(pages, size,cabInfoStatus);
+    }
+
+    @Override
+    public void expired() {
+       List<CabInfo> cabInfos = cabInfoMapper.expired();
+       if (cabInfos.isEmpty()||cabInfos == null){
+            log.info("今天并无租柜到期");
+       }else {
+           for (CabInfo cabInfo:cabInfos){
+               cabInfoMapper.deleteById(cabInfo.getCabInfoId());
+               cabinetMapper.updateNum(cabInfo.getCabInfoNum());
+               log.info("过期柜子编号"+cabInfo.getCabInfoNum()+"租柜记录编号"+cabInfo.getCabInfoNumber()+"租柜会员编号"+ cabInfo.getCabInfoMember());
+           }
+       }
     }
 }

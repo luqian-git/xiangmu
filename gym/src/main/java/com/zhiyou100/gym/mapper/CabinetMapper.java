@@ -38,4 +38,6 @@ public interface CabinetMapper{
     public void update0(Integer cabId);
 
     public void insert(Cabinet cabinet);
+
+    public void updateNum(Integer cabNumber);
 }

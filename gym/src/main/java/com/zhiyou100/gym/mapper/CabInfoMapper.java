@@ -30,4 +30,6 @@ public interface CabInfoMapper{
 
     //续费
     public void update(CabInfo cabInfo);
+    //失效记录
+    public List<CabInfo> expired();
 }

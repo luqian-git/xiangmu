@@ -24,4 +24,6 @@ public interface CabInfoService {
 
     public List<CabInfo> findByPage(Integer page,Integer cabInfoStatus);
 
+    public void  expired();
+
 }

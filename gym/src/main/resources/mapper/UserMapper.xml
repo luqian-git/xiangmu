@@ -37,7 +37,7 @@
       ORDER BY u.us_id
     </select>
     <select id="findUserCount" resultType="java.lang.Integer">
-        select  count(us_id)  from gym_user where us_status = 1
+        select  count(us_id)  from gym_user
     </select>
     <select id="findByPage" resultMap="user" parameterType="integer">
         select * from gym_user
@@ -45,9 +45,7 @@
     </select>
     <select id="findByMember" resultMap="user" parameterType="integer">
         select * from gym_user u where u.us_status = 1
-        and u.us_member > 10000
         and u.us_member = #{usMember}
-        and us_status = 1
     </select>
     <select id="findByUMax" resultMap="user">
         select * from gym_user where us_id = (select max(us_id) from gym_user where us_member &lt; 10000)

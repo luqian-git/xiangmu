@@ -32,7 +32,7 @@
          select * from gym_student s
          INNER JOIN gym_user u on s.student_vip_num = u.us_member
          where s.student_coach_num = #{studentCoachNum}
-         and  student_state &lt; 2
+         and  student_state &lt; 2 and student_vip_num != 10015
     </select>
     <!-- 添加数据  大写-->
     <insert id="add" parameterType="com.zhiyou100.gym.pojo.Student">
@@ -61,5 +61,10 @@
         update  gym_student set
         student_state = 1
         where  student_state = 0
+    </update>
+    <update id="updateState2">
+        update  gym_student set
+        student_state = 2
+        where  student_state = 1
     </update>
 </mapper>

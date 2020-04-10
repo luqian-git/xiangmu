@@ -52,7 +52,7 @@ public class SignServiceImpl implements SignService {
         }
         //获取该 员工号 或者  会员号 的账号信息 0 为员工 1  为会员
         Integer member = sign.getSignUserNumber();
-        if (member < 10000 && member < 0){
+        if (member < 10000){
             //获取状态
             sign.setSignStatus(0);
         }else if (member > 10000){
@@ -76,7 +76,7 @@ public class SignServiceImpl implements SignService {
         Sign sign = new Sign();
         if (potentialMapper.findByPhone(phone).getPotId() != null){
             sign.setSignDesc(desc);
-            sign.setSignNumder(potentialMapper.findByPhone(phone).getPotNumber());
+            sign.setSignUserNumber(potentialMapper.findByPhone(phone).getPotNumber());
             sign.setSignStatus(2);
             sign.setSignNumder(signMapper.findMax().getSignNumder()+1);
             signMapper.add(sign);

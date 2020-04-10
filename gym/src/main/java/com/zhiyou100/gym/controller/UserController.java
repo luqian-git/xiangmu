@@ -2,6 +2,7 @@ package com.zhiyou100.gym.controller;
 
 import com.zhiyou100.gym.pojo.User;
 import com.zhiyou100.gym.service.UserService;
+import lombok.extern.log4j.Log4j2;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
@@ -10,7 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-
+@Log4j2
 @Controller
 @RequestMapping("user")
 public class UserController {
@@ -33,6 +34,8 @@ public class UserController {
     }
     @RequestMapping("admin")
     public String admin(){
+        log.info("log测试登录成功登录的人是");
+        log.error("登录的人是"+userService.shiroUser().getUsAccount());
         return "admin";
     }
 
